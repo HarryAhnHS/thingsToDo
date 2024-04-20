@@ -1,4 +1,5 @@
 import { isToday, isThisWeek } from "date-fns";
+import Todo from "./todo";
 
 
 export default class Project {
@@ -19,10 +20,22 @@ export default class Project {
         return this.todos;
     }
 
-    
+    setTodos(todos) {
+        this.todos = todos;
+    }
 
+    getTodo(todoTitle) {
+        return this.todos.find((todo) => todo.title == todoTitle);
+    }
+
+    /**
+     * 
+     * @param {Todo} newTodo - instance of Todo object to be added
+     */
     addTodo(newTodo) {
-        if (!this.todos.find((todo) => todo.getTitle == newTodo.title)) {
+        console.log(this.todos.some((todo) => todo.title == newTodo.getTitle()));
+        if (!this.todos.some((todo) => todo.title == newTodo.getTitle())) {
+            console.log("Here");
             this.todos.push(newTodo);
         }
     }
@@ -31,15 +44,11 @@ export default class Project {
         this.todos.filter((todo) => todo.title !== todoTitle);
     }
 
-    finishTodo(todo) {
-        todo.setDone(true);
-    }
-
     getTodayTodos() {
-        return this.todos.filter((todo) => isToday(todo.getDate));
+        return this.todos.filter((todo) => isToday(todo.date));
     }
 
     getThisWeekTodos() {
-        return this.todos.filter((todo) => isThisWeek(todo.getDate));
+        return this.todos.filter((todo) => isThisWeek(todo.date));
     }
 }

@@ -5,7 +5,7 @@ export default class Todo {
         this.desc = desc;
         this.date = date;
         this.priority = priority;
-        this.done = False;
+        this.done = false;
     }
 
     setTitle(title) {
@@ -24,11 +24,11 @@ export default class Todo {
         return this.desc;
     }
 
-    setDate(date) {
+    setDueDate(date) {
         this.date = date;
     }
 
-    getDate() {
+    getDueDate() {
         return this.date;
     }
 

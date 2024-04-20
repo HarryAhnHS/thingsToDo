@@ -29,7 +29,7 @@ img {
 .sidebar {
     grid-area: 2/1/3/2 ;
 
-    background-color: antiquewhite;
+    outline: 2px solid black;
 }
 
 .main {
