@@ -8,7 +8,15 @@ import ProjectList from './projectList.js';
 const Storage = (() => {
     // Save, extract project list from local storage
     function saveProjectList(currentList) {
-        // console.log("saving", currentList);
+        // Update All, Today, This Week, Done
+        currentList.updateAll();
+        currentList.updateToday();
+        currentList.updateThisWeek();
+        currentList.updateDone();
+
+
+        
+        console.log("saving", currentList);
         localStorage.setItem('data', JSON.stringify(currentList));
     }
 
@@ -63,11 +71,8 @@ const Storage = (() => {
 
     // Add/edit/delete/finish todos within projects
     function addTodo(projectName, newTodo) {
-        let projectList = getProjectList();
-
-        console.log(newTodo);
-        console.log(projectList);
-        console.log(projectList.getProject(projectName));        
+        let projectList = getProjectList();    
+        
         projectList.getProject(projectName).addTodo(newTodo);
 
         saveProjectList(projectList);

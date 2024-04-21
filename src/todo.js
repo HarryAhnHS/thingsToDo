@@ -24,11 +24,11 @@ export default class Todo {
         return this.desc;
     }
 
-    setDueDate(date) {
+    setDate(date) {
         this.date = date;
     }
 
-    getDueDate() {
+    getDate() {
         return this.date;
     }
 

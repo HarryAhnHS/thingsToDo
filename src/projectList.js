@@ -4,7 +4,7 @@ import Project from './project.js';
 export default class ProjectList {
     constructor() {
         this.projects = [];
-        this.projects.push(new Project('All Todos'));
+        this.projects.push(new Project('All'));
         this.projects.push(new Project('Today'));
         this.projects.push(new Project('This Week'));
         this.projects.push(new Project('Done'));
@@ -25,7 +25,7 @@ export default class ProjectList {
     }
 
     deleteProject(projectName) {
-        this.projects.filter((project) => project.name !== projectName);
+        this.projects = this.projects.filter((project) => project.name !== projectName);
     }
 
     renameProject(projectName, newName) {
@@ -46,4 +46,66 @@ export default class ProjectList {
     }
 
     // Update All, Today, This Week, Done Projects
+    updateAll() {
+        this.getProject('All').setTodos([]);
+
+        let buffer = [];
+        this.projects.forEach((project) => {
+            if (project.name != "All" && project.name != "Today" && project.name != "This Week" && project.name != "Done") {
+                project.getTodos().forEach((todo) => {
+                    buffer.push(todo);
+                })
+            }
+        })
+
+        this.getProject('All').setTodos(buffer);
+    }
+
+    updateToday() {
+        this.getProject('Today').setTodos([]);
+
+        let buffer = [];
+        this.projects.forEach((project) => {
+            if (project.name != "All" && project.name != "Today" && project.name != "This Week" && project.name != "Done") {
+                project.getTodayTodos().forEach((todo) => {
+                    buffer.push(todo);
+                })
+            }
+        })
+
+        this.getProject('Today').setTodos(buffer);
+    }
+
+    updateThisWeek() {
+        this.getProject('This Week').setTodos([]);
+
+        let buffer = [];
+        this.projects.forEach((project) => {
+            if (project.name != "All" && project.name != "Today" && project.name != "This Week" && project.name != "Done") {
+                project.getThisWeekTodos().forEach((todo) => {
+                    buffer.push(todo);
+                })
+            }
+        })
+
+        this.getProject('This Week').setTodos(buffer);
+    }
+
+    // Marked completed or overdue
+    updateDone() {
+        this.getProject('Done').setTodos([]);
+
+        let buffer = [];
+        this.projects.forEach((project) => {
+            if (project.name != "All" && project.name != "Today" && project.name != "This Week" && project.name != "Done") {
+                project.getTodos().forEach((todo) => {
+                    if (todo.done) buffer.push(todo);
+                })
+            }
+        })
+
+        this.getProject('Done').setTodos(buffer);
+
+    }
+
 };

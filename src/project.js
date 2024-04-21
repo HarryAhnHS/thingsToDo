@@ -1,4 +1,4 @@
-import { isToday, isThisWeek } from "date-fns";
+import { isToday, isThisWeek, isPast } from "date-fns";
 import Todo from "./todo";
 
 
@@ -33,15 +33,13 @@ export default class Project {
      * @param {Todo} newTodo - instance of Todo object to be added
      */
     addTodo(newTodo) {
-        console.log(this.todos.some((todo) => todo.title == newTodo.getTitle()));
         if (!this.todos.some((todo) => todo.title == newTodo.getTitle())) {
-            console.log("Here");
             this.todos.push(newTodo);
         }
     }
 
     deleteTodo(todoTitle) {
-        this.todos.filter((todo) => todo.title !== todoTitle);
+        this.todos = this.todos.filter((todo) => todo.title !== todoTitle);
     }
 
     getTodayTodos() {
@@ -50,5 +48,9 @@ export default class Project {
 
     getThisWeekTodos() {
         return this.todos.filter((todo) => isThisWeek(todo.date));
+    }
+
+    getOverdueTodos() {
+        return this.todos.filter((todo) => isPast(todo.date));
     }
 }
