@@ -105,7 +105,8 @@ export default class ProjectList {
         })
 
         this.getProject('Done').setTodos(buffer);
-
     }
+
+    
 
 };

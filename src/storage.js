@@ -14,7 +14,8 @@ const Storage = (() => {
         currentList.updateThisWeek();
         currentList.updateDone();
 
-
+        // Sort all projects todos by ascending date
+        currentList.projects.forEach((project) => project.sortTodos());
         
         console.log("saving", currentList);
         localStorage.setItem('data', JSON.stringify(currentList));

@@ -1,4 +1,4 @@
-import { isToday, isThisWeek, isPast } from "date-fns";
+import { compareAsc, isToday, isThisWeek, isPast } from "date-fns";
 import Todo from "./todo";
 
 
@@ -52,5 +52,9 @@ export default class Project {
 
     getOverdueTodos() {
         return this.todos.filter((todo) => isPast(todo.date));
+    }
+
+    sortTodos() {
+        this.todos.sort((a,b) => compareAsc(a.date, b.date));
     }
 }
