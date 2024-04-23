@@ -6,9 +6,35 @@
     <title>To Do List</title>
 </head>
 <body>
-    <div class="header">To-Do List</div>
-    <div class="sidebar"></div>
-    <div class="main"></div>
+    <div class="header">To Do List</div>
+    <div class="sidebar">
+        <div class="open-close">
+            <a href="javascript:void(0)" onclick="toggleSidebar()" class="openbtn">&#9776;</a>
+        </div>
+        <div class="project">All</div>
+        <div class="project">Today</div>
+        <div class="project">This Week</div>
+        <div class="project">Done</div>
+        <div class="my-projects-title">My Projects</div>
+        <div class="project"># Dog</div>
+        <div class="project"># Cat</div>
+        <div class="sidebar-add">
+            <button id="add-project">+ Add Project</button>
+        </div>
+    </div>
+    <div class="main">
+        <div class="container">
+            <div class="main-head">
+                Project Name
+            </div>
+            <div class="todo-list">
+                <div class="todo">Eat Food</div>
+                <div class="todo">Eat Food</div>
+                <div class="todo">Eat Food</div>
+                <div class="todo">Eat Food</div>
+            </div>
+        </div>
+    </div>
     <div class="footer">
         &copy; Copyright by @HarryAhnHS 
         <a href="https://github.com/HarryAhnHS" class="github-a" target="_blank">

@@ -9,6 +9,9 @@ import ProjectList from './projectList.js';
 
 document.querySelector("#github").src = Git;
 
+function toggleSidebar() {
+}
+
 localStorage.clear();
 
 Storage.addProject(new Project('Dog'));

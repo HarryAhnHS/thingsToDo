@@ -5,7 +5,7 @@ body {
     margin: 0;
 
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 4fr;
     grid-template-rows: 100px calc(100vh - 100px) 100px;
 
     font-family: 'Urbanist', sans-serif;
@@ -16,7 +16,7 @@ img {
 }
 
 .header {
-    grid-area: 1/1/2/3;
+    grid-area: 1/2/2/3;
     height: 100px;
 
     display: flex;
@@ -27,13 +27,144 @@ img {
 }
 
 .sidebar {
-    grid-area: 2/1/3/2 ;
+    grid-area: 1/1/3/2;
+    background-color: lightblue;
 
-    outline: 2px solid black;
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: scroll;
 }
+
+.open-close {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 50px;
+    box-sizing: border-box;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+}
+
+.openbtn {
+    font-size: 36px;
+    font-weight: 400;
+    text-decoration: none;
+    color: black;
+}
+
+.sidebar-add {
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    font-weight: 500;
+}
+
+.project {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    box-sizing: border-box;
+
+    padding-left: 15px;
+
+    font-weight: 500;
+    text-transform: uppercase;
+
+    border-radius: 12px;
+}
+
+.my-projects-title {
+    height: 100px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    box-sizing: border-box;
+
+    padding-left: 15px;
+    padding-bottom: 15px;
+
+    text-transform: uppercase;
+
+    font-weight: 600;
+    font-size: 18px;
+}
+
+/* Button styling add project */
+#add-project {
+    width: 80%;
+    height: 80%;
+
+    margin: 0;
+    padding: 0;
+
+    border-radius: 5px;
+    border: none;
+
+    font-family: 'Urbanist', sans-serif;
+
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Main todo list content styling */
 
 .main {
     grid-area: 2/2/3/3;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 80%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.main-head {
+    padding-top: 15px;
+
+    height: 60px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    font-weight: 600;
+
+    border-bottom: 1px solid gray;
+}
+
+.todo-list {
+    width: 100%;
+    flex: 1;
+}
+
+.todo {
+    height: 50px;
+    border-bottom: 1px solid gray;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .footer {
