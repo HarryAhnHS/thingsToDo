@@ -6,6 +6,7 @@ import Storage from './storage';
 import Todo from './todo.js';
 import Project from './project.js';
 import ProjectList from './projectList.js';
+import UI from './UI.js';
 import { add } from 'date-fns';
 
 document.querySelector("#github").src = Git;
@@ -80,4 +81,7 @@ Storage.addTodo('Maru', new Todo("Clean Poo","", new Date(2024,3,19,13,30),'Low'
 Storage.addTodo('Maru', new Todo("Clean Piss","", new Date(2024,3,19,11,30),'Low'))
 
 Storage.changeDateTodo('Meow','Buy Tuna', new Date(2024,3,19,12,30))
+
+UI.displayProjects();
+UI.displayTasks("Meow");
 
