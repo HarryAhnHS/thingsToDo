@@ -7,11 +7,12 @@
 </head>
 <body>
     <div class="header">To Do List</div>
-    <div class="sidebar">
+
+    <div class="sidebar opened">
         <div class="open-close">
-            <a href="javascript:void(0)" onclick="toggleSidebar()" class="openbtn">&#9776;</a>
+            <a href="javascript:void(0)" class="openbtn">&#9776;</a>
         </div>
-        <div class="project">All</div>
+        <div class="project selected">All</div>
         <div class="project">Today</div>
         <div class="project">This Week</div>
         <div class="project">Done</div>
@@ -30,7 +31,6 @@
             <div class="todo-list">
                 <div class="todo">
                     <input type="checkbox" class="checkbox" id="0_0">
-                    
                     <div class="title-desc">
                         <div class="title">
                             <div>Eat Food</div>
@@ -39,8 +39,8 @@
                         <div class="desc">Need to eat my favorite</div>
                     </div>
                     <div class="date-time">
-                        <div class="date">April 23, 2024</div>
-                        <div class="time">12:00 PM</div>
+                        <div class="date">Due April 23, 2024</div>
+                        <div class="time">@12:00 PM</div>
                     </div>
                     <div class="edit">
                         Edit

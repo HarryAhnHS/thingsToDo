@@ -6,6 +6,10 @@
     --low: #ffba08;
 }
 
+.hidden {
+    display: none !important;
+}
+
 body {
     height: calc(100vh + 100px);
     margin: 0;
@@ -34,23 +38,24 @@ img {
 .sidebar {
     grid-area: 1/1/3/2;
 
-    border-right: 1px solid gray;
+    background-color: #e9ecef;
 
     display: flex;
     flex-direction: column;
 
     overflow-y: scroll;
+
 }
 
 .open-close {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    height: 50px;
     box-sizing: border-box;
     padding-top: 5px;
     padding-left: 10px;
     padding-bottom: 5px;
+    height: 80px;
 }
 
 .openbtn {
@@ -84,8 +89,15 @@ img {
 
     font-weight: 500;
     text-transform: uppercase;
+}
 
-    border-radius: 12px;
+.project:hover, .project:focus {
+    cursor: pointer;
+}
+
+.selected {
+    background-color: black;
+    color: white;
 }
 
 .my-projects-title {
@@ -131,6 +143,8 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    transition: all 0.5s;
 }
 
 .container {

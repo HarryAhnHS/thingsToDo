@@ -6,11 +6,49 @@ import Storage from './storage';
 import Todo from './todo.js';
 import Project from './project.js';
 import ProjectList from './projectList.js';
+import { add } from 'date-fns';
 
 document.querySelector("#github").src = Git;
 
 function toggleSidebar() {
+    const sidebar = document.querySelector(".sidebar");
+    const projects = document.querySelectorAll(".project");
+    const projectTitle = document.querySelector(".my-projects-title");
+    const addProject = document.querySelector(".sidebar-add");
+    const body = document.querySelector("body");
+    // Closing
+    if (sidebar.classList.contains('opened')) {
+        body.style['grid-template-columns'] = "50px auto";
+        
+        sidebar.style['width'] = "50px";
+        sidebar.style['border-right'] = 'none';
+
+
+        projects.forEach(project => {
+            project.classList.add('hidden');
+        })
+        projectTitle.classList.add('hidden');
+        addProject.classList.add('hidden');
+
+        sidebar.classList.remove('opened');
+    }
+    // Opening
+    else {
+        body.style['grid-template-columns'] = "1fr 4fr";
+
+        sidebar.style['width'] = "100%";
+
+        projects.forEach(project => {
+            project.classList.remove('hidden');
+        })
+        projectTitle.classList.remove('hidden');
+        addProject.classList.remove('hidden');
+
+        sidebar.classList.add('opened');
+    }
 }
+
+document.querySelector(".open-close").onclick = toggleSidebar;
 
 localStorage.clear();
 
@@ -42,5 +80,4 @@ Storage.addTodo('Maru', new Todo("Clean Poo","", new Date(2024,3,19,13,30),'Low'
 Storage.addTodo('Maru', new Todo("Clean Piss","", new Date(2024,3,19,11,30),'Low'))
 
 Storage.changeDateTodo('Meow','Buy Tuna', new Date(2024,3,19,12,30))
-
 
