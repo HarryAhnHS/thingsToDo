@@ -1,1 +1,62 @@
-<head><script defer src="main.js"></script></head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+<script defer src="main.js"></script></head>
+<body>
+    <div class="header">To Do List</div>
+
+    <div class="open-close">
+        <a href="javascript:void(0)" onclick="toggleSidebar()" class="openbtn">&#9776;</a>
+    </div>
+
+    <div class="sidebar opened">
+        <div class="project">All</div>
+        <div class="project">Today</div>
+        <div class="project">This Week</div>
+        <div class="project">Done</div>
+        <div class="my-projects-title">My Projects</div>
+        <div class="project"># Dog</div>
+        <div class="project"># Cat</div>
+        <div class="sidebar-add">
+            <button id="add-project">+ Add Project</button>
+        </div>
+    </div>
+    <div class="main">
+        <div class="container">
+            <div class="main-head">
+                Project Name
+            </div>
+            <div class="todo-list">
+                <div class="todo">
+                    <input type="checkbox" class="checkbox" id="0_0">
+                    <div class="title-desc">
+                        <div class="title">
+                            <div>Eat Food</div>
+                            <div class="priority">High Priority</div>
+                        </div>
+                        <div class="desc">Need to eat my favorite</div>
+                    </div>
+                    <div class="date-time">
+                        <div class="date">Due April 23, 2024</div>
+                        <div class="time">@12:00 PM</div>
+                    </div>
+                    <div class="edit">
+                        Edit
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        &copy; Copyright by @HarryAhnHS 
+        <a href="https://github.com/HarryAhnHS" class="github-a" target="_blank">
+            <div class="github-logo">
+                <img id="github" alt="github">
+            </div>
+        </a>
+    </div>
+</body>
+</html>
