@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-    --high: #9d0208; 
-    --medium: #e85d04;
-    --low: #ffba08;
+    --high: rgba(157, 2, 8);
+    --medium: rgba(232, 93, 4);
+    --low: rgba(255, 186, 8);
 }
 
 .hidden {
@@ -95,7 +95,7 @@ img {
     cursor: pointer;
 }
 
-.selected {
+.active {
     background-color: black;
     color: white;
 }
@@ -187,14 +187,17 @@ img {
     justify-content: flex-start;
 }
 
+.todo.overdue > .date-time, 
+.todo.overdue > .title-desc  {
+    color: rgba(157, 2, 8);
+}
+
+
 .checkbox {
     width: 25px;
     height: 25px;
     border-radius: 50%;
     vertical-align: middle;
-    border: 1.5px solid rgba(157, 2, 8, 1);
-
-    background-color: rgba(157, 2, 8, 0.1);
     
     appearance: none;
     -webkit-appearance: none;
@@ -204,9 +207,26 @@ img {
     margin-right: 15px;
 }
 
+.checkbox.high {
+    border: 1.5px solid rgba(157, 2, 8, 0.5);
+
+    background-color: rgba(157, 2, 8, 0.1);
+}
+
+.checkbox.medium {
+    border: 1.5px solid rgba(232, 93, 4, 0.5);
+
+    background-color: rgba(232, 93, 4, 0.1);
+}
+
+.checkbox.low {
+    border: 1.5px solid rgba(255, 186, 8, 0.5);
+
+    background-color: rgba(255, 186, 8, 0.1);
+}
+
 .checkbox:checked {
     clip-path: circle(50% at 50% 50%);
-    background-color: rgba(157, 2, 8, 1);
 }
 
 .title-desc {
@@ -232,16 +252,27 @@ img {
     margin-left: 15px;
 
     font-size: 10px;
-    color: rgba(157, 2, 8, 1);
-
-    outline: 0.5px solid rgba(157, 2, 8, 1);
 
     border-radius: 15px;
 
     display: flex;
     align-items: center;
     justify-content: center;
+}
 
+.priority.high {
+    color: var(--high);
+    outline: 0.5px solid var(--high);
+}
+
+.priority.medium {
+    color: var(--medium);
+    outline: 0.5px solid var(--medium);
+}
+
+.priority.low {
+    color: var(--low);
+    outline: 0.5px solid var(--low);
 }
 
 .desc {

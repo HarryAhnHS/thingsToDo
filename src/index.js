@@ -80,8 +80,11 @@ Storage.addTodo('Maru', new Todo("Buy Cheese","His favorite treat", new Date(202
 Storage.addTodo('Maru', new Todo("Clean Poo","", new Date(2024,3,19,13,30),'Low'))
 Storage.addTodo('Maru', new Todo("Clean Piss","", new Date(2024,3,19,11,30),'Low'))
 
-Storage.changeDateTodo('Meow','Buy Tuna', new Date(2024,3,19,12,30))
+Storage.changeDateTodo('Meow','Buy Tuna', new Date(2024,4,8,12,30))
+Storage.changeDateTodo('Maru','Buy Cheese', new Date(2024,4,13,23,30))
 
+
+UI.initDisplay();
 UI.displayProjects();
-UI.displayTasks("Meow");
+UI.displaySelectedProjectContent();
 
