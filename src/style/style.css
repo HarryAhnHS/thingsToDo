@@ -192,6 +192,10 @@ img {
     color: rgba(157, 2, 8);
 }
 
+.todo.overdue > .title-desc > .desc {
+    color: rgba(157, 2, 8, 0.5);
+}
+
 
 .checkbox {
     width: 25px;
@@ -236,7 +240,7 @@ img {
     flex-direction: column;
 }
 
-.title {
+.title-tags {
     font-size: 16px;
 
     display: flex;
@@ -302,12 +306,23 @@ img {
     font-size: 14px;
 }
 
-.edit {
+.edit-delete {
     width: 50px;
 
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.edit-svg:hover, .edit-svg:focus {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+
+.delete-svg:hover, .delete-svg:focus {
+    opacity: 0.5;
+    cursor: pointer;
 }
 
 
