@@ -17,6 +17,12 @@ import { isPast, isWithinInterval, formatDistance, formatDistanceToNow, format, 
 
 const UI = (() => {
 
+    function resetDisplay() {
+        initDisplay();
+        displayProjects();
+        displaySelectedProjectContent();
+    }
+
     function initDisplay() {        
         const projectDivs = document.querySelectorAll('.project');
         const projectName = document.querySelector('.main-head');
@@ -37,6 +43,10 @@ const UI = (() => {
      * Function to display user created projects in sidebar
      */
     function displayProjects() {
+        // Clear Previous ProjectList
+        const myProjectList = document.querySelector('.my-projects');
+        myProjectList.innerHTML = "";
+
         Storage.getProjectList().getProjects().forEach((project) => {
             if (project.name != 'All' && project.name != 'Today' && project.name != 'This Week' && project.name != 'Done') {
                 UI.createProject(project.name);
@@ -409,13 +419,18 @@ const UI = (() => {
                     project.classList.add("project");
                     project.textContent = "# " + name.value;
 
+                    myProjects.appendChild(project);
+
                     // Storage - add new project
                     colors.forEach((color) => {
                         if (color.classList.contains("selected")) {
                             Storage.addProject(new Project(name.value, color.id));
                         }
                     })
-                    myProjects.append(project);
+
+                    // Refresh projects and todos
+                    resetDisplay();
+
                     dialog.close();
                 }
                 else {
@@ -455,6 +470,7 @@ const UI = (() => {
 
         
     return {
+        resetDisplay,
         initDisplay,
 
         displayProjects,

@@ -58,8 +58,6 @@ function toggleSidebar() {
 
 document.querySelector(".open-close").onclick = toggleSidebar;
 
-// localStorage.clear();
-
 // Storage.addProject(new Project('Dog'));
 // Storage.addProject(new Project('Cat'));
 
@@ -90,9 +88,7 @@ document.querySelector(".open-close").onclick = toggleSidebar;
 // Storage.changeDateTodo('Meow','Buy Tuna', new Date(2024,4,8,12,30))
 // Storage.changeDateTodo('Maru','Buy Cheese', new Date(2024,4,13,23,30))
 
-
-UI.initDisplay();
-UI.displayProjects();
-UI.displaySelectedProjectContent();
+// localStorage.clear();
+UI.resetDisplay();
 UI.newProject();
 
