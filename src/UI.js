@@ -53,7 +53,7 @@ const UI = (() => {
 
         const project = document.createElement('div');
         project.classList.add('project');
-        project.textContent = `* ${name}`;
+        project.textContent = `# ${name}`;
 
         myProjectList.appendChild(project);
     }
@@ -138,6 +138,19 @@ const UI = (() => {
         todo.appendChild(title_desc);
         todo.appendChild(date_time);
         todo.appendChild(edit_delete);
+
+        // Check for conditions before appending todo into list
+        if (isPast(date) && !done) {
+            // IF OVERDUE
+            todo.classList.add('overdue');
+
+            const overdue = document.createElement('div');
+            overdue.classList.add("priority");
+            overdue.classList.add("high");
+            overdue.textContent = "! Overdue";
+
+            title_tags.appendChild(overdue);
+        }
 
         // Append new div into todolist
         const todoList = document.querySelector('.todo-list');
@@ -289,6 +302,39 @@ const UI = (() => {
         })
     }
 
+    // Add project - popup
+    function newProject() {
+        const button = document.querySelector("#new-project");
+        const myProjects = document.querySelector(".my-projects");
+
+        button.addEventListener("click", (e) => {
+            console.log("Add Project Clicked")
+            const project = document.createElement("div");
+            project.classList.add("project");
+
+            myProjects.append(project);
+        });
+    }
+
+    // View task - popup
+
+    // Add task - popup
+    function newTask() {
+
+    }
+
+
+    // Edit task - popup
+    function editProject() {
+
+    }
+
+    // Delete task 
+    function addProject() {
+
+    }
+
+    // Toggle task as done - visual check + move to "Done" project
     function toggleDone() {
         
     }
@@ -307,6 +353,8 @@ const UI = (() => {
         clearTodos,
         resetActive,
         displaySelectedProjectContent,
+
+        newProject
     }
 })();
 

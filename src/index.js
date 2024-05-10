@@ -87,4 +87,5 @@ Storage.changeDateTodo('Maru','Buy Cheese', new Date(2024,4,13,23,30))
 UI.initDisplay();
 UI.displayProjects();
 UI.displaySelectedProjectContent();
+UI.newProject();
 
