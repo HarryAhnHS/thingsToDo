@@ -89,6 +89,8 @@ document.querySelector(".open-close").onclick = toggleSidebar;
 // Storage.changeDateTodo('Maru','Buy Cheese', new Date(2024,4,13,23,30))
 
 // localStorage.clear();
+UI.initDisplay();
 UI.resetDisplay();
 UI.newProject();
+UI.newTodo();
 

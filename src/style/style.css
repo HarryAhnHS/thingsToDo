@@ -162,10 +162,22 @@ img {
     align-items: center;
     justify-content: flex-start;
 
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 600;
 
     border-bottom: 1px solid gray;
+
+    color: black;
+}
+
+.head-title {
+    flex: 1;
+}
+
+/* New todo */
+#new-todo {
+    width: 80px;
+
 }
 
 .todo-list {

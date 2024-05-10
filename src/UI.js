@@ -18,7 +18,6 @@ import { isPast, isWithinInterval, formatDistance, formatDistanceToNow, format, 
 const UI = (() => {
 
     function resetDisplay() {
-        initDisplay();
         displayProjects();
         displaySelectedProjectContent();
     }
@@ -28,13 +27,14 @@ const UI = (() => {
         const projectName = document.querySelector('.main-head');
 
         projectDivs.forEach((project) => {
-            if (project.textContent == 'All') {
+            console.log(project.textContent)
+            if (project.textContent == 'ALL') {
                 resetActive();
                 project.classList.add("active");
-                projectName.textContent = "All";
+                projectName.textContent = "ALL";
                 clearTodos();
                 Storage.getProjectList().updateAll();
-                displayTodos('All');
+                displayTodos('ALL');
             }
         });
     };
@@ -48,7 +48,7 @@ const UI = (() => {
         myProjectList.innerHTML = "";
 
         Storage.getProjectList().getProjects().forEach((project) => {
-            if (project.name != 'All' && project.name != 'Today' && project.name != 'This Week' && project.name != 'Done') {
+            if (project.name != 'ALL' && project.name != 'TODAY' && project.name != 'THIS WEEK' && project.name != 'DONE') {
                 UI.createProject(project.name);
             }
         });
@@ -66,9 +66,11 @@ const UI = (() => {
 
         const sharp = document.createElement('span');
         sharp.innerHTML = `#&nbsp;`;
+        sharp.style['pointer-events'] = 'none';
 
         const projectName = document.createElement('div');
         projectName.textContent = `${name}`;
+        projectName.style['pointer-events'] = 'none';
 
         sharp.style['color'] = `#${Storage.getProjectList().getProject(name).getColor()}`;
 
@@ -79,9 +81,9 @@ const UI = (() => {
     }
 
     function displayTodos(projectName) {
-        if (Storage.getProjectList().getProject(projectName).getTodos().length === 0) {
+        if (Storage.getProjectList().getProject(projectName).getTodos().length == 0) {
             // Edge-case - if no todos
-            if (projectName == "Done") {
+            if (projectName == "DONE") {
                 // No done todos
                 const todoList = document.querySelector('.todo-list');
 
@@ -222,78 +224,6 @@ const UI = (() => {
         todoList.appendChild(todo);
     }
 
-
-    // function createTodo(title, priority, desc, date, done) {
-    //     const todoList = document.querySelector('.todo-list');
-    //     const today = new Date();
-
-    //     if (isWithinInterval(date, {
-    //         start: today,
-    //         end: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7)
-    //     })) {
-    //         // 1. If task's date is due within a week
-    //         todoList.innerHTML += `<div class="todo">
-    //                 <input type="checkbox" class="checkbox ${priority.toLowerCase()}" id="0_0">
-    //                 <div class="title-desc">
-    //                     <div class="title-tags">
-    //                         <div>${title}</div>
-    //                         <div class="priority ${priority.toLowerCase()}">${priority} Priority</div>
-    //                     </div>
-    //                     <div class="desc">${desc}</div>
-    //                 </div>
-    //                 <div class="date-time">
-    //                     <div class="date">${formatDistanceToNow(date,{addSuffix: true})}</div>
-    //                     <div class="time">@${format(date, "p")}</div>
-    //                 </div>
-    //                 <div class="edit-delete">
-    //                     <svg class = "edit-svg" opacity="0.8" width="15px" height="15px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
-    //                     <svg class = "delete-svg" opacity="0.8" width="15px" height="15px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>
-    //                 </div>
-    //             </div>`;
-    //     }
-    //     else if (isPast(date) && !done) {
-    //         // 2. If overdue
-    //         todoList.innerHTML += `<div class="todo overdue">
-    //         <input type="checkbox" class="checkbox ${priority.toLowerCase()}" id="0_0">
-    //         <div class="title-desc">
-    //             <div class="title">
-    //                 <div>${title}</div>
-    //                 <div class="priority ${priority.toLowerCase()}">${priority} Priority</div>
-    //                 <div class="priority high">! Overdue</div>
-    //             </div>
-    //             <div class="desc">${desc}</div>
-    //         </div>
-    //         <div class="date-time">
-    //             <div class="date">${formatDistance(date, today, {addSuffix: true})}</div>
-    //             <div class="time"></div>
-    //         </div>
-    //         <div class="edit">
-    //         <svg class = "edit-svg" width="20px" height="25px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
-    //         </div>
-    //     </div>`;
-    //     }
-    //     else {
-    //         // 3. Else, if due at any other time
-    //         todoList.innerHTML += `<div class="todo">
-    //         <input type="checkbox" class="checkbox ${priority.toLowerCase()}" id="0_0">
-    //         <div class="title-desc">
-    //             <div class="title">
-    //                 <div>${title}</div>
-    //                 <div class="priority ${priority.toLowerCase()}">${priority} Priority</div>
-    //             </div>
-    //             <div class="desc">${desc}</div>
-    //         </div>
-    //         <div class="date-time">
-    //             <div class="date">${format(date, "PPP")}</div>
-    //             <div class="time">@${format(date, "p")}</div>
-    //         </div>
-    //         <div class="edit">
-    //         <svg class = "edit-svg" width="20px" height="25px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
-    //         </div>
-    //     </div>`;
-    //     }
-    // };
-
     function clearTodos() {
         const todoList = document.querySelector('.todo-list');
         todoList.innerHTML = "";
@@ -309,61 +239,91 @@ const UI = (() => {
     // Each project click event listeners and display selected content  
     function displaySelectedProjectContent() {
         const projectDivs = document.querySelectorAll('.project');
-        const projectName = document.querySelector('.main-head');
+        const head = document.querySelector('.main-head');
+        
         projectDivs.forEach((project) => {
-            if (project.textContent == 'All') {
+            if (project.textContent == 'ALL') {
                 project.addEventListener('click', (e) => {
+                    head.innerHTML = ""; // Reset head
                     resetActive();
                     e.target.classList.add("active");
 
-                    projectName.textContent = "All Todos";
+                    head.textContent = "ALL";
+                    head.style.color = 'black'; 
+
                     clearTodos();
                     Storage.getProjectList().updateAll();
-                    displayTodos('All');
+                    displayTodos('ALL');
                 })
             }
-            else if (project.textContent == 'Today') {
+            else if (project.textContent == 'TODAY') {
                 project.addEventListener('click', (e) => {
+                    head.innerHTML = ""; // Reset head
                     resetActive();
                     e.target.classList.add("active");
 
-                    projectName.textContent = "Today";
+                    head.textContent = "TODAY";
+                    head.style.color = 'black';
+
                     clearTodos();
                     Storage.getProjectList().updateToday();
-                    displayTodos('Today');
+                    displayTodos('TODAY');
                 })
             } 
-            else if (project.textContent == 'This Week') {
+            else if (project.textContent == 'THIS WEEK') {
                 project.addEventListener('click', (e) => {
+                    head.innerHTML = ""; // Reset head
                     resetActive();
                     e.target.classList.add("active");
                     
-                    projectName.textContent = "This Week";
+                    head.textContent = "THIS WEEK";
+                    head.style.color = 'black';
+
                     clearTodos();
                     Storage.getProjectList().updateThisWeek();
-                    displayTodos('This Week');
+                    displayTodos('THIS WEEK');
                 })
             } 
-            else if (project.textContent == 'Done') {
+            else if (project.textContent == 'DONE') {
                 project.addEventListener('click', (e) => {
+                    head.innerHTML = ""; // Reset head
                     resetActive();
                     e.target.classList.add("active");
                     
-                    projectName.textContent = "Done";
+                    head.textContent = "DONE";
+                    head.style.color = 'black';
+
                     clearTodos();
                     Storage.getProjectList().updateDone();
-                    displayTodos('Done');
+                    displayTodos('DONE');
                 })
             } 
             else {
                 project.addEventListener('click', (e) => {
+                    head.innerHTML = ""; // Reset head
                     resetActive();
                     e.target.classList.add("active");
-                    projectName.textContent = "# " + e.target.textContent.slice(2).toUpperCase();
-                    projectName.style['color'] = `#${Storage.getProjectList().getProject(e.target.textContent.slice(2)).getColor()}`;
+
+                    const sharp = document.createElement('span');
+                    sharp.innerHTML = "#&nbsp";
+
+                    const title = document.createElement('div');
+                    title.classList.add("head-title");
+
+                    sharp.style.color = `#${Storage.getProjectList().getProject(e.currentTarget.textContent.slice(2)).getColor()}`;
+                    
+                    title.textContent = e.target.textContent.slice(2).toUpperCase();
+
+                    const button = document.createElement('button');
+                    button.id = "new-todo";
+                    button.textContent = `New Todo`;
+
+                    head.appendChild(sharp);
+                    head.appendChild(title);
+                    head.appendChild(button);
 
                     clearTodos();
-                    displayTodos(e.target.textContent.slice(2));
+                    displayTodos(e.target.textContent.slice(2).toUpperCase());
                 })
             }
         })
@@ -424,7 +384,7 @@ const UI = (() => {
                     // Storage - add new project
                     colors.forEach((color) => {
                         if (color.classList.contains("selected")) {
-                            Storage.addProject(new Project(name.value, color.id));
+                            Storage.addProject(new Project(name.value.toUpperCase(), color.id));
                         }
                     })
 
@@ -446,18 +406,20 @@ const UI = (() => {
     }
 
     // Add task - popup
-    function newTask() {
+    function newTodo() {
+        const head = document.querySelector(".main-head");
+        console.log(head.textContent)
 
     }
 
 
     // Edit task - popup
-    function editProject() {
+    function editTask() {
 
     }
 
     // Delete task 
-    function addProject() {
+    function deleteTask() {
 
     }
 
@@ -484,7 +446,8 @@ const UI = (() => {
         resetActive,
         displaySelectedProjectContent,
 
-        newProject
+        newProject,
+        newTodo
     }
 })();
 

@@ -42,7 +42,7 @@ export default class Project {
      * @param {Todo} newTodo - instance of Todo object to be added
      */
     addTodo(newTodo) {
-        if (!this.todos.some((todo) => todo.title == newTodo.getTitle())) {
+        if (!this.todos.some((todo) => todo.title.toUpperCase() == newTodo.getTitle().toUpperCase())) {
             this.todos.push(newTodo);
         }
     }
