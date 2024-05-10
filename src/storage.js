@@ -70,6 +70,14 @@ const Storage = (() => {
         saveProjectList(projectList);
     }
 
+    function changeColorProject(name, newColor) {
+        let projectList = getProjectList();
+        
+        projectList.changeColorProject(name, newColor);
+
+        saveProjectList(projectList);
+    }
+
     // Add/edit/delete/finish todos within projects
     function addTodo(projectName, newTodo) {
         let projectList = getProjectList();    
@@ -139,6 +147,7 @@ const Storage = (() => {
         addProject,
         deleteProject,
         renameProject,
+        changeColorProject,
 
         addTodo,
         deleteTodo,

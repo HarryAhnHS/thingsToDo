@@ -8,6 +8,38 @@
 <body>
     <div class="header">To Do List</div>
 
+    <dialog class="new-project-dialog">
+        <form name="new-project-form" class="new-project-dialog-container">
+            <div class="new-project-dialog-title">Create New Project</div>
+            <div class="new-project-dialog-inputs">
+                <label for="project-name">Name</label>
+                <input id="project-name" type="text" placeholder="Choose a name">
+    
+                <div class="project-color">
+                    <span>Choose a color:</span>
+                    <div class="colors">
+                        <div class="color selected" id="f94144"></div>
+                        <div class="color" id="f9844a"></div>
+                        <div class="color" id="f9c74f"></div>
+                        <div class="color" id="90be6d"></div>
+                        <div class="color" id="43aa8b"></div>
+                        <div class="color" id="4d908e"></div>
+                        <div class="color" id="577590"></div>
+                        <div class="color" id="277da1"></div> 
+                    </div>
+                      
+                </div>
+
+            </div>
+
+            <div class="new-project-dialog-buttons">
+                <button id="new-project-cancel">Cancel</button>
+                <button id="new-project-submit">Add</button>
+            </div>
+            
+        </form>
+    </dialog>
+
     <div class="sidebar opened">
         <div class="open-close">
             <a href="javascript:void(0)" class="openbtn">&#9776;</a>
@@ -23,9 +55,6 @@
         <div class="my-projects">
 
         </div>
-        <!-- <div class="sidebar-add">
-            <button id="add-project">+ Add Project</button>
-        </div> -->
     </div>
     <div class="main">
         <div class="container">

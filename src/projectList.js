@@ -20,8 +20,12 @@ export default class ProjectList {
         }
         else {
             console.log('Project with same name exists');
-            return;
+            return -1;
         }
+    }
+
+    projectExists(projectName) {
+        return this.projects.some((project) => project.name == projectName);
     }
 
     deleteProject(projectName) {
@@ -31,6 +35,11 @@ export default class ProjectList {
     renameProject(projectName, newName) {
         let idx = this.projects.findIndex((project) => project.name === projectName);
         this.projects[idx].setName(newName);
+    }
+
+    changeColorProject(projectName, newColor)  {
+        let idx = this.projects.findIndex((project) => project.name === projectName);
+        this.projects[idx].setColor(newColor);
     }
 
     getProjects() {
@@ -107,6 +116,6 @@ export default class ProjectList {
         this.getProject('Done').setTodos(buffer);
     }
 
-    
+
 
 };

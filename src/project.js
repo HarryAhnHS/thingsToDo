@@ -3,9 +3,10 @@ import Todo from "./todo";
 
 
 export default class Project {
-    constructor(name) {
+    constructor(name, color) {
         this.name = name;
         this.todos = [];
+        this.color = color;
     }
 
     setName(name) {
@@ -14,6 +15,14 @@ export default class Project {
 
     getName() {
         return this.name;
+    }
+
+    setColor(color) {
+        this.color = color;
+    } 
+
+    getColor() {
+        return this.color;
     }
 
     getTodos() {

@@ -53,7 +53,17 @@ const UI = (() => {
 
         const project = document.createElement('div');
         project.classList.add('project');
-        project.textContent = `# ${name}`;
+
+        const sharp = document.createElement('span');
+        sharp.innerHTML = `#&nbsp;`;
+
+        const projectName = document.createElement('div');
+        projectName.textContent = `${name}`;
+
+        sharp.style['color'] = `#${Storage.getProjectList().getProject(name).getColor()}`;
+
+        project.appendChild(sharp);
+        project.appendChild(projectName);
 
         myProjectList.appendChild(project);
     }
@@ -294,7 +304,9 @@ const UI = (() => {
                 project.addEventListener('click', (e) => {
                     resetActive();
                     e.target.classList.add("active");
-                    projectName.textContent = "Project: " + e.target.textContent.slice(2);
+                    projectName.textContent = "# " + e.target.textContent.slice(2).toUpperCase();
+                    projectName.style['color'] = `#${Storage.getProjectList().getProject(e.target.textContent.slice(2)).getColor()}`;
+
                     clearTodos();
                     displayTodos(e.target.textContent.slice(2));
                 })
@@ -306,13 +318,69 @@ const UI = (() => {
     function newProject() {
         const button = document.querySelector("#new-project");
         const myProjects = document.querySelector(".my-projects");
+        const dialog = document.querySelector(".new-project-dialog");
+        const colors = document.querySelectorAll(".color");
+
+        const form = document.querySelector(".new-project-dialog-container");
+        const name = document.querySelector("#project-name");
+
+        const add = document.querySelector("#new-project-submit");
+        const cancel = document.querySelector("#new-project-cancel");
+
+        colors.forEach((color) => {
+            const inner = document.createElement('div');
+            inner.style['background-color'] = `#${color.id}`;
+            inner.style['height'] = `30px`;
+            inner.style['width'] = `30px`;
+            inner.style['border-radius'] = '5px';
+
+            color.appendChild(inner);
+        });
 
         button.addEventListener("click", (e) => {
-            console.log("Add Project Clicked")
-            const project = document.createElement("div");
-            project.classList.add("project");
+            form.reset();
+            dialog.showModal();
 
-            myProjects.append(project);
+            // Default color
+            colors.forEach((color) => {
+                color.classList.remove('selected');
+            })
+            document.getElementById('f94144').classList.add('selected');
+
+            // Color choose
+            colors.forEach((color) => {
+                color.addEventListener('click', (e) => {
+                    colors.forEach((color)=> {
+                        color.classList.remove('selected');
+                    })
+                    color.classList.add('selected');
+                })
+            })
+
+            add.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (name.value != "" && !Storage.getProjectList().projectExists(name.value)) {
+                    const project = document.createElement("div");
+                    project.classList.add("project");
+                    project.textContent = "# " + name.value;
+
+                    // Storage - add new project
+                    colors.forEach((color) => {
+                        if (color.classList.contains("selected")) {
+                            Storage.addProject(new Project(name.value, color.id));
+                        }
+                    })
+                    myProjects.append(project);
+                    dialog.close();
+                }
+                else {
+                    console.log("Invalid name")
+                }
+            })
+
+            cancel.addEventListener('click', (e) => {
+                dialog.close();
+            });
         });
     }
 

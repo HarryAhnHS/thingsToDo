@@ -42,9 +42,6 @@ img {
 
     display: flex;
     flex-direction: column;
-
-    overflow-y: scroll;
-
 }
 
 .open-close {
@@ -111,6 +108,10 @@ img {
 
 .my-projects-title > span {
     flex: 1;
+}
+
+.my-projects {
+    overflow-y: scroll;
 }
 
 #new-project {
@@ -313,6 +314,103 @@ img {
     cursor: pointer;
 }
 
+
+/* Popups - new project, new task, edit task, view task  */
+dialog::backdrop {
+    opacity: 0.9;
+}
+
+.new-project-dialog {
+    width: 400px;
+    height: 40vh;
+}
+
+.new-project-dialog-container {
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new-project-dialog-title {
+    font-size: 20px;
+    height: 50px;
+}
+
+
+.new-project-dialog-inputs {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    width: 320px;
+}
+
+#project-name {
+    margin-top: 10px;
+
+    height: 30px;
+
+    border-radius: 5px;
+    border: none;
+
+    background-color:rgba(51, 51, 51, 0.05);
+    outline: 1px solid rgba(51, 51, 51, 0.2);
+}
+
+.project-color {
+    margin-top: 15px; 
+}
+
+.colors {
+    margin-top: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.color {
+    background-color:rgba(51, 51, 51, 0.05);
+    outline: 1px solid rgba(51, 51, 51, 0.2);
+
+    width: 35px;
+    height: 35px;
+
+    border-radius: 5px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.color:focus, .color:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.color.selected {
+    outline: 2px solid rgba(51, 51, 51, 1);
+}
+
+#new-project-cancel,
+#new-project-submit {
+    padding: 10px;
+    width: 100px;
+
+    border: none;
+
+    font-family: 'Urbanist', sans-serif;
+}
+
+#new-project-cancel:hover,
+#new-project-submit:hover,
+#new-project-cancel:focus,
+#new-project-submit:focus {
+    outline: 1.5px solid black;
+}
 
 
 .footer {
