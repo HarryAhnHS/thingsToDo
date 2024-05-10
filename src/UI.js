@@ -25,7 +25,7 @@ const UI = (() => {
             if (project.textContent == 'All') {
                 resetActive();
                 project.classList.add("active");
-                projectName.textContent = "All Todos";
+                projectName.textContent = "All";
                 clearTodos();
                 Storage.getProjectList().updateAll();
                 displayTodos('All');
@@ -69,9 +69,54 @@ const UI = (() => {
     }
 
     function displayTodos(projectName) {
-        Storage.getProjectList().getProject(projectName).getTodos().forEach((todo) => {
-            createTodo(todo.title, todo.priority, todo.desc, todo.date, todo.done);
-        });
+        if (Storage.getProjectList().getProject(projectName).getTodos().length === 0) {
+            // Edge-case - if no todos
+            if (projectName == "Done") {
+                // No done todos
+                const todoList = document.querySelector('.todo-list');
+
+                const emptySaver = document.createElement("div");
+                emptySaver.classList.add("empty-saver");
+
+                const emoji = document.createElement("div");
+                emoji.classList.add("emoji");
+                emoji.textContent = "🦥";
+
+                const text = document.createElement("div");
+                text.classList.add("empty-text");
+                text.textContent = "Nothing done!"
+                
+                emptySaver.appendChild(emoji);
+                emptySaver.appendChild(text);  
+                
+                todoList.appendChild(emptySaver);
+            }
+            else {
+                const todoList = document.querySelector('.todo-list');
+
+                const emptySaver = document.createElement("div");
+                emptySaver.classList.add("empty-saver");
+
+                const emoji = document.createElement("div");
+                emoji.classList.add("emoji");
+                emoji.textContent = "🎊";
+
+                const text = document.createElement("div");
+                text.classList.add("empty-text");
+                text.textContent = "Everything done!"
+                
+                emptySaver.appendChild(emoji);
+                emptySaver.appendChild(text);  
+                
+                todoList.appendChild(emptySaver);
+            }
+        }
+        else {
+            Storage.getProjectList().getProject(projectName).getTodos().forEach((todo) => {
+                createTodo(todo.title, todo.priority, todo.desc, todo.date, todo.done);
+            });
+        }
+
     }
 
     function createTodo(title, priority, desc, date, done) {
@@ -379,12 +424,11 @@ const UI = (() => {
             })
 
             cancel.addEventListener('click', (e) => {
+                e.preventDefault();
                 dialog.close();
             });
         });
     }
-
-    // View task - popup
 
     // Add task - popup
     function newTask() {
@@ -406,6 +450,8 @@ const UI = (() => {
     function toggleDone() {
         
     }
+
+    // If empty todo
 
         
     return {

@@ -15,21 +15,25 @@ function toggleSidebar() {
     const sidebar = document.querySelector(".sidebar");
     const projects = document.querySelectorAll(".project");
     const projectTitle = document.querySelector(".my-projects-title");
-    const addProject = document.querySelector(".sidebar-add");
     const body = document.querySelector("body");
+
+    const header = document.querySelector(".header");
+    const main = document.querySelector(".main");
     // Closing
     if (sidebar.classList.contains('opened')) {
         body.style['grid-template-columns'] = "50px auto";
+
+        header.style['grid-area'] = "1/1/2/3";
+        main.style['grid-area'] = "2/1/3/3";
         
         sidebar.style['width'] = "50px";
-        sidebar.style['border-right'] = 'none';
+        sidebar.style['background-color'] = 'transparent';
 
 
         projects.forEach(project => {
             project.classList.add('hidden');
         })
         projectTitle.classList.add('hidden');
-        addProject.classList.add('hidden');
 
         sidebar.classList.remove('opened');
     }
@@ -37,13 +41,16 @@ function toggleSidebar() {
     else {
         body.style['grid-template-columns'] = "1fr 4fr";
 
+        header.style['grid-area'] = "1/2/2/3";
+        main.style['grid-area'] = "2/2/3/3";
+
         sidebar.style['width'] = "100%";
+        sidebar.style['background-color'] = '#e9ecef';
 
         projects.forEach(project => {
             project.classList.remove('hidden');
         })
         projectTitle.classList.remove('hidden');
-        addProject.classList.remove('hidden');
 
         sidebar.classList.add('opened');
     }
