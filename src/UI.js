@@ -38,7 +38,6 @@ const UI = (() => {
         const projectName = document.querySelector('.main-head');
 
         projectDivs.forEach((project) => {
-            console.log(project.textContent)
             if (project.textContent == 'ALL') {
                 resetActive();
                 project.classList.add("active");
@@ -451,14 +450,23 @@ const UI = (() => {
         const dialog = document.querySelector(".new-todo-dialog");
         const form = document.querySelector(".new-todo-dialog-container");
 
+
+        var projectName;
+        var newTodoBtn;
+
         myProjects.forEach((project) => {
             project.addEventListener('click', (e) => {
-                let projectName = e.target.textContent.slice(2).toUpperCase();
-                const newTodoBtn = document.querySelector("#new-todo"); 
-                newTodoBtn.addEventListener("click", (e) => {
+
+                projectName = e.target.textContent.slice(2).toUpperCase();
+                newTodoBtn = document.querySelector("#new-todo"); 
+
+                // NEW TODO BUTTON IS ADDING EVENT LISTENER FOR EACH CLICK IN PROJECT, NEED TO DELETE WHEN NEW PROJECT CLICKED
+                newTodoBtn.addEventListener("click", function newTodoPopup(e) {
                     e.preventDefault();
                     form.reset();
 
+                    console.log("Add Click Running for "+ projectName);
+        
                     const priorities = document.querySelectorAll(".priority-radio");
                     
                     // Priority reset to low
@@ -466,27 +474,27 @@ const UI = (() => {
                         priority.classList.remove('selected');
                     });
                     document.querySelector("#low").classList.add('selected');
-
+        
                     // Project - name
                     const intro = document.querySelector('.intro');
                     intro.style['font-weight'] = "300";
                     intro.style['font-style'] = "italic";
-
+        
                     const sharp = document.querySelector('.sharp-name');
                     sharp.innerHTML = `#&nbsp${projectName}`;
                     sharp.style.color = `#${Storage.getProjectList().getProject(projectName).getColor()}`;
                     sharp.style['font-weight'] = "600";
-
+        
                     // Set due date and time to current
                     const dateinput = document.querySelector("#todo-date");
                     const timeinput = document.querySelector("#todo-time");
-
+        
                     let today = new Date();
                     let todayLater = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()+1);
-
+        
                     dateinput.value = format(today, "yyyy-MM-dd");
                     timeinput.value = format(todayLater, "HH:mm");
-
+        
                     // Priority choose
                     priorities.forEach((priority) => {
                         priority.addEventListener('click', (e) => {
@@ -496,24 +504,25 @@ const UI = (() => {
                             priority.classList.add('selected');
                         })
                     });
-
+        
                     dialog.showModal();
-
+        
                     const titleinput = document.querySelector("#todo-title");
                     const descinput = document.querySelector("#todo-desc");
-
+        
                     const add = document.querySelector("#new-todo-submit");
                     add.textContent = "Add";
                     const cancel = document.querySelector("#new-todo-cancel");
-
-                    add.addEventListener('click', (e) => {
+        
+                    add.addEventListener('click', function adding(e) {
+                        console.log("Clicked add");
                         e.preventDefault();
                         if (titleinput.value != "" && !Storage.getProjectList().getProject(projectName).todoExists(titleinput.value)) {
                             // If unique title - able to add
-
+        
                             // convert date, time inputs into Date object
                             let dateString =  `${dateinput.value}T${timeinput.value}`;
-                                       
+                                        
                             // Find current selected priority
                             let priorityinput = "low";
                             priorities.forEach((priority) => {
@@ -521,13 +530,13 @@ const UI = (() => {
                                     priorityinput = priority.id;
                                 }
                             })
-
+        
                             // Add to storage
                             Storage.addTodo(projectName, new Todo(titleinput.value, descinput.value, new Date(dateString), priorityinput, projectName));
-
                             dialog.close();
-                            
 
+                            add.removeEventListener('click',adding);
+        
                             // refresh current page's todos
                             refreshCurrentTodos();
                         }
@@ -536,14 +545,26 @@ const UI = (() => {
                         }
                     });
         
-                    cancel.addEventListener('click', (e) => {
+                    cancel.addEventListener('click', function cancelling(e) {
                         e.preventDefault();
                         dialog.close();
+
+                        cancel.removeEventListener('click',cancelling);
                     });
-                });
+
+
+                    // If new project clicked, then need to delete original new todo button event listener  
+                    // Ready for new iteration of click 
+                    myProjects.forEach((project) => {
+                        project.addEventListener('click', function deleteEvent(e) {
+                            newTodoBtn.removeEventListener('click', newTodoPopup);
+                            // Then clicking delete event listeners
+                            myProjects.forEach((project) => project.removeEventListener('click',deleteEvent));
+                        });
+                    });
+                });   
             });
         })
-
     }
 
 

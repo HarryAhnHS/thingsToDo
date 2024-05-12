@@ -17,7 +17,7 @@ const Storage = (() => {
         // Sort all projects todos by ascending date
         currentList.projects.forEach((project) => project.sortTodos());
         
-        console.log("saving", currentList);
+        // console.log("saving", currentList);
         localStorage.setItem('data', JSON.stringify(currentList));
     }
 
@@ -40,7 +40,7 @@ const Storage = (() => {
             project.setTodos(tasksBuffer);
         })
         
-        console.log("current projectList", projectList);
+        // console.log("current projectList", projectList);
         return projectList;
     }
 
