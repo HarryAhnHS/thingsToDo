@@ -17,9 +17,11 @@ import { isPast, isWithinInterval, formatDistance, formatDistanceToNow, format, 
 
 const UI = (() => {
 
-    function resetDisplay() {
+    function refresh() {
         displayProjects();
         displaySelectedProjectContent();
+        newTodo();
+        newProject();
     }
 
     function initDisplay() {        
@@ -63,6 +65,7 @@ const UI = (() => {
 
         const project = document.createElement('div');
         project.classList.add('project');
+        project.classList.add('new');
 
         const sharp = document.createElement('span');
         sharp.innerHTML = `#&nbsp;`;
@@ -316,7 +319,7 @@ const UI = (() => {
 
                     const button = document.createElement('button');
                     button.id = "new-todo";
-                    button.textContent = `New Todo`;
+                    button.textContent = `+ Add Todo`
 
                     head.appendChild(sharp);
                     head.appendChild(title);
@@ -389,7 +392,7 @@ const UI = (() => {
                     })
 
                     // Refresh projects and todos
-                    resetDisplay();
+                    refresh();
 
                     dialog.close();
                 }
@@ -407,8 +410,21 @@ const UI = (() => {
 
     // Add task - popup
     function newTodo() {
-        const head = document.querySelector(".main-head");
-        console.log(head.textContent)
+        const myProjects = document.querySelectorAll(".project.new");
+        const dialog = document.querySelector(".new-todo-dialog");
+
+        myProjects.forEach((project) => {
+            project.addEventListener('click', (e) => {
+                let projectName = e.target.textContent.slice(2).toUpperCase();
+                const newTodoBtn = document.querySelector("#new-todo"); 
+                newTodoBtn.addEventListener("click", (e) => {
+                    dialog.showModal();
+                    
+
+                    console.log(projectName);
+                });
+            });
+        })
 
     }
 
@@ -432,7 +448,7 @@ const UI = (() => {
 
         
     return {
-        resetDisplay,
+        refresh,
         initDisplay,
 
         displayProjects,

@@ -90,7 +90,5 @@ document.querySelector(".open-close").onclick = toggleSidebar;
 
 // localStorage.clear();
 UI.initDisplay();
-UI.resetDisplay();
-UI.newProject();
-UI.newTodo();
+UI.refresh();
 
