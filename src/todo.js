@@ -1,10 +1,11 @@
 // Todo Class
 export default class Todo {
-    constructor(title, desc, date, priority) {
+    constructor(title, desc, date, priority, project) {
         this.title = title;
         this.desc = desc;
         this.date = date;
         this.priority = priority;
+        this.project = project;
         this.done = false;
     }
 
@@ -47,4 +48,12 @@ export default class Todo {
     getDone() {
         return this.done;
     } 
+
+    setProject(projectName) {
+        this.project = projectName;
+    }
+
+    getProject() {
+        return this.project;
+    }
 };

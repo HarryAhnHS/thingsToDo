@@ -318,11 +318,11 @@ img {
     padding-left: 5px;
     padding-right: 5px;
 
-    margin-left: 15px;
+    margin-left: 10px;
 
     font-size: 10px;
 
-    border-radius: 15px;
+    border-radius: 5px;
 
     display: flex;
     align-items: center;
@@ -331,17 +331,17 @@ img {
 
 .priority.high {
     color: var(--high);
-    outline: 0.5px solid var(--high);
+    outline: 1px solid var(--high);
 }
 
 .priority.medium {
     color: var(--medium);
-    outline: 0.5px solid var(--medium);
+    outline: 1px solid var(--medium);
 }
 
 .priority.low {
     color: var(--low);
-    outline: 0.5px solid var(--low);
+    outline: 1px solid var(--low);
 }
 
 .desc {
@@ -355,13 +355,13 @@ img {
 }
 
 .date-time {
-    width: 120px;
+    width: 100px;
 
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 
-    margin-right: 15px;
+    margin: 5px;
 }
 
 .date {
@@ -373,11 +373,15 @@ img {
 }
 
 .edit-delete {
-    width: 50px;
+    width: 60px;
 
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.edit-svg, .delete-svg {
+    margin: 5px;
 }
 
 .edit-svg:hover, .edit-svg:focus {
@@ -550,7 +554,7 @@ dialog::backdrop {
     margin-bottom: 10px;
 }
 
-#todo-name, #todo-desc {
+#todo-title, #todo-desc {
     border:none;
     border-radius: 1px;
 

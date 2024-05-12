@@ -42,7 +42,7 @@ const UI = (() => {
             if (project.textContent == 'ALL') {
                 resetActive();
                 project.classList.add("active");
-                projectName.textContent = "ALL";
+                projectName.textContent = "All";
                 clearTodos();
                 Storage.getProjectList().updateAll();
                 displayTodos('ALL');
@@ -137,13 +137,13 @@ const UI = (() => {
         }
         else {
             Storage.getProjectList().getProject(projectName).getTodos().forEach((todo) => {
-                createTodo(todo.title, todo.priority, todo.desc, todo.date, todo.done);
+                createTodo(todo.title, todo.priority, todo.desc, todo.date, todo.done, todo.project);
             });
         }
 
     }
 
-    function createTodo(title, priority, desc, date, done) {
+    function createTodo(title, priority, desc, date, done, project) {
     
         const todo = document.createElement('div');
         todo.classList.add('todo');
@@ -164,9 +164,18 @@ const UI = (() => {
                     const priorityText = document.createElement('div');
                     priorityText.classList.add('priority');
                     priorityText.classList.add(priority.toLowerCase());
-                    priorityText.textContent = `${priority} Priority`;
+                    priorityText.textContent = `${priority.charAt(0).toUpperCase()+ priority.slice(1)} Priority`;
+                    
+                    // Add project name as tag
+                    const projectName = document.createElement('div');
+                    projectName.classList.add("priority");
+                    projectName.style['color'] = `#${Storage.getProjectList().getProject(project).getColor()}`;
+                    projectName.style['outline'] = `1px solid #${Storage.getProjectList().getProject(project).getColor()}`;
+                    projectName.textContent = `#${project}`;
 
                 title_tags.appendChild(titleText);
+
+                title_tags.appendChild(projectName);
                 title_tags.appendChild(priorityText);
 
                 const descText = document.createElement('div');
@@ -210,8 +219,8 @@ const UI = (() => {
             const edit_delete = document.createElement('div');
             edit_delete.classList.add('edit-delete');
             edit_delete.innerHTML += 
-            `<svg class = "edit-svg" opacity="0.8" width="15px" height="15px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
-            <svg class = "delete-svg" opacity="0.8" width="15px" height="15px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>`;
+            `<svg class = "edit-svg" opacity="0.8" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
+            <svg class = "delete-svg" opacity="0.8" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>`;
 
         todo.appendChild(check);
         todo.appendChild(title_desc);
@@ -260,7 +269,7 @@ const UI = (() => {
                     resetActive();
                     e.target.classList.add("active");
 
-                    head.textContent = "ALL";
+                    head.textContent = "All";
                     head.style.color = 'black'; 
 
                     clearTodos();
@@ -274,7 +283,7 @@ const UI = (() => {
                     resetActive();
                     e.target.classList.add("active");
 
-                    head.textContent = "TODAY";
+                    head.textContent = "Today";
                     head.style.color = 'black';
 
                     clearTodos();
@@ -288,7 +297,7 @@ const UI = (() => {
                     resetActive();
                     e.target.classList.add("active");
                     
-                    head.textContent = "THIS WEEK";
+                    head.textContent = "This Week";
                     head.style.color = 'black';
 
                     clearTodos();
@@ -302,7 +311,7 @@ const UI = (() => {
                     resetActive();
                     e.target.classList.add("active");
                     
-                    head.textContent = "DONE";
+                    head.textContent = "Done";
                     head.style.color = 'black';
 
                     clearTodos();
@@ -468,7 +477,7 @@ const UI = (() => {
                     const time = document.querySelector("#todo-time");
 
                     let today = new Date();
-                    let todayLater = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours(), today.getMinutes() + 30);
+                    let todayLater = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()+1);
 
                     date.value = format(today, "yyyy-MM-dd");
                     time.value = format(todayLater, "HH:mm");
@@ -510,7 +519,7 @@ const UI = (() => {
                             })
 
                             // Add to storage
-                            Storage.addTodo(projectName, new Todo(titleinput.value, descinput.value, dateString, priorityinput))
+                            Storage.addTodo(projectName, new Todo(titleinput.value, descinput.value, dateString, priorityinput, projectName));
 
                             dialog.close();
                             
