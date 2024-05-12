@@ -17,11 +17,20 @@ import { isPast, isWithinInterval, formatDistance, formatDistanceToNow, format, 
 
 const UI = (() => {
 
-    function refresh() {
+    function refreshCurrentProjects() {
         displayProjects();
         displaySelectedProjectContent();
         newTodo();
-        newProject();
+    }
+
+    function refreshCurrentTodos() {
+        const projects = document.querySelectorAll(".project");
+        projects.forEach((project) => {
+            if (project.classList.contains("active")) {
+                clearTodos();
+                displayTodos(project.textContent.slice(2).toUpperCase());
+            }
+        })
     }
 
     function initDisplay() {        
@@ -366,12 +375,16 @@ const UI = (() => {
             form.reset();
             dialog.showModal();
 
-            // Default color
+            // Unselected color
             colors.forEach((color) => {
                 color.classList.remove('selected');
                 color.style['outline'] = `1px solid rgba(51, 51, 51, 0.2)`;
             })
+
+            // Select default color to first choice
             document.getElementById('f94144').classList.add('selected');
+            document.getElementById('f94144').style['outline'] = '2px solid #f94144';
+            
 
             // Color choose
             colors.forEach((color) => {
@@ -402,7 +415,7 @@ const UI = (() => {
                     })
 
                     // Refresh projects and todos
-                    refresh();
+                    refreshCurrentProjects();
 
                     dialog.close();
                 }
@@ -422,17 +435,43 @@ const UI = (() => {
     function newTodo() {
         const myProjects = document.querySelectorAll(".project.new");
         const dialog = document.querySelector(".new-todo-dialog");
+        const form = document.querySelector(".new-todo-dialog-container");
 
         myProjects.forEach((project) => {
             project.addEventListener('click', (e) => {
                 let projectName = e.target.textContent.slice(2).toUpperCase();
                 const newTodoBtn = document.querySelector("#new-todo"); 
                 newTodoBtn.addEventListener("click", (e) => {
-                    const priorities = document.querySelectorAll(".priority-radio");
-                    const project = document.querySelector(".new-todo-dialog-project");
+                    e.preventDefault();
+                    form.reset();
 
-                    // Project 
+                    const priorities = document.querySelectorAll(".priority-radio");
                     
+                    // Priority reset to low
+                    priorities.forEach((priority) => {
+                        priority.classList.remove('selected');
+                    });
+                    document.querySelector("#low").classList.add('selected');
+
+                    // Project - name
+                    const intro = document.querySelector('.intro');
+                    intro.style['font-weight'] = "300";
+                    intro.style['font-style'] = "italic";
+
+                    const sharp = document.querySelector('.sharp-name');
+                    sharp.innerHTML = `#&nbsp${projectName}`;
+                    sharp.style.color = `#${Storage.getProjectList().getProject(projectName).getColor()}`;
+                    sharp.style['font-weight'] = "600";
+
+                    // Set due date and time to current
+                    const date = document.querySelector("#todo-date");
+                    const time = document.querySelector("#todo-time");
+
+                    let today = new Date();
+                    let todayLater = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours(), today.getMinutes() + 30);
+
+                    date.value = format(today, "yyyy-MM-dd");
+                    time.value = format(todayLater, "HH:mm");
 
                     // Priority choose
                     priorities.forEach((priority) => {
@@ -445,9 +484,49 @@ const UI = (() => {
                     });
 
                     dialog.showModal();
-                    
 
-                    console.log(projectName);
+                    const titleinput = document.querySelector("#todo-title");
+                    const descinput = document.querySelector("#todo-desc");
+                    const dateinput = document.querySelector("#todo-date");
+                    const timeinput = document.querySelector("#todo-time");
+
+                    const add = document.querySelector("#new-todo-submit");
+                    const cancel = document.querySelector("#new-todo-cancel");
+
+                    add.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (titleinput.value != "" && !Storage.getProjectList().getProject(projectName).todoExists(titleinput.value)) {
+                            // If unique title - able to add
+
+                            // convert date, time inputs into Date object
+                            let dateString =  `${dateinput.value}T${timeinput.value}`;
+                                       
+                            // Find current selected priority
+                            let priorityinput = "low";
+                            priorities.forEach((priority) => {
+                                if (priority.classList.contains('selected')) {
+                                    priorityinput = priority.id;
+                                }
+                            })
+
+                            // Add to storage
+                            Storage.addTodo(projectName, new Todo(titleinput.value, descinput.value, dateString, priorityinput))
+
+                            dialog.close();
+                            
+
+                            // refresh current page's todos
+                            refreshCurrentTodos();
+                        }
+                        else {
+                            console.log("Invalid name");
+                        }
+                    });
+        
+                    cancel.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        dialog.close();
+                    });
                 });
             });
         })
@@ -474,7 +553,8 @@ const UI = (() => {
 
         
     return {
-        refresh,
+        refreshCurrentProjects,
+        refreshCurrentTodos,
         initDisplay,
 
         displayProjects,

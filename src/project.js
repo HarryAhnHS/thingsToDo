@@ -37,12 +37,16 @@ export default class Project {
         return this.todos.find((todo) => todo.title == todoTitle);
     }
 
+    todoExists(todoTitle) {
+        return this.todos.some((todo) => todo.title == todoTitle);
+    }
+
     /**
      * 
      * @param {Todo} newTodo - instance of Todo object to be added
      */
     addTodo(newTodo) {
-        if (!this.todos.some((todo) => todo.title.toUpperCase() == newTodo.getTitle().toUpperCase())) {
+        if (!this.todos.some((todo) => todo.title == newTodo.getTitle())) {
             this.todos.push(newTodo);
         }
     }
