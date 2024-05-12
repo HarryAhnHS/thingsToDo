@@ -25,6 +25,10 @@ export default class Todo {
         return this.desc;
     }
 
+    emptyDesc() {
+        this.desc = "";
+    }
+
     setDate(date) {
         this.date = date;
     }

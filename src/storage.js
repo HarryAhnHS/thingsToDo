@@ -105,8 +105,13 @@ const Storage = (() => {
 
     function changeDescTodo(projectName, todoTitle, newDesc) {
         let projectList = getProjectList();
-        
-        projectList.getProject(projectName).getTodo(todoTitle).setDesc(newDesc);
+
+        if (newDesc == "") {
+            projectList.getProject(projectName).getTodo(todoTitle).emptyDesc();
+        }
+        else {
+            projectList.getProject(projectName).getTodo(todoTitle).setDesc(newDesc);
+        }
 
         saveProjectList(projectList);
     }

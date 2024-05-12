@@ -243,6 +243,11 @@ const UI = (() => {
         // Append new div into todolist
         const todoList = document.querySelector('.todo-list');
         todoList.appendChild(todo);
+
+        // Edit delete task configuration
+        const editsvg = document.querySelector(".edit-svg");
+        const deletesvg = document.querySelector(".delete-svg");
+        editDelTodo(editsvg, deletesvg, title, project);
     }
 
     function clearTodos() {
@@ -473,14 +478,14 @@ const UI = (() => {
                     sharp.style['font-weight'] = "600";
 
                     // Set due date and time to current
-                    const date = document.querySelector("#todo-date");
-                    const time = document.querySelector("#todo-time");
+                    const dateinput = document.querySelector("#todo-date");
+                    const timeinput = document.querySelector("#todo-time");
 
                     let today = new Date();
                     let todayLater = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()+1);
 
-                    date.value = format(today, "yyyy-MM-dd");
-                    time.value = format(todayLater, "HH:mm");
+                    dateinput.value = format(today, "yyyy-MM-dd");
+                    timeinput.value = format(todayLater, "HH:mm");
 
                     // Priority choose
                     priorities.forEach((priority) => {
@@ -496,10 +501,9 @@ const UI = (() => {
 
                     const titleinput = document.querySelector("#todo-title");
                     const descinput = document.querySelector("#todo-desc");
-                    const dateinput = document.querySelector("#todo-date");
-                    const timeinput = document.querySelector("#todo-time");
 
                     const add = document.querySelector("#new-todo-submit");
+                    add.textContent = "Add";
                     const cancel = document.querySelector("#new-todo-cancel");
 
                     add.addEventListener('click', (e) => {
@@ -519,7 +523,7 @@ const UI = (() => {
                             })
 
                             // Add to storage
-                            Storage.addTodo(projectName, new Todo(titleinput.value, descinput.value, dateString, priorityinput, projectName));
+                            Storage.addTodo(projectName, new Todo(titleinput.value, descinput.value, new Date(dateString), priorityinput, projectName));
 
                             dialog.close();
                             
@@ -544,13 +548,100 @@ const UI = (() => {
 
 
     // Edit task - popup
-    function editTask() {
+    function editDelTodo(editsvg, deletesvg, todoTitle, todoProject) {
+        const dialog = document.querySelector(".new-todo-dialog");
+        const form = document.querySelector(".new-todo-dialog-container");
 
-    }
+        editsvg.addEventListener("click", (e) => {
+            e.preventDefault();
+            form.reset();
 
-    // Delete task 
-    function deleteTask() {
+            const priorities = document.querySelectorAll(".priority-radio");
+            
+            // Priority automatically set to its pre-set state
+            priorities.forEach((priority) => {
+                priority.classList.remove('selected');
+            });
+            document.getElementById(Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getPriority()).classList.add('selected');
 
+            // Project - name
+            const intro = document.querySelector('.intro');
+            intro.style['font-weight'] = "300";
+            intro.style['font-style'] = "italic";
+
+            const sharp = document.querySelector('.sharp-name');
+            sharp.innerHTML = `#&nbsp${todoProject}`;
+            sharp.style.color = `#${Storage.getProjectList().getProject(todoProject).getColor()}`;
+            sharp.style['font-weight'] = "600";
+
+            // Set title to current
+            const titleinput = document.querySelector("#todo-title");
+            titleinput.value = Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getTitle();
+
+            // Set desc to current
+            const descinput = document.querySelector("#todo-desc");
+            descinput.value = Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDesc();
+
+            // Set due date and time to current
+            const dateinput = document.querySelector("#todo-date");
+            const timeinput = document.querySelector("#todo-time");
+
+            dateinput.value = format(Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDate(), "yyyy-MM-dd");
+            timeinput.value = format(Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDate(), "HH:mm");
+
+            dialog.showModal();
+
+            // Priority choose
+            priorities.forEach((priority) => {
+                priority.addEventListener('click', (e) => {
+                    priorities.forEach((priority)=> {
+                        priority.classList.remove('selected');
+                    })
+                    priority.classList.add('selected');
+                })
+            });
+
+            // Edit submit/cancel
+            const edit = document.querySelector("#new-todo-submit");
+            edit.textContent = "Edit";
+
+            const cancel = document.querySelector("#new-todo-cancel");
+
+            edit.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (titleinput.value != "" && !Storage.getProjectList().getProject(todoProject).todoExists(titleinput.value)) {
+                    // If unique edited title - able to add
+                    // convert date, time inputs into Date object
+                    let dateString =  `${dateinput.value}T${timeinput.value}`;
+                               
+                    // Find current selected priority
+                    let priorityinput;
+                    priorities.forEach((priority) => {
+                        if (priority.classList.contains('selected')) {
+                            priorityinput = priority.id;
+                        }
+                    })
+
+                    // Edit storage
+                    Storage.renameTodo(todoProject, todoTitle, titleinput.value);
+                    Storage.changeDescTodo(todoProject, todoTitle, descinput.value);
+                    Storage.changeDateTodo(todoProject, todoTitle, new Date(dateString));
+                    Storage.changePriorityTodo(todoProject, todoTitle, priorityinput);
+
+                    dialog.close();
+                    // refresh current page's todos
+                    refreshCurrentTodos();
+                }
+                else {
+                    console.log("Invalid name / Already exists");
+                }
+            });
+
+            cancel.addEventListener('click', (e) => {
+                e.preventDefault();
+                dialog.close();
+            });
+        })
     }
 
     // Toggle task as done - visual check + move to "Done" project
@@ -558,7 +649,6 @@ const UI = (() => {
         
     }
 
-    // If empty todo
 
         
     return {
