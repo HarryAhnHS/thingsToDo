@@ -39,7 +39,7 @@ function toggleSidebar() {
     }
     // Opening
     else {
-        body.style['grid-template-columns'] = "1fr 4fr";
+        body.style['grid-template-columns'] = "200px auto";
 
         header.style['grid-area'] = "1/2/2/3";
         main.style['grid-area'] = "2/2/3/3";

@@ -15,7 +15,7 @@ body {
     margin: 0;
 
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 200px auto;
     grid-template-rows: 80px calc(100vh - 80px) 100px;
 
     font-family: 'Urbanist', sans-serif;
@@ -351,6 +351,7 @@ img {
     text-overflow: ellipsis;
 
     font-weight: 300;
+
 }
 
 .date-time {
@@ -430,11 +431,14 @@ dialog::backdrop {
 
     height: 30px;
 
-    border-radius: 5px;
+    border-radius: 1px;
     border: none;
 
     background-color:rgba(51, 51, 51, 0.05);
     outline: 1px solid rgba(51, 51, 51, 0.2);
+
+    font-family: 'Urbanist', sans-serif;
+    font-size: 16px;
 }
 
 .project-color {
@@ -470,9 +474,9 @@ dialog::backdrop {
     cursor: pointer;
 }
 
-.color.selected {
+/* .color.selected {
     outline: 2px solid rgba(51, 51, 51, 1);
-}
+} */
 
 #new-project-cancel,
 #new-project-submit,
@@ -500,17 +504,141 @@ dialog::backdrop {
 /* New/Edit Todo Modal */
 .new-todo-dialog {
     width: 400px;
-    height: 40vh;
+    height: 60vh;
 
     border-radius: 5px;
     border: none;
 }
 
 .new-todo-dialog-container {
-    height: 40vh;
+    height: 60vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.new-todo-dialog-project {
+    height: 40px;
+
+    display: flex;
+    
+    width: 320px;
+    
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.new-todo-dialog-inputs {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 320px;
+}
+
+.new-todo-dialog-inputs > div {
+    padding-bottom: 15px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+#todo-name, #todo-desc {
+    border:none;
+    border-radius: 1px;
+
+    background-color:rgba(51, 51, 51, 0.05);
+    outline: 1px solid rgba(51, 51, 51, 0.2);
+
+    height: 30px;
+
+    font-family: 'Urbanist', sans-serif;
+    font-size: 16px;
+}
+
+.datetime-input > div {
+    display: flex;
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+#todo-date {
+    border:none;
+    border-radius: 1px;
+
+    background-color:rgba(51, 51, 51, 0.05);
+    outline: 1px solid rgba(51, 51, 51, 0.2);
+    
+    width: 45%;
+
+    height: 30px;
+
+    font-size: 16px;
+}
+
+#todo-time {
+    border:none;
+    border-radius: 1px;
+
+    background-color:rgba(51, 51, 51, 0.05);
+    outline: 1px solid rgba(51, 51, 51, 0.2);
+
+    width: 45%;
+
+    height: 30px;
+}
+
+.priorities {
+    margin-top: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.priority-radio {
+    background-color:rgba(51, 51, 51, 0.05);
+    outline: 1px solid rgba(51, 51, 51, 0.2);
+
+    width: 80px;
+    height: 30px;
+
+    border-radius: 1px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 5px;
+}
+
+.priority-radio:focus, .priority-radio:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+#high.selected {
+    color: rgba(157, 2, 8);
+    outline: 1px solid rgba(157, 2, 8, 0.8);
+    background-color: rgba(157, 2, 8, 0.1);
+}
+
+#medium.selected {
+    color: rgba(232, 93, 4);
+    outline: 1px solid rgba(232, 93, 4, 0.8);
+    background-color: rgba(232, 93, 4, 0.1);
+}
+
+#low.selected {
+    color: rgba(255, 186, 8);
+    outline: 1px solid rgba(255, 186, 8, 0.8);
+    background-color: rgba(255, 186, 8, 0.1);
 }
 
 

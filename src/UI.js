@@ -99,7 +99,7 @@ const UI = (() => {
 
                 const text = document.createElement("div");
                 text.classList.add("empty-text");
-                text.textContent = "Nothing done!"
+                text.textContent = "Nothing Done!"
                 
                 emptySaver.appendChild(emoji);
                 emptySaver.appendChild(text);  
@@ -118,7 +118,7 @@ const UI = (() => {
 
                 const text = document.createElement("div");
                 text.classList.add("empty-text");
-                text.textContent = "Everything done!"
+                text.textContent = "No Todos!"
                 
                 emptySaver.appendChild(emoji);
                 emptySaver.appendChild(text);  
@@ -307,6 +307,11 @@ const UI = (() => {
                     resetActive();
                     e.target.classList.add("active");
 
+                    const intro = document.createElement('div');
+                    intro.innerHTML = "Project&nbsp";
+                    intro.style['font-style'] = "italic";
+                    intro.style['font-weight'] = "100";
+
                     const sharp = document.createElement('span');
                     sharp.innerHTML = "#&nbsp";
 
@@ -314,6 +319,7 @@ const UI = (() => {
                     title.classList.add("head-title");
 
                     sharp.style.color = `#${Storage.getProjectList().getProject(e.currentTarget.textContent.slice(2)).getColor()}`;
+                    title.style.color = `#${Storage.getProjectList().getProject(e.currentTarget.textContent.slice(2)).getColor()}`;
                     
                     title.textContent = e.target.textContent.slice(2).toUpperCase();
 
@@ -321,6 +327,7 @@ const UI = (() => {
                     button.id = "new-todo";
                     button.textContent = `+ Add Todo`
 
+                    head.appendChild(intro);
                     head.appendChild(sharp);
                     head.appendChild(title);
                     head.appendChild(button);
@@ -362,6 +369,7 @@ const UI = (() => {
             // Default color
             colors.forEach((color) => {
                 color.classList.remove('selected');
+                color.style['outline'] = `1px solid rgba(51, 51, 51, 0.2)`;
             })
             document.getElementById('f94144').classList.add('selected');
 
@@ -370,8 +378,10 @@ const UI = (() => {
                 color.addEventListener('click', (e) => {
                     colors.forEach((color)=> {
                         color.classList.remove('selected');
+                        color.style['outline'] = `1px solid rgba(51, 51, 51, 0.2)`;
                     })
                     color.classList.add('selected');
+                    color.style['outline'] = `2px solid #${color.id}`;
                 })
             })
 
@@ -418,6 +428,22 @@ const UI = (() => {
                 let projectName = e.target.textContent.slice(2).toUpperCase();
                 const newTodoBtn = document.querySelector("#new-todo"); 
                 newTodoBtn.addEventListener("click", (e) => {
+                    const priorities = document.querySelectorAll(".priority-radio");
+                    const project = document.querySelector(".new-todo-dialog-project");
+
+                    // Project 
+                    
+
+                    // Priority choose
+                    priorities.forEach((priority) => {
+                        priority.addEventListener('click', (e) => {
+                            priorities.forEach((priority)=> {
+                                priority.classList.remove('selected');
+                            })
+                            priority.classList.add('selected');
+                        })
+                    });
+
                     dialog.showModal();
                     
 

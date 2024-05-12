@@ -28,7 +28,6 @@
                         <div class="color" id="577590"></div>
                         <div class="color" id="277da1"></div> 
                     </div>
-                      
                 </div>
 
             </div>
@@ -45,9 +44,43 @@
     <dialog class="new-todo-dialog">
         <form name="new-todo-form" class="new-todo-dialog-container">
             <div class="new-todo-dialog-title">Create New Todo</div>
+            <div class="new-todo-dialog-project"># MARU</div>
+
             <div class="new-todo-dialog-inputs">
-                <label for="todo-title">Title</label>
-                <input id="todo-name" type="text" placeholder="Choose a name">
+                <div class="title-input">
+                    <label for="todo-title">Title</label>
+                    <input id="todo-name" type="text" placeholder="Choose a title">
+                </div>
+                
+            
+                <div class="desc-input">
+                    <label for="todo-desc">Description</label>
+                    <input id="todo-desc" type="text" placeholder="Add a description">
+                </div>
+                
+                
+                <div class="datetime-input">
+                    <label for="todo-date">Due Date</label>
+                    <div>
+                        <input id="todo-date" type="date">
+                        <input id="todo-time" type="time">
+                    </div>
+                </div>
+                
+                <div class="priority-input">
+                    <span>Choose a priority:</span>
+                    <div class="priorities">
+                        <div class="priority-radio selected" id="low">
+                            Low
+                        </div>
+                        <div class="priority-radio" id="medium">
+                            Medium
+                        </div>
+                        <div class="priority-radio" id="high">
+                            High
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="new-todo-dialog-buttons">
