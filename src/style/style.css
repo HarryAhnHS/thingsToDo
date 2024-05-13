@@ -178,6 +178,7 @@ img {
 #new-todo {
     width: 120px;
     height: 40px;
+    margin-right: 15px;
 }
 
 #new-todo {
@@ -194,7 +195,6 @@ img {
   font-weight: 500;
   justify-content: center;
   line-height: 1.25;
-  margin: 0;
   position: relative;
   text-decoration: none;
   transition: all 250ms;
@@ -382,25 +382,23 @@ img {
     justify-content: center;
 }
 
-.edit-svg, .delete-svg {
+.edit-svg, .delete-svg, .delete-project-svg, .edit-project-svg {
     margin: 5px;
 }
 
-.edit-svg:hover, .edit-svg:focus {
-    opacity: 0.5;
-    cursor: pointer;
-}
-
-
-.delete-svg:hover, .delete-svg:focus {
+.edit-svg:hover, .edit-svg:focus, 
+.delete-svg:hover, .delete-svg:focus, 
+.delete-project-svg:hover, .delete-project-svg:focus,
+.edit-project-svg:hover, .edit-project-svg:focus  {
     opacity: 0.5;
     cursor: pointer;
 }
 
 /* Pointer event none for svg - only div */
-.edit-svg > svg, .delete-svg > svg {
+.edit-svg > svg, .delete-svg > svg, .delete-project-svg > svg, .edit-project-svg > svg {
     pointer-events: none;
 }
+
 
 
 /* Popups - new project, new task, edit task, view task  */

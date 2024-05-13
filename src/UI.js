@@ -344,43 +344,7 @@ const UI = (() => {
             }
             else {
                 project.onclick = function switchProject(e) {
-                    head.innerHTML = ""; // Reset head
-                    resetActive();
-                    e.target.classList.add("active");
-
-                    const intro = document.createElement('div');
-                    intro.innerHTML = "Project&nbsp";
-                    intro.style['font-style'] = "italic";
-                    intro.style['font-weight'] = "100";
-
-                    const sharp = document.createElement('span');
-                    sharp.innerHTML = "#&nbsp";
-
-                    const title = document.createElement('div');
-                    title.classList.add("head-title");
-
-                    sharp.style.color = `#${Storage.getProjectList().getProject(e.currentTarget.textContent.slice(2).toUpperCase()).getColor()}`;
-                    title.style.color = `#${Storage.getProjectList().getProject(e.currentTarget.textContent.slice(2).toUpperCase()).getColor()}`;
-
-                    title.textContent = e.target.textContent.slice(2).toUpperCase();
-
-                    const button = document.createElement('button');
-                    button.id = "new-todo";
-                    button.textContent = `+ Add Todo`
-
-                    const todoProject = e.currentTarget.textContent.slice(2).toUpperCase();
-                    // New Todo Button Config
-                    button.onclick = (e) => {
-                        newTodo(todoProject);
-                    };
-
-                    head.appendChild(intro);
-                    head.appendChild(sharp);
-                    head.appendChild(title);
-                    head.appendChild(button);
-
-                    clearTodos();
-                    displayTodos(e.target.textContent.slice(2).toUpperCase());
+                    setActiveAndOpenProject(e.target.textContent.slice(2).toUpperCase());
                 };
             }
         })
@@ -415,20 +379,43 @@ const UI = (() => {
 
         title.textContent = projectName.toUpperCase();
 
-        const button = document.createElement('button');
-        button.id = "new-todo";
-        button.textContent = `+ Add Todo`
-
-        const todoProject = projectName.toUpperCase();
         // New Todo Button Config
-        button.onclick = () => {
-            newTodo(todoProject);
+        const newTodoButton = document.createElement('button');
+        newTodoButton.id = "new-todo";
+        newTodoButton.textContent = `+ Add Todo`;
+
+        newTodoButton.onclick = () => {
+            newTodo(projectName.toUpperCase());
         };
+
+         // Edit Project Button Config
+         const editProjectButton = document.createElement('div');
+         editProjectButton.classList.add("edit-project-svg");
+         editProjectButton.innerHTML = `<svg opacity="0.8" width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>`;
+ 
+         editProjectButton.onclick = () => {
+            editProject(projectName.toUpperCase());
+         };
+
+        // Delete Project Button Config
+        const deleteProjectButton = document.createElement('div');
+        deleteProjectButton.classList.add("delete-project-svg");
+        deleteProjectButton.innerHTML = `<svg opacity="0.8" width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>`;
+
+        deleteProjectButton.onclick = () => {
+            deleteProject(projectName.toUpperCase());
+        };
+
+
+
 
         head.appendChild(intro);
         head.appendChild(sharp);
         head.appendChild(title);
-        head.appendChild(button);
+        head.appendChild(newTodoButton);
+        head.appendChild(editProjectButton);
+        head.appendChild(deleteProjectButton);
+
 
         clearTodos();
         displayTodos(projectName.toUpperCase());
@@ -721,6 +708,17 @@ const UI = (() => {
         refreshCurrentTodos();
     }
 
+    function editProject(projectName) {
+
+    }
+
+    function deleteProject(projectName) {
+        Storage.deleteProject(projectName); 
+        
+        refreshCurrentProjects(); // Refresh project sidebar + onclick events
+        initDisplay(); // initialize display and active to 'All'
+    }
+
     // Toggle task as done - visual check + add to "Done" project
     function toggleDone() {
 
@@ -747,7 +745,11 @@ const UI = (() => {
 
         newProject,
         newTodo,
-        editTodo
+        editTodo,
+        deleteTodo,
+
+        editProject,
+        deleteProject
     }
 })();
 
