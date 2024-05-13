@@ -97,6 +97,8 @@ const Storage = (() => {
 
     function renameTodo(projectName, todoTitle, newTitle) {
         let projectList = getProjectList();
+
+        console.log("Renaming todo in Project:" + projectName + " | Todo:" + todoTitle + " | to newTitle: " + newTitle);
         
         projectList.getProject(projectName).getTodo(todoTitle).setTitle(newTitle);
 
@@ -105,6 +107,8 @@ const Storage = (() => {
 
     function changeDescTodo(projectName, todoTitle, newDesc) {
         let projectList = getProjectList();
+
+        console.log("changing desc todo in Project:" + projectName + " | Todo:" + todoTitle + " | to NewDesc: " + newDesc);
 
         if (newDesc == "") {
             projectList.getProject(projectName).getTodo(todoTitle).emptyDesc();

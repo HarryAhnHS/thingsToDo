@@ -28,7 +28,9 @@ const UI = (() => {
         projects.forEach((project) => {
             if (project.classList.contains("active")) {
                 clearTodos();
-                displayTodos(project.textContent.slice(2).toUpperCase());
+
+                if (project.classList.contains("new")) displayTodos(project.textContent.slice(2).toUpperCase());
+                else displayTodos(project.textContent);
             }
         })
     }
@@ -462,6 +464,7 @@ const UI = (() => {
     // Add task - popup
     function newTodo() {
         const myProjects = document.querySelectorAll(".project.new");
+        const allProjects = document.querySelectorAll(".project");
         const dialog = document.querySelector(".new-todo-dialog");
         const form = document.querySelector(".new-todo-dialog-container");
 
@@ -488,6 +491,9 @@ const UI = (() => {
                         priority.classList.remove('selected');
                     });
                     document.querySelector("#low").classList.add('selected');
+
+                    const title = document.querySelector('.new-todo-dialog-title')
+                    title.textContent = "Create New Todo";
         
                     // Project - name
                     const intro = document.querySelector('.intro');
@@ -599,6 +605,9 @@ const UI = (() => {
         document.getElementById(Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getPriority()).classList.add('selected');
 
         // Project - name
+        const title = document.querySelector('.new-todo-dialog-title')
+        title.textContent = "Edit Todo";
+
         const intro = document.querySelector('.intro');
         intro.style['font-weight'] = "300";
         intro.style['font-style'] = "italic";
@@ -643,7 +652,8 @@ const UI = (() => {
 
         edit.addEventListener('click', function editing(e) {
             e.preventDefault();
-            if (titleinput.value != "") {
+            if (titleinput.value != "" && // If title input is not empty & (either no change or new title doesn't already exist in the project) 
+            (todoTitle == titleinput.value || !Storage.getProjectList().getProject(todoProject).todoExists(titleinput.value))) {
                 // If unique edited title - able to add
                 // convert date, time inputs into Date object
                 let dateString =  `${dateinput.value}T${timeinput.value}`;
@@ -660,13 +670,13 @@ const UI = (() => {
                 Storage.changeDescTodo(todoProject, todoTitle, descinput.value);
                 Storage.changeDateTodo(todoProject, todoTitle, new Date(dateString));
                 Storage.changePriorityTodo(todoProject, todoTitle, priorityinput);
-
                 Storage.renameTodo(todoProject, todoTitle, titleinput.value); 
 
                 dialog.close();
                 edit.removeEventListener('click', editing);
+                
                 // refresh current page's todos
-                refreshTodosFor(todoProject);
+                refreshCurrentTodos();
             }
             else {
                 console.log("Invalid name / Already exists");
