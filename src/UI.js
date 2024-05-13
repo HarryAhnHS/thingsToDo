@@ -464,7 +464,6 @@ const UI = (() => {
     // Add task - popup
     function newTodo() {
         const myProjects = document.querySelectorAll(".project.new");
-        const allProjects = document.querySelectorAll(".project");
         const dialog = document.querySelector(".new-todo-dialog");
         const form = document.querySelector(".new-todo-dialog-container");
 
@@ -478,7 +477,7 @@ const UI = (() => {
                 newTodoBtn = document.querySelector("#new-todo"); 
 
                 // NEW TODO BUTTON IS ADDING EVENT LISTENER FOR EACH CLICK IN PROJECT, NEED TO DELETE WHEN NEW PROJECT CLICKED
-                newTodoBtn.addEventListener("click", function newTodoPopup(e) {
+                newTodoBtn.onclick = function newTodoPopup(e) {
                     e.preventDefault();
                     form.reset();
 
@@ -534,12 +533,12 @@ const UI = (() => {
                     add.textContent = "Add";
                     const cancel = document.querySelector("#new-todo-cancel");
         
-                    add.addEventListener('click', function adding(e) {
+                    add.onclick = function adding(e) {
                         console.log("Clicked add");
                         e.preventDefault();
                         if (titleinput.value != "" && !Storage.getProjectList().getProject(projectName).todoExists(titleinput.value)) {
                             // If unique title - able to add
-        
+    
                             // convert date, time inputs into Date object
                             let dateString =  `${dateinput.value}T${timeinput.value}`;
                                         
@@ -554,8 +553,6 @@ const UI = (() => {
                             // Add to storage
                             Storage.addTodo(projectName, new Todo(titleinput.value, descinput.value, new Date(dateString), priorityinput, projectName));
                             dialog.close();
-
-                            add.removeEventListener('click',adding);
         
                             // refresh current page's todos
                             refreshCurrentTodos();
@@ -563,26 +560,13 @@ const UI = (() => {
                         else {
                             console.log("Invalid name");
                         }
-                    });
+                    };
         
-                    cancel.addEventListener('click', function cancelling(e) {
+                    cancel.onclick = function cancelling(e) {
                         e.preventDefault();
                         dialog.close();
-
-                        cancel.removeEventListener('click',cancelling);
-                    });
-
-
-                    // If new project clicked, then need to delete original new todo button event listener  
-                    // Ready for new iteration of click 
-                    myProjects.forEach((project) => {
-                        project.addEventListener('click', function deleteEvent(e) {
-                            newTodoBtn.removeEventListener('click', newTodoPopup);
-                            // Then clicking delete event listeners
-                            myProjects.forEach((project) => project.removeEventListener('click',deleteEvent));
-                        });
-                    });
-                });   
+                    };
+                };   
             });
         })
     }
@@ -650,7 +634,7 @@ const UI = (() => {
 
         const cancel = document.querySelector("#new-todo-cancel");
 
-        edit.addEventListener('click', function editing(e) {
+        edit.onclick =  function editing(e) {
             e.preventDefault();
             if (titleinput.value != "" && // If title input is not empty & (either no change or new title doesn't already exist in the project) 
             (todoTitle == titleinput.value || !Storage.getProjectList().getProject(todoProject).todoExists(titleinput.value))) {
@@ -673,7 +657,6 @@ const UI = (() => {
                 Storage.renameTodo(todoProject, todoTitle, titleinput.value); 
 
                 dialog.close();
-                edit.removeEventListener('click', editing);
                 
                 // refresh current page's todos
                 refreshCurrentTodos();
@@ -681,14 +664,14 @@ const UI = (() => {
             else {
                 console.log("Invalid name / Already exists");
             }
-        });
+        };
 
-        cancel.addEventListener('click', function cancelling(e) {
+        cancel.onclick = function cancelling(e) {
             e.preventDefault();
             dialog.close();
+        };
 
-            cancel.removeEventListener('click', cancelling);
-        });
+        
     };
 
     // Toggle task as done - visual check + move to "Done" project
