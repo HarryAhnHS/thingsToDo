@@ -33,6 +33,11 @@ const UI = (() => {
         })
     }
 
+    function refreshTodosFor(projectName) {
+        clearTodos();
+        displayTodos(projectName);
+    }
+
     function initDisplay() {        
         const projectDivs = document.querySelectorAll('.project');
         const projectName = document.querySelector('.main-head');
@@ -150,7 +155,7 @@ const UI = (() => {
             const check = document.createElement('input');
             check.setAttribute('type','checkbox');
             check.setAttribute('class','checkbox');
-            check.setAttribute('id','0_0'); // TODO
+            // check.setAttribute('id','0_0'); // TODO
             check.classList.add(`${priority.toLowerCase()}`);
 
             const title_desc = document.createElement('div');
@@ -217,9 +222,24 @@ const UI = (() => {
 
             const edit_delete = document.createElement('div');
             edit_delete.classList.add('edit-delete');
-            edit_delete.innerHTML += 
-            `<svg class = "edit-svg" opacity="0.8" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
-            <svg class = "delete-svg" opacity="0.8" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>`;
+
+                const edit_svg = document.createElement('div');
+                edit_svg.classList.add('edit-svg');
+                edit_svg.innerHTML = `<svg opacity="0.8" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>`
+                // Edit delete task configuration
+                edit_svg.onclick = (e) => {
+                    console.log(e.target, title, project)
+                    editTodo(title, project);
+                }
+
+                const delete_svg = document.createElement('div');
+                delete_svg.classList.add('delete-svg');
+                delete_svg.innerHTML = `<svg opacity="0.8" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>`;
+                // Edit delete task configuration
+                // delete_svg.onclick = deleteTodo(title, project);
+            
+                edit_delete.appendChild(edit_svg);
+                edit_delete.appendChild(delete_svg);
 
         todo.appendChild(check);
         todo.appendChild(title_desc);
@@ -242,11 +262,6 @@ const UI = (() => {
         // Append new div into todolist
         const todoList = document.querySelector('.todo-list');
         todoList.appendChild(todo);
-
-        // Edit delete task configuration
-        const editsvg = document.querySelector(".edit-svg");
-        const deletesvg = document.querySelector(".delete-svg");
-        editDelTodo(editsvg, deletesvg, title, project);
     }
 
     function clearTodos() {
@@ -450,7 +465,6 @@ const UI = (() => {
         const dialog = document.querySelector(".new-todo-dialog");
         const form = document.querySelector(".new-todo-dialog-container");
 
-
         var projectName;
         var newTodoBtn;
 
@@ -569,101 +583,103 @@ const UI = (() => {
 
 
     // Edit task - popup
-    function editDelTodo(editsvg, deletesvg, todoTitle, todoProject) {
+    function editTodo(todoTitle, todoProject) {
+        console.log("edit tab opened", todoTitle, todoProject);
         const dialog = document.querySelector(".new-todo-dialog");
         const form = document.querySelector(".new-todo-dialog-container");
 
-        editsvg.addEventListener("click", (e) => {
-            e.preventDefault();
-            form.reset();
+        form.reset();
 
-            const priorities = document.querySelectorAll(".priority-radio");
-            
-            // Priority automatically set to its pre-set state
-            priorities.forEach((priority) => {
-                priority.classList.remove('selected');
-            });
-            document.getElementById(Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getPriority()).classList.add('selected');
+        const priorities = document.querySelectorAll(".priority-radio");
+        
+        // Priority automatically set to its pre-set state
+        priorities.forEach((priority) => {
+            priority.classList.remove('selected');
+        });
+        document.getElementById(Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getPriority()).classList.add('selected');
 
-            // Project - name
-            const intro = document.querySelector('.intro');
-            intro.style['font-weight'] = "300";
-            intro.style['font-style'] = "italic";
+        // Project - name
+        const intro = document.querySelector('.intro');
+        intro.style['font-weight'] = "300";
+        intro.style['font-style'] = "italic";
 
-            const sharp = document.querySelector('.sharp-name');
-            sharp.innerHTML = `#&nbsp${todoProject}`;
-            sharp.style.color = `#${Storage.getProjectList().getProject(todoProject).getColor()}`;
-            sharp.style['font-weight'] = "600";
+        const sharp = document.querySelector('.sharp-name');
+        sharp.innerHTML = `#&nbsp${todoProject}`;
+        sharp.style.color = `#${Storage.getProjectList().getProject(todoProject).getColor()}`;
+        sharp.style['font-weight'] = "600";
 
-            // Set title to current
-            const titleinput = document.querySelector("#todo-title");
-            titleinput.value = Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getTitle();
+        // Set title to current
+        const titleinput = document.querySelector("#todo-title");
+        titleinput.value = Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getTitle();
 
-            // Set desc to current
-            const descinput = document.querySelector("#todo-desc");
-            descinput.value = Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDesc();
+        // Set desc to current
+        const descinput = document.querySelector("#todo-desc");
+        descinput.value = Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDesc();
 
-            // Set due date and time to current
-            const dateinput = document.querySelector("#todo-date");
-            const timeinput = document.querySelector("#todo-time");
+        // Set due date and time to current
+        const dateinput = document.querySelector("#todo-date");
+        const timeinput = document.querySelector("#todo-time");
 
-            dateinput.value = format(Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDate(), "yyyy-MM-dd");
-            timeinput.value = format(Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDate(), "HH:mm");
+        dateinput.value = format(Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDate(), "yyyy-MM-dd");
+        timeinput.value = format(Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDate(), "HH:mm");
 
-            dialog.showModal();
+        dialog.showModal();
 
-            // Priority choose
-            priorities.forEach((priority) => {
-                priority.addEventListener('click', (e) => {
-                    priorities.forEach((priority)=> {
-                        priority.classList.remove('selected');
-                    })
-                    priority.classList.add('selected');
+        // Priority choose
+        priorities.forEach((priority) => {
+            priority.addEventListener('click', (e) => {
+                priorities.forEach((priority)=> {
+                    priority.classList.remove('selected');
                 })
-            });
+                priority.classList.add('selected');
+            })
+        });
 
-            // Edit submit/cancel
-            const edit = document.querySelector("#new-todo-submit");
-            edit.textContent = "Edit";
+        // Edit submit/cancel
+        const edit = document.querySelector("#new-todo-submit");
+        edit.textContent = "Edit";
 
-            const cancel = document.querySelector("#new-todo-cancel");
+        const cancel = document.querySelector("#new-todo-cancel");
 
-            edit.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (titleinput.value != "" && !Storage.getProjectList().getProject(todoProject).todoExists(titleinput.value)) {
-                    // If unique edited title - able to add
-                    // convert date, time inputs into Date object
-                    let dateString =  `${dateinput.value}T${timeinput.value}`;
-                               
-                    // Find current selected priority
-                    let priorityinput;
-                    priorities.forEach((priority) => {
-                        if (priority.classList.contains('selected')) {
-                            priorityinput = priority.id;
-                        }
-                    })
+        edit.addEventListener('click', function editing(e) {
+            e.preventDefault();
+            if (titleinput.value != "") {
+                // If unique edited title - able to add
+                // convert date, time inputs into Date object
+                let dateString =  `${dateinput.value}T${timeinput.value}`;
+                            
+                // Find current selected priority
+                let priorityinput;
+                priorities.forEach((priority) => {
+                    if (priority.classList.contains('selected')) {
+                        priorityinput = priority.id;
+                    }
+                })
 
-                    // Edit storage
-                    Storage.renameTodo(todoProject, todoTitle, titleinput.value);
-                    Storage.changeDescTodo(todoProject, todoTitle, descinput.value);
-                    Storage.changeDateTodo(todoProject, todoTitle, new Date(dateString));
-                    Storage.changePriorityTodo(todoProject, todoTitle, priorityinput);
+                // Edit storage - change name last (as name functions as index)
+                Storage.changeDescTodo(todoProject, todoTitle, descinput.value);
+                Storage.changeDateTodo(todoProject, todoTitle, new Date(dateString));
+                Storage.changePriorityTodo(todoProject, todoTitle, priorityinput);
 
-                    dialog.close();
-                    // refresh current page's todos
-                    refreshCurrentTodos();
-                }
-                else {
-                    console.log("Invalid name / Already exists");
-                }
-            });
+                Storage.renameTodo(todoProject, todoTitle, titleinput.value); 
 
-            cancel.addEventListener('click', (e) => {
-                e.preventDefault();
                 dialog.close();
-            });
-        })
-    }
+                edit.removeEventListener('click', editing);
+                // refresh current page's todos
+                refreshTodosFor(todoProject);
+            }
+            else {
+                console.log("Invalid name / Already exists");
+            }
+        });
+
+        cancel.addEventListener('click', function cancelling(e) {
+            e.preventDefault();
+            dialog.close();
+
+            cancel.removeEventListener('click', cancelling);
+        });
+    };
 
     // Toggle task as done - visual check + move to "Done" project
     function toggleDone() {
@@ -675,6 +691,7 @@ const UI = (() => {
     return {
         refreshCurrentProjects,
         refreshCurrentTodos,
+        refreshTodosFor,
         initDisplay,
 
         displayProjects,
@@ -689,7 +706,8 @@ const UI = (() => {
         displaySelectedProjectContent,
 
         newProject,
-        newTodo
+        newTodo,
+        editTodo
     }
 })();
 

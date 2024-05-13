@@ -397,6 +397,11 @@ img {
     cursor: pointer;
 }
 
+/* Pointer event none for svg - only div */
+.edit-svg > svg, .delete-svg > svg {
+    pointer-events: none;
+}
+
 
 /* Popups - new project, new task, edit task, view task  */
 dialog::backdrop {
