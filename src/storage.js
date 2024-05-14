@@ -67,6 +67,11 @@ const Storage = (() => {
         
         projectList.renameProject(name, newName);
 
+        // Update all existing todos 'project' value to newProjectName
+        projectList.getProject(newName).getTodos().forEach((todo) => {
+            todo.setProject(newName);
+        })
+
         saveProjectList(projectList);
     }
 

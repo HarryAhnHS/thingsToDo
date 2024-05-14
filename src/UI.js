@@ -34,11 +34,6 @@ const UI = (() => {
         })
     }
 
-    function refreshTodosFor(projectName) {
-        clearTodos();
-        displayTodos(projectName);
-    }
-
     function initDisplay() {
         const projectDivs = document.querySelectorAll('.project');
         const projectName = document.querySelector('.main-head');
@@ -421,10 +416,9 @@ const UI = (() => {
         displayTodos(projectName.toUpperCase());
     }
 
-    // Add project - popup
+    // Add/Edit/Delete project functions
     function newProject() {
         const button = document.querySelector("#new-project");
-        const myProjects = document.querySelector(".my-projects");
         const dialog = document.querySelector(".new-project-dialog");
         const colors = document.querySelectorAll(".color");
 
@@ -447,6 +441,9 @@ const UI = (() => {
         button.onclick = function newProjectPopup(e) {
             form.reset();
             dialog.showModal();
+
+            const title = document.querySelector(".new-project-dialog-title");
+            title.innerHTML = "Create New Project";
 
             // Unselected color
             colors.forEach((color) => {
@@ -474,11 +471,6 @@ const UI = (() => {
             add.onclick = function adding(e) {
                 e.preventDefault();
                 if (name.value != "" && !Storage.getProjectList().projectExists(name.value)) {
-                    const project = document.createElement("div");
-                    project.classList.add("project");
-                    project.textContent = "# " + name.value;
-
-                    myProjects.appendChild(project);
 
                     // Storage - add new project
                     colors.forEach((color) => {
@@ -508,6 +500,107 @@ const UI = (() => {
         };
     }
 
+    function editProject(projectName) {
+        // Add project - popup
+        const dialog = document.querySelector(".new-project-dialog");
+        const colors = document.querySelectorAll(".color");
+
+        const form = document.querySelector(".new-project-dialog-container");
+        const name = document.querySelector("#project-name");
+
+        const add = document.querySelector("#new-project-submit");
+        const cancel = document.querySelector("#new-project-cancel");
+
+        const originalColor = Storage.getProjectList().getProject(projectName).getColor();
+
+        colors.forEach((color) => {
+            color.innerHTML = ""; // Empty color div at each iteration
+            const inner = document.createElement('div');
+            inner.style['background-color'] = `#${color.id}`;
+            inner.style['height'] = `30px`;
+            inner.style['width'] = `30px`;
+            inner.style['border-radius'] = '5px';
+
+            color.appendChild(inner);
+        });
+
+        form.reset();
+        dialog.showModal();
+
+        const title = document.querySelector(".new-project-dialog-title");
+        title.innerHTML = "Edit Project&nbsp";
+
+        const sharp = document.createElement('span');
+        sharp.innerHTML = `# ${projectName}`;
+        sharp.style['color'] = `#${originalColor}`;
+        sharp.style['font-weight'] = '600';
+        
+        title.appendChild(sharp);
+
+        // Set name value to pre-selected name 
+        name.value = projectName;
+
+        // Unselect all colors
+        colors.forEach((color) => {
+            color.classList.remove('selected');
+            color.style['outline'] = `1px solid rgba(51, 51, 51, 0.2)`;
+        })
+        // Select color value to pre-selected choice
+        document.getElementById(originalColor).classList.add('selected');
+        document.getElementById(originalColor).style['outline'] = `2px solid #${originalColor}`;
+
+        // Color choose
+        colors.forEach((color) => {
+            color.onclick = function selectColor(e) {
+                colors.forEach((color) => {
+                    color.classList.remove('selected');
+                    color.style['outline'] = `1px solid rgba(51, 51, 51, 0.2)`;
+                })
+                color.classList.add('selected');
+                color.style['outline'] = `2px solid #${color.id}`;
+            };
+        })
+
+        add.onclick = function adding(e) {
+            e.preventDefault();
+            if (name.value != "" && (name.value.toUpperCase() == projectName || !Storage.getProjectList().projectExists(name.value.toUpperCase()))) {
+                // Storage - add new project
+                colors.forEach((color) => {
+                    if (color.classList.contains("selected")) {
+                        Storage.changeColorProject(projectName, color.id);
+                    }
+                })
+
+                Storage.renameProject(projectName, name.value.toUpperCase());
+
+                dialog.close();
+
+                // Refresh projects and todos
+                refreshCurrentProjects();
+
+                // Open newly created project and set as active
+                setActiveAndOpenProject(name.value.toUpperCase());
+            }
+            else {
+                console.log("Invalid name")
+            }
+        };
+
+        cancel.onclick = function cancelling(e) {
+            e.preventDefault();
+            dialog.close();
+        };
+    }
+
+    function deleteProject(projectName) {
+        Storage.deleteProject(projectName); 
+        
+        refreshCurrentProjects(); // Refresh project sidebar + onclick events
+        initDisplay(); // initialize display and active to 'All'
+    }
+
+
+    // Add/Edit/Delete Todo functions
     function newTodo(todoProject) {
         console.log("Add New Todo Running for: " , todoProject);
 
@@ -706,18 +799,7 @@ const UI = (() => {
         Storage.deleteTodo(todoProject, todoTitle);
          // refresh current page's todos 
         refreshCurrentTodos();
-    }
-
-    function editProject(projectName) {
-
-    }
-
-    function deleteProject(projectName) {
-        Storage.deleteProject(projectName); 
-        
-        refreshCurrentProjects(); // Refresh project sidebar + onclick events
-        initDisplay(); // initialize display and active to 'All'
-    }
+    };
 
     // Toggle task as done - visual check + add to "Done" project
     function toggleDone() {
@@ -729,7 +811,6 @@ const UI = (() => {
     return {
         refreshCurrentProjects,
         refreshCurrentTodos,
-        refreshTodosFor,
         initDisplay,
 
         displaySidebarProjects,
