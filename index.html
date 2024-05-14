@@ -8,29 +8,114 @@
 <body>
     <div class="header">To Do List</div>
 
-    <div class="open-close">
-        <a href="javascript:void(0)" onclick="toggleSidebar()" class="openbtn">&#9776;</a>
-    </div>
+    <!-- New Project Modal -->
+    <dialog class="new-project-dialog">
+        <form name="new-project-form" class="new-project-dialog-container">
+            <div class="new-project-dialog-title"></div>
+            <div class="new-project-dialog-inputs">
+                <label for="project-name">Name</label>
+                <input id="project-name" type="text" placeholder="Choose a name">
+    
+                <div class="project-color">
+                    <span>Choose a color:</span>
+                    <div class="colors">
+                        <div class="color selected" id="f94144"></div>
+                        <div class="color" id="f9844a"></div>
+                        <div class="color" id="f9c74f"></div>
+                        <div class="color" id="90be6d"></div>
+                        <div class="color" id="43aa8b"></div>
+                        <div class="color" id="4d908e"></div>
+                        <div class="color" id="577590"></div>
+                        <div class="color" id="277da1"></div> 
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="new-project-dialog-buttons">
+                <button id="new-project-cancel">Cancel</button>
+                <button id="new-project-submit">Add</button>
+            </div>
+            
+        </form>
+    </dialog>
+
+    <!-- New/Edit Todo Modal -->
+    <dialog class="new-todo-dialog">
+        <form name="new-todo-form" class="new-todo-dialog-container">
+            <div class="new-todo-dialog-title">Create New Todo</div>
+            <div class="new-todo-dialog-project">
+                <div class="intro">in Project&nbsp;</div>
+                <div class="sharp-name"></div>
+            </div>
+
+            <div class="new-todo-dialog-inputs">
+                <div class="title-input">
+                    <label for="todo-title">Title</label>
+                    <input id="todo-title" type="text" placeholder="Choose a title">
+                </div>
+                
+            
+                <div class="desc-input">
+                    <label for="todo-desc">Description</label>
+                    <input id="todo-desc" type="text" placeholder="Add a description">
+                </div>
+                
+                
+                <div class="datetime-input">
+                    <label for="todo-date">Due Date</label>
+                    <div>
+                        <input id="todo-date" type="date">
+                        <input id="todo-time" type="time">
+                    </div>
+                </div>
+                
+                <div class="priority-input">
+                    <span>Choose a priority:</span>
+                    <div class="priorities">
+                        <div class="priority-radio selected" id="low">
+                            Low
+                        </div>
+                        <div class="priority-radio" id="medium">
+                            Medium
+                        </div>
+                        <div class="priority-radio" id="high">
+                            High
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="new-todo-dialog-buttons">
+                <button id="new-todo-cancel">Cancel</button>
+                <button id="new-todo-submit">Add</button>
+            </div>
+            
+        </form>
+    </dialog>
 
     <div class="sidebar opened">
-        <div class="project">All</div>
-        <div class="project">Today</div>
-        <div class="project">This Week</div>
-        <div class="project">Done</div>
-        <div class="my-projects-title">My Projects</div>
-        <div class="project"># Dog</div>
-        <div class="project"># Cat</div>
-        <div class="sidebar-add">
-            <button id="add-project">+ Add Project</button>
+        <div class="open-close">
+            <a href="javascript:void(0)" class="openbtn">&#9776;</a>
+        </div>
+        <div class="project">ALL</div>
+        <div class="project">TODAY</div>
+        <div class="project">THIS WEEK</div>
+        <div class="project">DONE</div>
+        <div class="my-projects-title">
+            <span>My Projects</span>
+            <svg id="new-project" width="22px" height="22px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+        </div>
+        <div class="my-projects">
+
         </div>
     </div>
     <div class="main">
         <div class="container">
             <div class="main-head">
-                Project Name
             </div>
             <div class="todo-list">
-                <div class="todo">
+                <!-- <div class="todo">
                     <input type="checkbox" class="checkbox" id="0_0">
                     <div class="title-desc">
                         <div class="title">
@@ -46,7 +131,7 @@
                     <div class="edit">
                         Edit
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
