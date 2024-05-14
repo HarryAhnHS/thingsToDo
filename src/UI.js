@@ -3,7 +3,7 @@ import Project from './project.js';
 import ProjectList from './projectList.js';
 import Storage from './storage.js';
 
-import { isPast, isWithinInterval, formatDistance, formatDistanceToNow, format, add } from 'date-fns';
+import { isPast, isWithinInterval, formatDistance, formatDistanceToNow, format } from 'date-fns';
 
 // Display: For each project in list, create tab in sidebar and display it's todos in main content page
 
@@ -146,13 +146,16 @@ const UI = (() => {
     function createTodo(title, priority, desc, date, done, project) {
 
         const todo = document.createElement('div');
-        todo.classList.add('todo');
+        todo.classList.add('todo');        
 
-        const check = document.createElement('input');
-        check.setAttribute('type', 'checkbox');
+        const check = document.createElement('div');
         check.setAttribute('class', 'checkbox');
-        // check.setAttribute('id','0_0'); // TODO
-        check.classList.add(`${priority.toLowerCase()}`);
+        check.classList.add(`${priority.toLowerCase()}-check`);
+
+        // set Todo Done input configuration
+        check.onclick = (e) => {
+            toggleDoneTodo(title, project);           
+        }
 
         const title_desc = document.createElement('div');
         title_desc.classList.add('title-desc');
@@ -160,6 +163,7 @@ const UI = (() => {
         title_tags.classList.add('title-tags');
 
         const titleText = document.createElement('div');
+        titleText.classList.add('title');
         titleText.textContent = title;
         const priorityText = document.createElement('div');
         priorityText.classList.add('priority');
@@ -203,7 +207,7 @@ const UI = (() => {
             dateText.textContent = formatDistanceToNow(date, { addSuffix: true });
             timeText.textContent = `@${format(date, "p")}`;
         }
-        else if (isPast(date) && !done) {
+        else if (isPast(date)) {
             // 2. If overdue
             dateText.textContent = formatDistance(date, today, { addSuffix: true });
             timeText.textContent = "";
@@ -257,6 +261,16 @@ const UI = (() => {
 
             title_tags.appendChild(overdue);
         }
+
+        // If done - styling
+        if (done) {
+            todo.classList.add('done');
+        }
+        else {
+            todo.classList.remove('done');
+        }
+
+
 
         // Append new div into todolist
         const todoList = document.querySelector('.todo-list');
@@ -802,11 +816,18 @@ const UI = (() => {
     };
 
     // Toggle task as done - visual check + add to "Done" project
-    function toggleDone() {
-
+    function toggleDoneTodo(todoTitle, todoProject) {
+        if (!Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDone()) {
+            // Toggle to 'done'
+            Storage.changeDoneTodo(todoProject, todoTitle, true);
+            refreshCurrentTodos();
+        }
+        else {
+            // Toggle to 'not done'
+            Storage.changeDoneTodo(todoProject, todoTitle, false);
+            refreshCurrentTodos();
+        }
     }
-
-
 
     return {
         refreshCurrentProjects,
@@ -825,12 +846,14 @@ const UI = (() => {
         setActiveAndOpenProject,
 
         newProject,
+        editProject,
+        deleteProject,
+
         newTodo,
         editTodo,
         deleteTodo,
 
-        editProject,
-        deleteProject
+        toggleDoneTodo
     }
 })();
 
