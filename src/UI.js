@@ -153,12 +153,7 @@ const UI = (() => {
         check.classList.add(`${priority.toLowerCase()}-check`);
 
         // set Todo Done input configuration
-        check.onclick = (e) => {
-            toggleDoneTodo(title, project);           
-        }
-        // set Todo Done input configuration
         todo.onclick = (e) => {
-            console.log(e.target);
             if (!e.target.classList.contains("edit-svg") && !e.target.classList.contains("delete-svg")) {
                 toggleDoneTodo(title, project);  
             }
@@ -180,8 +175,9 @@ const UI = (() => {
         // Add project name as tag
         const projectName = document.createElement('div');
         projectName.classList.add("priority");
-        projectName.style['color'] = `#${Storage.getProjectList().getProject(project).getColor()}`;
-        projectName.style['outline'] = `1px solid #${Storage.getProjectList().getProject(project).getColor()}`;
+        projectName.style['color'] = `#FFFFFF`;
+        projectName.style['background-color'] = `#${Storage.getProjectList().getProject(project).getColor()}`;
+
         projectName.textContent = `#${project}`;
 
         title_tags.appendChild(titleText);
@@ -199,11 +195,21 @@ const UI = (() => {
         const date_time = document.createElement('div');
         date_time.classList.add('date-time');
 
-        const dateText = document.createElement('div');
-        dateText.classList.add('date');
+        const dateFull = document.createElement('div');
+        dateFull.classList.add('date');
 
-        const timeText = document.createElement('div');
-        timeText.classList.add('time');
+            const dateIcon = document.createElement('i');
+            dateIcon.classList.add("date-icon");
+
+            const dateText = document.createElement('div');
+
+        const timeFull = document.createElement('div');
+        timeFull.classList.add('time');
+
+            const timeIcon = document.createElement('i');
+            timeIcon.classList.add("time-icon");
+
+            const timeText = document.createElement('div');
 
         const today = new Date();
         if (isWithinInterval(date, {
@@ -212,32 +218,45 @@ const UI = (() => {
         })) {
             // 1. If task's date is due within a week
             dateText.textContent = formatDistanceToNow(date, { addSuffix: true });
-            timeText.textContent = `@${format(date, "p")}`;
+            timeText.textContent = `${format(date, "p")}`;
         }
         else if (isPast(date)) {
             // 2. If overdue
             dateText.textContent = formatDistance(date, today, { addSuffix: true });
             timeText.textContent = "";
+            timeIcon.style.display = 'none';
+            dateIcon.style['background-color'] = 'rgba(157, 2, 8)';
         }
         else {
             // 3. Else
-            dateText.textContent = format(date, "PPP");
-            timeText.textContent = `@${format(date, "p")}`;
+            dateText.textContent = format(date, "P");
+            timeText.textContent = `${format(date, "p")}`;
         }
 
-        date_time.appendChild(dateText);
-        date_time.appendChild(timeText);
+        dateFull.appendChild(dateIcon);
+        dateFull.appendChild(dateText);
+        timeFull.appendChild(timeIcon);
+        timeFull.appendChild(timeText);
+
+        date_time.appendChild(dateFull);
+        date_time.appendChild(timeFull);
 
         const edit_delete = document.createElement('div');
         edit_delete.classList.add('edit-delete');
 
         const edit_svg = document.createElement('div');
         edit_svg.classList.add('edit-svg');
-        edit_svg.innerHTML = `<svg opacity="0.8" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>`
+
+            const editTodoIcon = document.createElement('i');
+            editTodoIcon.classList.add("editTodoIcon");
+            edit_svg.appendChild(editTodoIcon);
 
         const delete_svg = document.createElement('div');
         delete_svg.classList.add('delete-svg');
-        delete_svg.innerHTML = `<svg opacity="0.8" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>`;
+
+            const deleteTodoIcon = document.createElement('i');
+            deleteTodoIcon.classList.add("deleteTodoIcon");
+            delete_svg.appendChild(deleteTodoIcon);
 
         // Edit delete task configuration
         edit_svg.onclick = (e) => {
@@ -265,8 +284,9 @@ const UI = (() => {
 
             const overdue = document.createElement('div');
             overdue.classList.add("priority");
-            overdue.classList.add("high");
             overdue.textContent = "! Overdue";
+            overdue.style['color'] = `#FFFFFF`;
+            overdue.style['background-color'] = `#000000`;
 
             title_tags.appendChild(overdue);
         }
@@ -407,7 +427,10 @@ const UI = (() => {
          // Edit Project Button Config
          const editProjectButton = document.createElement('div');
          editProjectButton.classList.add("edit-project-svg");
-         editProjectButton.innerHTML = `<svg opacity="0.8" width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>`;
+
+            const editProjectIcon = document.createElement('i');
+            editProjectIcon.classList.add("editProjectIcon");
+            editProjectButton.appendChild(editProjectIcon);
  
          editProjectButton.onclick = () => {
             editProject(projectName.toUpperCase());
@@ -416,7 +439,10 @@ const UI = (() => {
         // Delete Project Button Config
         const deleteProjectButton = document.createElement('div');
         deleteProjectButton.classList.add("delete-project-svg");
-        deleteProjectButton.innerHTML = `<svg opacity="0.8" width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>`;
+
+            const deleteProjectIcon = document.createElement('i');
+            deleteProjectIcon.classList.add("deleteProjectIcon");
+            deleteProjectButton.appendChild(deleteProjectIcon);
 
         deleteProjectButton.onclick = () => {
             deleteProject(projectName.toUpperCase());

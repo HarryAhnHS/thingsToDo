@@ -267,12 +267,12 @@ img {
 .todo::before {  
     transform: scaleX(0);
     transform-origin: bottom right;
-  }
+}
   
 .todo:hover::before {
     transform: scaleX(1);
     transform-origin: bottom left;
-    }
+}
   
 .todo::before {
     content: " ";
@@ -280,20 +280,26 @@ img {
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
     inset: 0 0 0 0;
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.03);
     z-index: -1;
     transition: transform 1s ease;
 }
+
+/* Overdue todo styling */
 
 .todo.overdue > .date-time  {
     color: rgba(157, 2, 8);
     font-weight: 500;
 }
 
+.todo.overdue {
+    background-color: rgba(157, 2, 8, 0.08);
+
+}
 
 .checkbox {
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
     appearance: none;
 
     margin-right: 10px;
@@ -328,7 +334,7 @@ img {
 }
 
 .done > .checkbox.high-check {
-    background: url("../images/check.png"), rgba(157, 2, 8, 0.5);
+    background: url("../images/check.png"), rgba(157, 2, 8, 0.8);
     background-size: 60%;
     background-repeat: no-repeat;
     background-origin: border-box;
@@ -337,7 +343,7 @@ img {
 }
 
 .done > .checkbox.medium-check {
-    background: url("../images/check.png"),  rgba(232, 93, 4, 0.5);
+    background: url("../images/check.png"),  rgba(232, 93, 4, 0.8);
     background-size: 60%;
     background-repeat: no-repeat;
     background-origin: border-box;
@@ -346,7 +352,7 @@ img {
 }
 
 .done > .checkbox.low-check {
-    background: url("../images/check.png"), rgba(255, 186, 8, 0.5);
+    background: url("../images/check.png"), rgba(255, 186, 8, 0.8);
     background-size: 60%;
     background-repeat: no-repeat;
     background-origin: border-box;
@@ -376,14 +382,14 @@ img {
 }
 
 .priority {
-    padding-top: 2px;
-    padding-bottom: 2px;
+    height: 18px;
     padding-left: 5px;
     padding-right: 5px;
 
     margin-left: 10px;
 
     font-size: 10px;
+    font-weight: 600;
 
     border-radius: 5px;
 
@@ -393,18 +399,21 @@ img {
 }
 
 .priority.high {
-    color: var(--high);
-    outline: 1px solid var(--high);
+    color: white;
+    background-color: var(--high);
 }
 
 .priority.medium {
-    color: var(--medium);
-    outline: 1px solid var(--medium);
+    color: white;
+    background-color: var(--medium);
 }
 
 .priority.low {
-    color: var(--low);
-    outline: 1px solid var(--low);
+    color: white;
+    background-color: var(--low);
+
+    /* color: var(--low);
+    outline: 1px solid var(--low); */
 }
 
 .desc {
@@ -418,21 +427,53 @@ img {
 }
 
 .date-time {
-    width: 100px;
+    height: 60px;
 
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    justify-content: center;
 
     margin: 5px;
 }
 
 .date {
     font-size: 14px;
+
+    display: flex;
+    align-items: center;
+}
+
+.date-icon {
+    background-color: #1a759f;
+    -webkit-mask-image: url("../images/date.svg");
+    mask-image: url("../images/date.svg");
+
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+
+    margin-right: 7px;
 }
 
 .time {
     font-size: 14px;
+
+    display: flex;
+    align-items: center;
+
+}
+
+.time-icon {
+    background-color: #1a759f;
+    -webkit-mask-image: url("../images/time.svg");
+    mask-image: url("../images/time.svg");
+
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+
+    margin-right: 7px;
 }
 
 .edit-delete {
@@ -456,10 +497,55 @@ img {
 }
 
 /* Pointer event none for svg - only div */
-.edit-svg > svg, .delete-svg > svg, .delete-project-svg > svg, .edit-project-svg > svg {
+.edit-svg > i, .delete-svg > i, .edit-project-svg > i, .delete-project-svg > i {
     pointer-events: none;
 }
 
+.edit-project-svg, .edit-svg, .delete-svg, .delete-project-svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.editProjectIcon {
+    background-color: rgb(0,0,0,0.7);
+    -webkit-mask-image: url("../images/edit-project.svg");
+    mask-image: url("../images/edit-project.svg");
+
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+}
+
+.deleteProjectIcon {
+    background-color: rgb(0,0,0,0.7);
+    -webkit-mask-image: url("../images/delete.svg");
+    mask-image: url("../images/delete.svg");
+
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+}
+
+.editTodoIcon {
+    background-color: rgb(0,0,0,0.7);
+    -webkit-mask-image: url("../images/edit-todo.svg");
+    mask-image: url("../images/edit-todo.svg");
+
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+.deleteTodoIcon {
+    background-color: rgb(0,0,0,0.7);
+    -webkit-mask-image: url("../images/delete.svg");
+    mask-image: url("../images/delete.svg");
+
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
 
 
 /* Popups - new project, new task, edit task, view task  */
