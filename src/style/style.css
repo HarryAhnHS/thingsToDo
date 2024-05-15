@@ -256,6 +256,33 @@ img {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+
+    position: relative;
+
+    cursor: pointer;
+}
+
+/* Focus todo styling */
+
+.todo::before {  
+    transform: scaleX(0);
+    transform-origin: bottom right;
+  }
+  
+.todo:hover::before {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+    }
+  
+.todo::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    inset: 0 0 0 0;
+    background: rgba(0, 0, 0, 0.05);
+    z-index: -1;
+    transition: transform 1s ease;
 }
 
 .todo.overdue > .date-time  {

@@ -146,7 +146,7 @@ const UI = (() => {
     function createTodo(title, priority, desc, date, done, project) {
 
         const todo = document.createElement('div');
-        todo.classList.add('todo');        
+        todo.classList.add('todo');    
 
         const check = document.createElement('div');
         check.setAttribute('class', 'checkbox');
@@ -155,6 +155,13 @@ const UI = (() => {
         // set Todo Done input configuration
         check.onclick = (e) => {
             toggleDoneTodo(title, project);           
+        }
+        // set Todo Done input configuration
+        todo.onclick = (e) => {
+            console.log(e.target);
+            if (!e.target.classList.contains("edit-svg") && !e.target.classList.contains("delete-svg")) {
+                toggleDoneTodo(title, project);  
+            }
         }
 
         const title_desc = document.createElement('div');
@@ -227,14 +234,16 @@ const UI = (() => {
         const edit_svg = document.createElement('div');
         edit_svg.classList.add('edit-svg');
         edit_svg.innerHTML = `<svg opacity="0.8" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>`
+
+        const delete_svg = document.createElement('div');
+        delete_svg.classList.add('delete-svg');
+        delete_svg.innerHTML = `<svg opacity="0.8" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>`;
+
         // Edit delete task configuration
         edit_svg.onclick = (e) => {
             editTodo(title, project);
         }
 
-        const delete_svg = document.createElement('div');
-        delete_svg.classList.add('delete-svg');
-        delete_svg.innerHTML = `<svg opacity="0.8" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>`;
         // Edit delete task configuration
         delete_svg.onclick = (e) => {
             console.log("Clicked Delete", title, project);
@@ -269,8 +278,6 @@ const UI = (() => {
         else {
             todo.classList.remove('done');
         }
-
-
 
         // Append new div into todolist
         const todoList = document.querySelector('.todo-list');
