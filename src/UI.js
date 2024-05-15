@@ -149,8 +149,12 @@ const UI = (() => {
         todo.classList.add('todo');    
 
         const check = document.createElement('div');
-        check.setAttribute('class', 'checkbox');
-        check.classList.add(`${priority.toLowerCase()}-check`);
+        check.classList.add("checkbox");
+        // check.classList.add(`${priority.toLowerCase()}-check`);
+
+        check.style['border'] = `2px solid #${Storage.getProjectList().getProject(project).getColor()}90`;
+        check.style['background-color'] = `#${Storage.getProjectList().getProject(project).getColor()}30`;
+
 
         // set Todo Done input configuration
         todo.onclick = (e) => {
@@ -294,9 +298,18 @@ const UI = (() => {
         // If done - styling
         if (done) {
             todo.classList.add('done');
+
+            const checkIcon = document.createElement("i");
+            checkIcon.classList.add('checkIcon');
+
+            check.appendChild(checkIcon);
+
+            check.style['background-color'] = `#${Storage.getProjectList().getProject(project).getColor()}`;
         }
         else {
             todo.classList.remove('done');
+
+            check.innerHTML = "";
         }
 
         // Append new div into todolist
