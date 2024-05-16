@@ -163,8 +163,8 @@ const UI = (() => {
             && !e.target.classList.contains("option")
             && !e.target.classList.contains("editTodoIcon")
             && !e.target.classList.contains("deleteTodoIcon")
-            && !e.target.classList.contains("editTodoText")
-            && !e.target.classList.contains("deleteTodoText")
+            && !e.target.classList.contains("editText")
+            && !e.target.classList.contains("deleteText")
             ) {
                 toggleDoneTodo(title, project);  
             }
@@ -252,7 +252,6 @@ const UI = (() => {
         date_time.appendChild(dateFull);
         date_time.appendChild(timeFull);
 
-
         const edit_delete = document.createElement('div');
         edit_delete.classList.add('edit-delete');
 
@@ -271,7 +270,7 @@ const UI = (() => {
                     edit_option_i.classList.add("editTodoIcon");
 
                     const edit_option_text = document.createElement('div');
-                    edit_option_text.classList.add("editTodoText");
+                    edit_option_text.classList.add("editText");
                     edit_option_text.textContent = "Edit";
                 
                     edit_option.appendChild(edit_option_i); edit_option.appendChild(edit_option_text);
@@ -279,6 +278,7 @@ const UI = (() => {
                 // Edit delete task configuration
                 edit_option.onclick = (e) => {
                     editTodo(title, project);
+                    edit_delete_menu.classList.add('hidden');
                 }
 
                 const delete_option = document.createElement('div');
@@ -288,7 +288,7 @@ const UI = (() => {
                     delete_option_i.classList.add("deleteTodoIcon");
 
                     const delete_option_text = document.createElement('div');
-                    delete_option_text.classList.add("deleteTodoText");
+                    delete_option_text.classList.add("deleteText");
                     delete_option_text.textContent = "Delete";
                 
                     delete_option.appendChild(delete_option_i); 
@@ -298,6 +298,7 @@ const UI = (() => {
                 delete_option.onclick = (e) => {
                     console.log("Clicked Delete", title, project);
                     deleteTodo(title, project);
+                    edit_delete_menu.classList.add('hidden');
                 }
                 
             edit_delete_menu.appendChild(edit_option);
@@ -307,11 +308,17 @@ const UI = (() => {
         edit_delete.appendChild(edit_delete_menu);
 
         edit_delete_popup_i.onclick = function openList(e) {
-            edit_delete_menu.classList.remove('hidden');
+            if (edit_delete_menu.classList.contains('hidden')) {
+                edit_delete_menu.classList.remove('hidden');
+            }
+            else {
+                edit_delete_menu.classList.add('hidden');
+            }            
         }
-
         window.onclick = function closeList(e) {
-            if (!e.target.classList.contains("edit-delete-popup-icon") && !e.target.classList.contains("option")) {
+            if (!e.target.classList.contains("option") 
+            && !e.target.classList.contains("edit-delete-menu")
+            && !e.target.classList.contains("edit-delete-popup-icon")) {
                 edit_delete_menu.classList.add('hidden');
             }
         };
@@ -477,41 +484,81 @@ const UI = (() => {
             newTodo(projectName.toUpperCase());
         };
 
-         // Edit Project Button Config
-         const editProjectButton = document.createElement('div');
-         editProjectButton.classList.add("edit-project-svg");
+        const edit_delete = document.createElement('div');
+        edit_delete.classList.add('edit-delete');
+        
+            const edit_delete_popup_i = document.createElement('i');
+            edit_delete_popup_i.classList.add('edit-delete-popup-icon')
 
-            const editProjectIcon = document.createElement('i');
-            editProjectIcon.classList.add("editProjectIcon");
-            editProjectButton.appendChild(editProjectIcon);
-            editProjectButton.setAttribute('title','Edit Project')
- 
-         editProjectButton.onclick = () => {
-            editProject(projectName.toUpperCase());
-         };
+            // Hidden popup for edit-delete buttons
+            const edit_delete_menu = document.createElement('div');
+            edit_delete_menu.classList.add('edit-delete-menu');
+            edit_delete_menu.classList.add('hidden');
 
-        // Delete Project Button Config
-        const deleteProjectButton = document.createElement('div');
-        deleteProjectButton.classList.add("delete-project-svg");
+                const edit_option = document.createElement('div');
+                edit_option.classList.add('option');
 
-            const deleteProjectIcon = document.createElement('i');
-            deleteProjectIcon.classList.add("deleteProjectIcon");
-            deleteProjectButton.appendChild(deleteProjectIcon);
-            deleteProjectButton.setAttribute('title','Delete Project')
+                    const edit_option_i = document.createElement('i');
+                    edit_option_i.classList.add("editProjectIcon");
 
-        deleteProjectButton.onclick = () => {
-            deleteProject(projectName.toUpperCase());
+                    const edit_option_text = document.createElement('div');
+                    edit_option_text.classList.add("editText");
+                    edit_option_text.textContent = "Edit";
+                
+                    edit_option.appendChild(edit_option_i); edit_option.appendChild(edit_option_text);
+
+                // Edit delete todo configuration
+                edit_option.onclick = () => {
+                    editProject(projectName.toUpperCase());
+                    edit_delete_menu.classList.add('hidden');
+                 };
+
+                const delete_option = document.createElement('div');
+                delete_option.classList.add('option');
+
+                    const delete_option_i = document.createElement('i');
+                    delete_option_i.classList.add("deleteProjectIcon");
+
+                    const delete_option_text = document.createElement('div');
+                    delete_option_text.classList.add("deleteText");
+                    delete_option_text.textContent = "Delete";
+                
+                    delete_option.appendChild(delete_option_i); 
+                    delete_option.appendChild(delete_option_text);
+
+                // Edit delete task configuration
+                delete_option.onclick = () => {
+                    deleteProject(projectName.toUpperCase());
+                    edit_delete_menu.classList.add('hidden');
+                };
+                
+            edit_delete_menu.appendChild(edit_option);
+            edit_delete_menu.appendChild(delete_option);
+        
+        edit_delete.appendChild(edit_delete_popup_i);
+        edit_delete.appendChild(edit_delete_menu);
+
+        edit_delete_popup_i.onclick = function openList(e) {
+            if (edit_delete_menu.classList.contains('hidden')) {
+                edit_delete_menu.classList.remove('hidden');
+            }
+            else {
+                edit_delete_menu.classList.add('hidden');
+            }            
+        }
+        window.onclick = function closeList(e) {
+            if (!e.target.classList.contains("option") 
+            && !e.target.classList.contains("edit-delete-menu")
+            && !e.target.classList.contains("edit-delete-popup-icon")) {
+                edit_delete_menu.classList.add('hidden');
+            }
         };
-
-
-
 
         head.appendChild(intro);
         head.appendChild(sharp);
         head.appendChild(title);
         head.appendChild(newTodoButton);
-        head.appendChild(editProjectButton);
-        head.appendChild(deleteProjectButton);
+        head.appendChild(edit_delete);
 
 
         clearTodos();
