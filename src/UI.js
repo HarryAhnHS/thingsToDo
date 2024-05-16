@@ -157,7 +157,7 @@ const UI = (() => {
 
         // set Todo Done input configuration
         todo.onclick = (e) => {
-            console.log(e.target);
+            console.log('Todo clicked at:'+e.target);
             if (!e.target.classList.contains("edit-delete-popup-icon") 
             && !e.target.classList.contains("edit-delete-menu")
             && !e.target.classList.contains("option")
@@ -271,7 +271,7 @@ const UI = (() => {
 
                     const edit_option_text = document.createElement('div');
                     edit_option_text.classList.add("editText");
-                    edit_option_text.textContent = "Edit";
+                    edit_option_text.textContent = "Edit Todo";
                 
                     edit_option.appendChild(edit_option_i); edit_option.appendChild(edit_option_text);
 
@@ -289,14 +289,13 @@ const UI = (() => {
 
                     const delete_option_text = document.createElement('div');
                     delete_option_text.classList.add("deleteText");
-                    delete_option_text.textContent = "Delete";
+                    delete_option_text.textContent = "Delete Todo";
                 
                     delete_option.appendChild(delete_option_i); 
                     delete_option.appendChild(delete_option_text);
 
                 // Edit delete task configuration
                 delete_option.onclick = (e) => {
-                    console.log("Clicked Delete", title, project);
                     deleteTodo(title, project);
                     edit_delete_menu.classList.add('hidden');
                 }
@@ -308,20 +307,28 @@ const UI = (() => {
         edit_delete.appendChild(edit_delete_menu);
 
         edit_delete_popup_i.onclick = function openList(e) {
-            if (edit_delete_menu.classList.contains('hidden')) {
+            // Hide all other popups
+            const popups = document.querySelectorAll('.edit-delete-menu');
+            popups.forEach((menu) => {
+                menu.classList.add('hidden');
+            })
+
+            // show menu 
+            if (edit_delete_menu.classList.contains("hidden")) {
                 edit_delete_menu.classList.remove('hidden');
             }
             else {
                 edit_delete_menu.classList.add('hidden');
-            }            
-        }
-        window.onclick = function closeList(e) {
-            if (!e.target.classList.contains("option") 
-            && !e.target.classList.contains("edit-delete-menu")
-            && !e.target.classList.contains("edit-delete-popup-icon")) {
-                edit_delete_menu.classList.add('hidden');
             }
-        };
+
+            window.onclick =  function closeList(e) {
+                if (!e.target.classList.contains("edit-delete-popup-icon")// not the edit button itself
+                && !e.target.classList.contains("option") 
+                && !e.target.classList.contains("edit-delete-menu")) {
+                    edit_delete_menu.classList.add('hidden');
+                }
+            };         
+        }
 
         todo.appendChild(check);
         todo.appendChild(title_desc);
@@ -488,7 +495,7 @@ const UI = (() => {
         edit_delete.classList.add('edit-delete');
         
             const edit_delete_popup_i = document.createElement('i');
-            edit_delete_popup_i.classList.add('edit-delete-popup-icon')
+            edit_delete_popup_i.classList.add('edit-delete-popup-icon');
 
             // Hidden popup for edit-delete buttons
             const edit_delete_menu = document.createElement('div');
@@ -503,7 +510,7 @@ const UI = (() => {
 
                     const edit_option_text = document.createElement('div');
                     edit_option_text.classList.add("editText");
-                    edit_option_text.textContent = "Edit";
+                    edit_option_text.textContent = "Edit Project";
                 
                     edit_option.appendChild(edit_option_i); edit_option.appendChild(edit_option_text);
 
@@ -521,7 +528,7 @@ const UI = (() => {
 
                     const delete_option_text = document.createElement('div');
                     delete_option_text.classList.add("deleteText");
-                    delete_option_text.textContent = "Delete";
+                    delete_option_text.textContent = "Delete Project";
                 
                     delete_option.appendChild(delete_option_i); 
                     delete_option.appendChild(delete_option_text);
@@ -539,20 +546,28 @@ const UI = (() => {
         edit_delete.appendChild(edit_delete_menu);
 
         edit_delete_popup_i.onclick = function openList(e) {
-            if (edit_delete_menu.classList.contains('hidden')) {
+            // Hide all other popups
+            const popups = document.querySelectorAll('.edit-delete-menu');
+            popups.forEach((menu) => {
+                menu.classList.add('hidden');
+            })
+
+            // show menu 
+            if (edit_delete_menu.classList.contains("hidden")) {
                 edit_delete_menu.classList.remove('hidden');
             }
             else {
                 edit_delete_menu.classList.add('hidden');
-            }            
-        }
-        window.onclick = function closeList(e) {
-            if (!e.target.classList.contains("option") 
-            && !e.target.classList.contains("edit-delete-menu")
-            && !e.target.classList.contains("edit-delete-popup-icon")) {
-                edit_delete_menu.classList.add('hidden');
             }
-        };
+
+            window.onclick =  function closeList(e) {
+                if (!e.target.classList.contains("edit-delete-popup-icon") // not the edit button itself
+                && !e.target.classList.contains("option") 
+                && !e.target.classList.contains("edit-delete-menu")) {
+                    edit_delete_menu.classList.add('hidden');
+                }
+            };         
+        }
 
         head.appendChild(intro);
         head.appendChild(sharp);

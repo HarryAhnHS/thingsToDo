@@ -340,7 +340,7 @@ img {
     flex-direction: column;
 }
 
-.done > .title-desc, .done > .date-time, .done > .edit-delete > .edit-delete-popup-icon {
+.done > .title-desc, .done > .date-time {
     opacity: 0.5;
 }
 
@@ -473,7 +473,7 @@ img {
     height: 22px;
 }
 
-.edit-delete-menu {
+.edit-delete-menu  {
     position: absolute;
     top: 30px;
     right: 10px;
@@ -483,7 +483,9 @@ img {
 
     border-radius: 5px;
 
-    width: 120px;
+    width: 170px;
+
+    z-index: 1;
 }
 
 .option {
@@ -511,7 +513,7 @@ img {
 /* Icons within popup*/
 
 .editTodoIcon {
-    background-color: rgb(0,0,0,0.7);
+    background-color: rgb(0,0,0,1);
     -webkit-mask-image: url("../images/edit-todo.svg");
     mask-image: url("../images/edit-todo.svg");
     mask-repeat: no-repeat;
@@ -526,7 +528,7 @@ img {
 }
 
 .deleteTodoIcon {
-    background-color: rgb(0,0,0,0.7);
+    background-color: rgb(0,0,0,1);
     -webkit-mask-image: url("../images/delete.svg");
     mask-image: url("../images/delete.svg");
     mask-repeat: no-repeat;
@@ -551,13 +553,8 @@ img {
     cursor: pointer;
 }
 
-/* Pointer event none for svg - only div
-.edit-svg > i, .delete-svg > i, .edit-project-svg > i, .delete-project-svg > i {
-    pointer-events: none;
-} */
-
 .editProjectIcon {
-    background-color: rgb(0,0,0,0.7);
+    background-color: rgb(0,0,0,1);
     -webkit-mask-image: url("../images/edit-project.svg");
     mask-image: url("../images/edit-project.svg");
     mask-repeat: no-repeat;
@@ -572,7 +569,7 @@ img {
 }
 
 .deleteProjectIcon {
-    background-color: rgb(0,0,0,0.7);
+    background-color: rgb(0,0,0,1);
     -webkit-mask-image: url("../images/delete.svg");
     mask-image: url("../images/delete.svg");
     mask-repeat: no-repeat;
