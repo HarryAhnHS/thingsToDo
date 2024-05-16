@@ -150,7 +150,6 @@ const UI = (() => {
 
         const check = document.createElement('div');
         check.classList.add("checkbox");
-        // check.classList.add(`${priority.toLowerCase()}-check`);
 
         check.style['border'] = `2px solid #${Storage.getProjectList().getProject(project).getColor()}90`;
         check.style['background-color'] = `#${Storage.getProjectList().getProject(project).getColor()}30`;
@@ -158,7 +157,15 @@ const UI = (() => {
 
         // set Todo Done input configuration
         todo.onclick = (e) => {
-            if (!e.target.classList.contains("edit-svg") && !e.target.classList.contains("delete-svg")) {
+            console.log(e.target);
+            if (!e.target.classList.contains("edit-delete-popup-icon") 
+            && !e.target.classList.contains("edit-delete-menu")
+            && !e.target.classList.contains("option")
+            && !e.target.classList.contains("editTodoIcon")
+            && !e.target.classList.contains("deleteTodoIcon")
+            && !e.target.classList.contains("editTodoText")
+            && !e.target.classList.contains("deleteTodoText")
+            ) {
                 toggleDoneTodo(title, project);  
             }
         }
@@ -245,36 +252,69 @@ const UI = (() => {
         date_time.appendChild(dateFull);
         date_time.appendChild(timeFull);
 
+
         const edit_delete = document.createElement('div');
         edit_delete.classList.add('edit-delete');
 
-        const edit_svg = document.createElement('div');
-        edit_svg.classList.add('edit-svg');
+            const edit_delete_popup_i = document.createElement('i');
+            edit_delete_popup_i.classList.add('edit-delete-popup-icon')
 
-            const editTodoIcon = document.createElement('i');
-            editTodoIcon.classList.add("editTodoIcon");
-            edit_svg.appendChild(editTodoIcon);
+            // Hidden popup for edit-delete buttons
+            const edit_delete_menu = document.createElement('div');
+            edit_delete_menu.classList.add('edit-delete-menu');
+            edit_delete_menu.classList.add('hidden');
 
-        const delete_svg = document.createElement('div');
-        delete_svg.classList.add('delete-svg');
+                const edit_option = document.createElement('div');
+                edit_option.classList.add('option');
 
-            const deleteTodoIcon = document.createElement('i');
-            deleteTodoIcon.classList.add("deleteTodoIcon");
-            delete_svg.appendChild(deleteTodoIcon);
+                    const edit_option_i = document.createElement('i');
+                    edit_option_i.classList.add("editTodoIcon");
 
-        // Edit delete task configuration
-        edit_svg.onclick = (e) => {
-            editTodo(title, project);
+                    const edit_option_text = document.createElement('div');
+                    edit_option_text.classList.add("editTodoText");
+                    edit_option_text.textContent = "Edit";
+                
+                    edit_option.appendChild(edit_option_i); edit_option.appendChild(edit_option_text);
+
+                // Edit delete task configuration
+                edit_option.onclick = (e) => {
+                    editTodo(title, project);
+                }
+
+                const delete_option = document.createElement('div');
+                delete_option.classList.add('option');
+
+                    const delete_option_i = document.createElement('i');
+                    delete_option_i.classList.add("deleteTodoIcon");
+
+                    const delete_option_text = document.createElement('div');
+                    delete_option_text.classList.add("deleteTodoText");
+                    delete_option_text.textContent = "Delete";
+                
+                    delete_option.appendChild(delete_option_i); 
+                    delete_option.appendChild(delete_option_text);
+
+                // Edit delete task configuration
+                delete_option.onclick = (e) => {
+                    console.log("Clicked Delete", title, project);
+                    deleteTodo(title, project);
+                }
+                
+            edit_delete_menu.appendChild(edit_option);
+            edit_delete_menu.appendChild(delete_option);
+        
+        edit_delete.appendChild(edit_delete_popup_i);
+        edit_delete.appendChild(edit_delete_menu);
+
+        edit_delete_popup_i.onclick = function openList(e) {
+            edit_delete_menu.classList.remove('hidden');
         }
 
-        // Edit delete task configuration
-        delete_svg.onclick = (e) => {
-            console.log("Clicked Delete", title, project);
-            deleteTodo(title, project);
-        }
-
-        edit_delete.appendChild(edit_svg);
-        edit_delete.appendChild(delete_svg);
+        window.onclick = function closeList(e) {
+            if (!e.target.classList.contains("edit-delete-popup-icon") && !e.target.classList.contains("option")) {
+                edit_delete_menu.classList.add('hidden');
+            }
+        };
 
         todo.appendChild(check);
         todo.appendChild(title_desc);
@@ -444,6 +484,7 @@ const UI = (() => {
             const editProjectIcon = document.createElement('i');
             editProjectIcon.classList.add("editProjectIcon");
             editProjectButton.appendChild(editProjectIcon);
+            editProjectButton.setAttribute('title','Edit Project')
  
          editProjectButton.onclick = () => {
             editProject(projectName.toUpperCase());
@@ -456,6 +497,7 @@ const UI = (() => {
             const deleteProjectIcon = document.createElement('i');
             deleteProjectIcon.classList.add("deleteProjectIcon");
             deleteProjectButton.appendChild(deleteProjectIcon);
+            deleteProjectButton.setAttribute('title','Delete Project')
 
         deleteProjectButton.onclick = () => {
             deleteProject(projectName.toUpperCase());
@@ -477,8 +519,10 @@ const UI = (() => {
     }
 
     // Add/Edit/Delete project functions
-    function newProject() {
+    function newProject() {;
         const button = document.querySelector("#new-project");
+        button.setAttribute('title','Add New Project');
+
         const dialog = document.querySelector(".new-project-dialog");
         const colors = document.querySelectorAll(".color");
 
