@@ -418,8 +418,6 @@ const UI = (() => {
             check.appendChild(checkIcon);
 
             check.style['background-color'] = `#${Storage.getProjectList().getProject(project).getColor()}`;
-
-            todo.classList.remove
         }
         else {
             todo.classList.remove('done');
@@ -1029,7 +1027,98 @@ const UI = (() => {
     };
 
     function viewTodo(todoTitle, todoProject) {
+        console.log("view tab opened", todoTitle, todoProject);
+        const dialog = document.querySelector(".view-todo-dialog");
+        const container = document.querySelector(".view-todo-dialog-container");
 
+        // Project - name
+        const title = document.querySelector('.view-title');
+        const span = document.querySelector('.view-title-intro');
+        span.style.color = `#${Storage.getProjectList().getProject(todoProject).getColor()}`;
+        title.textContent = `${Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getTitle()}`;
+
+        const title_tags = document.querySelector('.view-title-tags');
+        title_tags.innerHTML = ""; //reset
+
+        const date = Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDate()
+        const done = Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDone();
+
+        const currentPriority = Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getPriority();
+
+        const priorityText = document.createElement('div');
+        priorityText.classList.add('priority');
+        priorityText.classList.add('view-only');
+        priorityText.classList.add(currentPriority.toLowerCase());
+        priorityText.textContent = `${currentPriority.charAt(0).toUpperCase() + currentPriority.slice(1)} Priority`;
+
+        // Add project name as tag
+        const projectName = document.createElement('div');
+        projectName.classList.add("priority");
+        projectName.classList.add('view-only');
+        projectName.style['color'] = `#FFFFFF`;
+        projectName.style['background-color'] = `#${Storage.getProjectList().getProject(todoProject).getColor()}`;
+
+        projectName.textContent = `#${todoProject}`;
+
+        title_tags.appendChild(projectName);
+        title_tags.appendChild(priorityText);
+
+        // Set desc to current
+        const desc = document.querySelector(".view-desc-text");
+        if (Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDesc() == "") {
+            desc.textContent = `No Description`
+        }
+        else {
+            desc.textContent = `${Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDesc()}`;
+        }  
+
+        // Set due date and time to current
+        const distance = document.querySelector(".view-distance");
+        distance.style['color'] = 'black';
+        distance.textContent = `Due ${formatDistanceToNow(date, { addSuffix: true })}`;
+
+        const dateText = document.querySelector('.view-date-text');
+        dateText.textContent = format(date, "P");
+
+        const timeText = document.querySelector('.view-time-text');
+        timeText.textContent = `${format(date, "p")}`;
+
+        // If done - styling
+        if (done) {
+            distance.textContent = "Todo Completed!";
+            container.classList.add('done');
+        }
+        else {
+            container.classList.remove('done');
+        }
+
+        // Check for conditions before appending todo into list
+        if (isPast(date) && !done) {
+            // IF OVERDUE
+            container.classList.add('overdue');
+
+            const overdue = document.createElement('div');
+            overdue.classList.add("priority");
+            overdue.classList.add('view-only');
+            overdue.textContent = "! Overdue";
+            overdue.style['color'] = `#FFFFFF`;
+            overdue.style['background-color'] = `#000000`;
+
+            distance.style['color'] = 'rgba(157, 2, 8)'
+
+            title_tags.appendChild(overdue);
+        };
+
+        dialog.showModal();
+
+        // Edit submit/cancel
+
+        const cancel = document.querySelector("#view-cancel");
+
+        cancel.onclick = function cancelling(e) {
+            e.preventDefault();
+            dialog.close();
+        };
     }
 
     // Toggle task as done - visual check + add to "Done" project

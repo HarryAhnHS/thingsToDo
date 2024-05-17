@@ -362,11 +362,6 @@ img {
     font-weight: 500;
 }
 
-.todo.overdue {
-    background-color: rgba(234, 66, 72, 0.05);
-
-}
-
 .checkbox {
     width: 16px;
     height: 16px;
@@ -926,6 +921,165 @@ dialog::backdrop {
 
 .new-todo-dialog-buttons, .new-project-dialog-buttons {
     padding: 15px;
+}
+
+/* View Todo Dialog Styling */
+.view-todo-dialog {
+    width: 80%;
+    height: 50vh;
+
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+.view-todo-dialog-container {
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.view-todo-dialog-container.done > .view-todo {
+    opacity: 0.5;
+}
+
+.view-todo-dialog-container.done > .view-todo > .view-title-container > .view-title { 
+    text-decoration: line-through;
+}
+
+#view-cancel {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 5px;
+    margin-right: 15px;
+
+    font-size: 24px;
+}
+
+#view-cancel:hover, #view-cancel:focus {
+    cursor: pointer;
+
+    opacity: 0.5;
+} 
+
+.view-todo {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.view-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.view-title-intro {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    font-weight: 200;
+    font-size: 28px;
+
+    font-style: italic;
+
+    margin-right: 5px;
+}
+
+.view-title {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.view-title-tags {
+    margin-top: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.priority.view-only {
+    height: 24px;
+    padding-left: 7px;
+    padding-right: 7px;
+
+    margin-left: 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.view-desc {
+    margin-top: 15px;
+
+    display: flex;
+    justify-content: center;
+
+    color: rgba(0, 0, 0, 0.5);
+
+    font-weight: 300;
+    flex: 1;
+}
+
+.view-desc-text {
+    width: 80%;
+    padding: 15px;
+
+    border-radius: 5px;
+
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.view-date-time {
+    margin-top: 15px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: rgba(0, 0, 0, 0.7);
+
+    font-weight: 400;
+
+    margin-bottom: 15px;
+}
+
+.view-distance {
+    font-weight: 600;
+    text-transform: capitalize;
+
+    margin-bottom: 15px;
+
+    font-size: 20px;
+}
+
+.view-date-time-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.view-date, .view-time {
+    display: flex;
+
+    font-size: 18px;
+}
+
+.date-icon.view-only, .time-icon.view-only {
+    width: 22px;
+    height: 22px;
 }
 
 .footer {
