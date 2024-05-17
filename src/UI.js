@@ -161,7 +161,7 @@ const UI = (() => {
 
                 const text = document.createElement("div");
                 text.classList.add("empty-text");
-                text.textContent = "No Todos! Create A Project And Add Todos!"
+                text.textContent = "No Todos! Open a Project and Create Todos!"
 
                 emptySaver.appendChild(emoji);
                 emptySaver.appendChild(text);
