@@ -21,14 +21,11 @@ function toggleSidebar() {
     const main = document.querySelector(".main");
     // Closing
     if (sidebar.classList.contains('opened')) {
-        body.style['grid-template-columns'] = "50px auto";
+        sidebar.classList.add('closed');
+        body.style['grid-template-columns'] = "60px auto";
 
         header.style['grid-area'] = "1/1/2/3";
         main.style['grid-area'] = "2/1/3/3";
-        
-        sidebar.style['width'] = "50px";
-        sidebar.style['background-color'] = 'transparent';
-
 
         projects.forEach(project => {
             project.classList.add('hidden');
@@ -39,13 +36,11 @@ function toggleSidebar() {
     }
     // Opening
     else {
+        sidebar.classList.remove('closed');
         body.style['grid-template-columns'] = "200px auto";
 
         header.style['grid-area'] = "1/2/2/3";
         main.style['grid-area'] = "2/2/3/3";
-
-        sidebar.style['width'] = "100%";
-        sidebar.style['background-color'] = '#e9ecef';
 
         projects.forEach(project => {
             project.classList.remove('hidden');

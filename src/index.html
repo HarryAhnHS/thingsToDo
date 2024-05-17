@@ -6,7 +6,7 @@
     <title>To Do List</title>
 </head>
 <body>
-    <div class="header">To Do List</div>
+    <div class="header">LetsToDo</div>
 
     <!-- New Project Modal -->
     <dialog class="new-project-dialog">
@@ -14,7 +14,7 @@
             <div class="new-project-dialog-title"></div>
             <div class="new-project-dialog-inputs">
                 <label for="project-name">Name</label>
-                <input id="project-name" type="text" placeholder="Choose a name">
+                <input id="project-name" type="text" maxlength="15" placeholder="Choose a name">
     
                 <div class="project-color">
                     <span>Choose a color:</span>
@@ -52,13 +52,13 @@
             <div class="new-todo-dialog-inputs">
                 <div class="title-input">
                     <label for="todo-title">Title</label>
-                    <input id="todo-title" type="text" placeholder="Choose a title">
+                    <input id="todo-title" type="text" maxlength="25" placeholder="Choose a title">
                 </div>
                 
             
                 <div class="desc-input">
                     <label for="todo-desc">Description</label>
-                    <input id="todo-desc" type="text" placeholder="Add a description">
+                    <input id="todo-desc" type="text" maxlength="50" placeholder="Add a description">
                 </div>
                 
                 
@@ -98,16 +98,10 @@
         <div class="open-close">
             <a href="javascript:void(0)" class="openbtn">&#9776;</a>
         </div>
-        <div class="project">ALL</div>
-        <div class="project">TODAY</div>
-        <div class="project">THIS WEEK</div>
-        <div class="project">DONE</div>
-        <div class="my-projects-title">
-            <span>My Projects</span>
-            <i id="new-project"></i>
+        <div class="sidebar-defaults">
         </div>
-        <div class="my-projects">
 
+        <div class="my-projects">
         </div>
     </div>
     <div class="main">

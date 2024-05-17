@@ -5,16 +5,6 @@ import Storage from './storage.js';
 
 import { isPast, isWithinInterval, formatDistance, formatDistanceToNow, format } from 'date-fns';
 
-// Display: For each project in list, create tab in sidebar and display it's todos in main content page
-
-// Function: For each todo in project -- edit, delete, mark as done. 
-
-// Function: Add Task (Main Content) - Title, Priority, Date, Description, which project to add to
-
-// Function: Click Task for details
-
-// Function: Add Project (Sidebar)
-
 const UI = (() => {
 
     function refreshCurrentProjects() {
@@ -35,10 +25,13 @@ const UI = (() => {
     }
 
     function initDisplay() {
+        initSidebar();
+
         const projectDivs = document.querySelectorAll('.project');
         const projectName = document.querySelector('.main-head');
 
         projectDivs.forEach((project) => {
+            console.log(project.textContent);
             if (project.textContent == 'ALL') {
                 resetActive();
                 project.classList.add("active");
@@ -51,7 +44,50 @@ const UI = (() => {
     };
 
     /**
-     * Function to display user created projects in sidebar
+     * Function to create and create DOM for default projects in sidebar
+     */
+    function initSidebar() {
+        const sidebar = document.querySelector('.sidebar-defaults');
+
+        sidebar.innerHTML = "";
+        const all = document.createElement('div');
+        all.classList.add("project");
+        all.classList.add("active");
+        all.textContent = "ALL";
+
+        const today = document.createElement('div');
+        today.classList.add("project");
+        today.textContent = "TODAY";
+
+        const thisweek = document.createElement('div');
+        thisweek.classList.add("project");
+        thisweek.textContent = "THIS WEEK";
+
+        const done = document.createElement('div');
+        done.classList.add("project");
+        done.textContent = "DONE";
+
+        const myProjectsTitle = document.createElement('div');
+        myProjectsTitle.classList.add("my-projects-title");
+            const span = document.createElement('span');
+            span.textContent = "My Projects";
+
+            const i = document.createElement('i');
+            i.setAttribute('id',"new-project");
+        
+        myProjectsTitle.appendChild(span);
+        myProjectsTitle.appendChild(i);
+
+        sidebar.appendChild(all);
+        sidebar.appendChild(today);
+        sidebar.appendChild(thisweek);
+        sidebar.appendChild(done);
+        sidebar.appendChild(myProjectsTitle);
+    }
+
+
+    /**
+     * Function to create and create DOM for new projects in sidebar
      */
     function displaySidebarProjects() {
         // Clear Previous ProjectList
@@ -63,6 +99,8 @@ const UI = (() => {
                 UI.createProject(project.name);
             }
         });
+
+        initSidebar();
     }
 
     /**
@@ -236,7 +274,9 @@ const UI = (() => {
             dateText.textContent = formatDistance(date, today, { addSuffix: true });
             timeText.textContent = "";
             timeIcon.style.display = 'none';
-            dateIcon.style['background-color'] = 'rgba(157, 2, 8)';
+
+            if (done) dateIcon.style['background-color'] = 'rgba(0,0,0,0.7)';
+            else dateIcon.style['background-color'] = 'rgba(157, 2, 8)';
         }
         else {
             // 3. Else
@@ -262,6 +302,24 @@ const UI = (() => {
             const edit_delete_menu = document.createElement('div');
             edit_delete_menu.classList.add('edit-delete-menu');
             edit_delete_menu.classList.add('hidden');
+
+                const view_option = document.createElement('div');
+                    view_option.classList.add('option');
+
+                        const view_option_i = document.createElement('i');
+                        view_option_i.classList.add("viewTodoIcon");
+
+                        const view_option_text = document.createElement('div');
+                        view_option_text.classList.add("viewText");
+                        view_option_text.textContent = "View Todo";
+                    
+                        view_option.appendChild(view_option_i); view_option.appendChild(view_option_text);
+
+                    // Edit delete task configuration
+                    view_option.onclick = (e) => {
+                        viewTodo(title, project);
+                        edit_delete_menu.classList.add('hidden');
+                    }
 
                 const edit_option = document.createElement('div');
                 edit_option.classList.add('option');
@@ -299,7 +357,8 @@ const UI = (() => {
                     deleteTodo(title, project);
                     edit_delete_menu.classList.add('hidden');
                 }
-                
+            
+            edit_delete_menu.appendChild(view_option);    
             edit_delete_menu.appendChild(edit_option);
             edit_delete_menu.appendChild(delete_option);
         
@@ -359,6 +418,8 @@ const UI = (() => {
             check.appendChild(checkIcon);
 
             check.style['background-color'] = `#${Storage.getProjectList().getProject(project).getColor()}`;
+
+            todo.classList.remove
         }
         else {
             todo.classList.remove('done');
@@ -967,6 +1028,10 @@ const UI = (() => {
         refreshCurrentTodos();
     };
 
+    function viewTodo(todoTitle, todoProject) {
+
+    }
+
     // Toggle task as done - visual check + add to "Done" project
     function toggleDoneTodo(todoTitle, todoProject) {
         if (!Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDone()) {
@@ -985,6 +1050,7 @@ const UI = (() => {
         refreshCurrentProjects,
         refreshCurrentTodos,
         initDisplay,
+        initSidebar,
 
         displaySidebarProjects,
         createProject,
@@ -1004,6 +1070,7 @@ const UI = (() => {
         newTodo,
         editTodo,
         deleteTodo,
+        viewTodo,
 
         toggleDoneTodo
     }

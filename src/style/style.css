@@ -16,7 +16,7 @@ body {
 
     display: grid;
     grid-template-columns: 200px auto;
-    grid-template-rows: 80px calc(100vh - 80px) 100px;
+    grid-template-rows: 65px calc(100vh - 60px) 100px;
 
     font-family: 'Urbanist', sans-serif;
 }
@@ -32,38 +32,81 @@ img {
     align-items: center;
     justify-content: center;
 
+    font-weight: 200;
+
     font-size: 32px;
 }
 
 .sidebar {
     grid-area: 1/1/3/2;
 
-    background-color: #e9ecef;
-
     display: flex;
     flex-direction: column;
 }
 
+.sidebar.opened {
+    background-color: #f8f9fa;
+
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+
+    width: 200px;
+
+    color: black;
+}
+
+.sidebar.closed {
+    background-color: transparent;
+
+    box-shadow: none;
+
+    width: 60px;
+}
+
+.sidebar {
+    transition: all 0.3s;
+}
+
+/* Animate slide in and out  */
+.sidebar-defaults {
+    overflow-y: scroll; 
+    /* border-top: 0.5px solid black;
+
+    margin-left: 15px;
+    margin-right: 15px; */
+}
+
+
 .open-close {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     box-sizing: border-box;
     padding-top: 5px;
-    padding-left: 10px;
     padding-bottom: 5px;
-    height: 80px;
+
+    height: 65px;
+
+    width: 60px;
+}
+
+.open-close:hover, .open-close:focus {
+    opacity: 0.5;
+}
+
+.open-close:active {
+    transform: scale(1.1);
 }
 
 .openbtn {
     font-size: 36px;
-    font-weight: 400;
+    font-weight: 200;
     text-decoration: none;
+
     color: black;
 }
 
-
 .project {
+    width: 200px;
     height: 50px;
     display: flex;
     align-items: center;
@@ -73,36 +116,55 @@ img {
 
     padding-left: 15px;
 
-    font-weight: 500;
+    font-weight: 200;
     text-transform: uppercase;
+
+    transition: all 0.3s;
 }
 
 .project:hover, .project:focus {
     cursor: pointer;
+
+    font-weight: 500;
 }
 
-.active {
-    background-color: black;
-    color: white;
+.project:active {
+    transform: translateX(4px);
+    transform: scale(1.1);
+}
+
+.project.active {
+    background-color: rgba(255, 255, 255, 0.05);
+
+    width: 200px;
+
+    font-weight: 500;
+    transform: scale(1.2);
+    transform: translateX(4px);
 }
 
 .my-projects-title {
-    height: 100px;
+    width: 170px;
+    height: 80px;
+
+    box-sizing: border-box;
 
     display: flex;
     align-items: flex-end;
     justify-content: flex-start;
 
-    border-bottom: 1px solid black;
+    border-bottom: 0.5px solid black;
+
+    margin-left: 15px;
+    margin-right: 15px;
 
     box-sizing: border-box;
 
-    padding-left: 15px;
     padding-bottom: 10px;
 
     text-transform: uppercase;
 
-    font-weight: 600;
+    font-weight: 500;
     font-size: 18px;
 }
 
@@ -123,8 +185,8 @@ img {
 
 
     display: inline-block;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
 
     padding-right: 15px;
 
@@ -147,8 +209,6 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    transition: all 0.5s;
 }
 
 .container {
@@ -303,7 +363,7 @@ img {
 }
 
 .todo.overdue {
-    background-color: rgba(157, 2, 8, 0.08);
+    background-color: rgba(234, 66, 72, 0.05);
 
 }
 
@@ -385,9 +445,6 @@ img {
 .priority.low {
     color: white;
     background-color: var(--low);
-
-    /* color: var(--low);
-    outline: 1px solid var(--low); */
 }
 
 .desc {
@@ -397,12 +454,13 @@ img {
     text-overflow: ellipsis;
 
     font-weight: 300;
-
 }
 
 .date-time {
     height: 60px;
-    width: 140px;
+
+    padding-left: 15px;
+    padding-right: 15px;
 
     display: flex;
     flex-direction: column;
@@ -410,17 +468,22 @@ img {
     justify-content: center;
 
     margin: 5px;
+
+    color: rgba(0, 0, 0, 0.7);
 }
 
 .date {
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    
+    text-transform:capitalize;
 
     display: flex;
     align-items: center;
 }
 
 .date-icon {
-    background-color: #1a759f;
+    background-color: rgba(0, 0, 0, 0.7);
     -webkit-mask-image: url("../images/date.svg");
     mask-image: url("../images/date.svg");
 
@@ -428,11 +491,12 @@ img {
     width: 16px;
     height: 16px;
 
-    margin-right: 7px;
+    margin-right: 5px;
 }
 
 .time {
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 600;
 
     display: flex;
     align-items: center;
@@ -440,7 +504,7 @@ img {
 }
 
 .time-icon {
-    background-color: #1a759f;
+    background-color: rgba(0, 0, 0, 0.7);
     -webkit-mask-image: url("../images/time.svg");
     mask-image: url("../images/time.svg");
 
@@ -448,7 +512,7 @@ img {
     width: 16px;
     height: 16px;
 
-    margin-right: 7px;
+    margin-right: 5px;
 }
 
 .edit-delete {
@@ -542,7 +606,22 @@ img {
     pointer-events: none;
 }
 
-.editText, .deleteText {
+.viewTodoIcon {
+    background-color: rgb(0,0,0,1);
+    -webkit-mask-image: url("../images/view.svg");
+    mask-image: url("../images/view.svg");
+    mask-repeat: no-repeat;
+
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+
+    margin-right: 10px;
+
+    pointer-events: none;
+}
+
+.editText, .deleteText, .viewText {
     font-size: 16px;
     font-weight: 400;
     pointer-events: none;
@@ -880,4 +959,9 @@ dialog::backdrop {
 .github-a img:hover {
     opacity: 1;
     transform: rotate(360deg) scale(1.2);
+}
+
+
+@media screen {
+    
 }
