@@ -25,8 +25,6 @@ const UI = (() => {
     }
 
     function initDisplay() {
-        initSidebar();
-
         const projectDivs = document.querySelectorAll('.project');
         const projectName = document.querySelector('.main-head');
 
@@ -99,8 +97,6 @@ const UI = (() => {
                 UI.createProject(project.name);
             }
         });
-
-        initSidebar();
     }
 
     /**
@@ -147,6 +143,25 @@ const UI = (() => {
                 const text = document.createElement("div");
                 text.classList.add("empty-text");
                 text.textContent = "Nothing Done!"
+
+                emptySaver.appendChild(emoji);
+                emptySaver.appendChild(text);
+
+                todoList.appendChild(emptySaver);
+            }
+            else if (projectName == "ALL") {
+                const todoList = document.querySelector('.todo-list');
+
+                const emptySaver = document.createElement("div");
+                emptySaver.classList.add("empty-saver");
+
+                const emoji = document.createElement("div");
+                emoji.classList.add("emoji");
+                emoji.textContent = "🎊";
+
+                const text = document.createElement("div");
+                text.classList.add("empty-text");
+                text.textContent = "No Todos! Create A Project And Add Todos!"
 
                 emptySaver.appendChild(emoji);
                 emptySaver.appendChild(text);

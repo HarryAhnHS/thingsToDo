@@ -105,6 +105,7 @@ function myFunction(x) {
 var x = window.matchMedia("(max-width: 650px)")
 
 //localStorage.clear();
+UI.initSidebar();
 UI.initDisplay();
 UI.refreshCurrentProjects();
 UI.newProject();
