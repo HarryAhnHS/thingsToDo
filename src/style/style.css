@@ -191,9 +191,6 @@ img {
     font-size: 18px;
 }
 
-/* .my-projects-title > span {
-    flex: 1;
-} */
  
 .my-projects {
     height: 300px;
@@ -321,13 +318,13 @@ img {
     box-sizing: border-box;
 }
 
-.sidebar-defaults, .todo-list {
+.sidebar-defaults, .my-projects {
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
 }
 
 .sidebar-defaults::-webkit-scrollbar,
-.todo-list::-webkit-scrollbar { 
+.my-projects::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
 
