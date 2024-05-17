@@ -213,6 +213,10 @@ const UI = (() => {
         const title_tags = document.createElement('div');
         title_tags.classList.add('title-tags');
 
+        const tags = document.createElement('div');
+        tags.classList.add('tags');
+
+
         const titleText = document.createElement('div');
         titleText.classList.add('title');
         titleText.textContent = title;
@@ -230,9 +234,12 @@ const UI = (() => {
         projectName.textContent = `#${project}`;
 
         title_tags.appendChild(titleText);
+        title_tags.appendChild(tags);
 
-        title_tags.appendChild(projectName);
-        title_tags.appendChild(priorityText);
+        tags.appendChild(projectName);
+
+        tags.appendChild(priorityText);
+        
 
         const descText = document.createElement('div');
         descText.classList.add('desc');
@@ -405,7 +412,7 @@ const UI = (() => {
             overdue.style['color'] = `#FFFFFF`;
             overdue.style['background-color'] = `#000000`;
 
-            title_tags.appendChild(overdue);
+            tags.appendChild(overdue);
         }
 
         // If done - styling
