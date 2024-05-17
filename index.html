@@ -6,7 +6,10 @@
     <title>To Do List</title>
 <script defer src="main.js"></script></head>
 <body>
-    <div class="header">To Do List</div>
+    <div class="header">
+        <i class="headerIcon"></i>
+        <span>ThingsToDo</span>
+    </div>
 
     <!-- New Project Modal -->
     <dialog class="new-project-dialog">
@@ -14,7 +17,7 @@
             <div class="new-project-dialog-title"></div>
             <div class="new-project-dialog-inputs">
                 <label for="project-name">Name</label>
-                <input id="project-name" type="text" placeholder="Choose a name">
+                <input id="project-name" type="text" maxlength="15" placeholder="Choose a name">
     
                 <div class="project-color">
                     <span>Choose a color:</span>
@@ -52,7 +55,7 @@
             <div class="new-todo-dialog-inputs">
                 <div class="title-input">
                     <label for="todo-title">Title</label>
-                    <input id="todo-title" type="text" placeholder="Choose a title">
+                    <input id="todo-title" type="text" maxlength="50" placeholder="Choose a title">
                 </div>
                 
             
@@ -94,20 +97,59 @@
         </form>
     </dialog>
 
+    <!-- View Todo Modal -->
+    <dialog class="view-todo-dialog">
+        <div class="view-todo-dialog-container">
+            <div id="view-cancel">&#x2715;</div>
+            <div class="view-todo">
+                <div class="view-title-container">
+                    <span class="view-title-intro">
+                        Todo:&nbsp;
+                    </span>
+                    <div class="view-title">
+
+                    </div>
+                </div>
+                <div class="view-title-tags">
+                </div>
+                <div class="view-desc">
+                    <div class="view-desc-text">
+
+                    </div>
+                </div>
+                <div class="view-date-time">
+                    <div class="view-distance">
+
+                    </div>
+                    <div class="view-date-time-container">
+                        <div class="view-date">
+                            <i class="date-icon view-only">
+                            </i>
+                            <div class="view-date-text">
+    
+                            </div>
+                        </div>
+                        <div class="view-time">
+                            <i class="time-icon view-only">
+                            </i>
+                            <div class="view-time-text">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
     <div class="sidebar opened">
         <div class="open-close">
             <a href="javascript:void(0)" class="openbtn">&#9776;</a>
         </div>
-        <div class="project">ALL</div>
-        <div class="project">TODAY</div>
-        <div class="project">THIS WEEK</div>
-        <div class="project">DONE</div>
-        <div class="my-projects-title">
-            <span>My Projects</span>
-            <svg id="new-project" width="22px" height="22px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+        <div class="sidebar-defaults">
         </div>
-        <div class="my-projects">
 
+        <div class="my-projects">
         </div>
     </div>
     <div class="main">
@@ -115,23 +157,6 @@
             <div class="main-head">
             </div>
             <div class="todo-list">
-                <!-- <div class="todo">
-                    <input type="checkbox" class="checkbox" id="0_0">
-                    <div class="title-desc">
-                        <div class="title">
-                            <div>Eat Food</div>
-                            <div class="priority">High Priority</div>
-                        </div>
-                        <div class="desc">Need to eat my favorite</div>
-                    </div>
-                    <div class="date-time">
-                        <div class="date">Due April 23, 2024</div>
-                        <div class="time">@12:00 PM</div>
-                    </div>
-                    <div class="edit">
-                        Edit
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
