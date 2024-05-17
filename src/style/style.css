@@ -317,13 +317,15 @@ img {
     flex: 1;
 
     overflow-y: scroll;
+
+    box-sizing: border-box;
 }
 
-.todo-list, .sidebar-defaults {
+.sidebar-defaults {
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
 }
-.todo-list::-webkit-scrollbar,
+
 .sidebar-defaults::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
