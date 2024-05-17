@@ -92,10 +92,8 @@ img {
 /* Animate slide in and out  */
 .sidebar-defaults {
     overflow-y: scroll; 
-    /* border-top: 0.5px solid black;
 
-    margin-left: 15px;
-    margin-right: 15px; */
+    margin-top: 65px;
 }
 
 
@@ -110,6 +108,8 @@ img {
     height: 65px;
 
     width: 60px;
+
+    position: fixed;
 }
 
 .open-close:hover, .open-close:focus {
@@ -491,7 +491,7 @@ img {
 
     max-width: 120px;
 
-    padding-right: 5px;
+    padding-right: 10px;
 
     display: flex;
     flex-direction: column;
@@ -1177,10 +1177,6 @@ dialog::backdrop {
 /* Media and container queries */
 
 @media screen and (max-width: 740px) {
-    .tags {
-        /* display: none; */
-        min-width: 180px;
-    }
 
     .priority {
         font-size: 9px;
@@ -1189,6 +1185,8 @@ dialog::backdrop {
         padding-right: 3px;   
         
         margin-right: 5px;
+
+        text-overflow: ellipsis;
     }
 }
 
