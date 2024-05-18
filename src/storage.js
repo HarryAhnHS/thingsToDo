@@ -32,25 +32,25 @@ const Storage = (() => {
 
             projectList = new ProjectList();
             projectList.addProject(new Project("SCHOOL"));
-            projectList.changeColorProject("SCHOOL", "f94144");
+            projectList.changeColorProject("SCHOOL", "f9844a");
                 projectList.getProject("SCHOOL").addTodo(
-                    new Todo("CSCI170 Midterm Review", "Who the heck is dijkstra?", new Date(today.getFullYear(), today.getMonth(), today.getDate()+6, 14, 30), 'medium', 'SCHOOL')
+                    new Todo("CSCI170 Midterm Review", "Who the heck is Dijkstra?", new Date(today.getFullYear(), today.getMonth(), today.getDate()+6, 14, 30), 'medium', 'SCHOOL')
                 )
                 projectList.getProject("SCHOOL").addTodo(
                     new Todo("Apply for internships", "It's that time of year...", new Date(today.getFullYear(), today.getMonth()+1, today.getDate(), 0,0), 'high', 'SCHOOL')
                 )
 
             projectList.addProject(new Project("GYM"));
-            projectList.changeColorProject("GYM", "f9c74f");
+            projectList.changeColorProject("GYM", "90be6d");
                 projectList.getProject("GYM").addTodo(
-                    new Todo("Treadmill Cardio", "Incline 12deg, speed 3mph, time 30 minutes", new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()+1), 'low', 'GYM')
+                    new Todo("Treadmill Cardio", "Incline 12 degrees | Speed 3 mph | Time 30 minutes", new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()+1), 'low', 'GYM')
                 );
                 projectList.getProject("GYM").addTodo(
                     new Todo("Leg day...", "", new Date(today.getFullYear(), today.getMonth()-3, today.getDate(), 0,0), 'low', 'GYM')
                 );
 
             projectList.addProject(new Project("CHORES"));
-            projectList.changeColorProject("CHORES", "43aa8b");
+            projectList.changeColorProject("CHORES", "277da1");
                 projectList.getProject("CHORES").addTodo(
                     new Todo("Laundry", "", new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()-1), 'medium', 'CHORES')
                 );
