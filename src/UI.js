@@ -290,7 +290,7 @@ const UI = (() => {
         // If num is 0 - hide
         const numTodos = document.querySelectorAll('.num-todos');
         numTodos.forEach((num) => {
-            if (num.textContent == "0") {
+            if (num.textContent == "0" || num.textContent == "") {
                 console.log(num.textContent)
                 num.style.display = 'none';
             }
