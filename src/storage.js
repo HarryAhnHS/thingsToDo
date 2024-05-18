@@ -24,7 +24,48 @@ const Storage = (() => {
     // When extracting projectList data from local Storage, need to dynamically re-allocate Projects and Todo objects
     function getProjectList() {
 
-        let projectList = Object.assign(new ProjectList, JSON.parse(localStorage.getItem('data')));
+        let projectList;
+
+        // Sample project content for first time load
+        if (localStorage.getItem('data') == null) {
+            let today = new Date();
+
+            projectList = new ProjectList();
+            projectList.addProject(new Project("SCHOOL"));
+            projectList.changeColorProject("SCHOOL", "f94144");
+                projectList.getProject("SCHOOL").addTodo(
+                    new Todo("CSCI170 Midterm Review", "Who the heck is dijkstra?", new Date(today.getFullYear(), today.getMonth(), today.getDate()+6, 14, 30), 'medium', 'SCHOOL')
+                )
+                projectList.getProject("SCHOOL").addTodo(
+                    new Todo("Apply for internships", "It's that time of year...", new Date(today.getFullYear(), today.getMonth()+1, today.getDate(), 0,0), 'high', 'SCHOOL')
+                )
+
+            projectList.addProject(new Project("GYM"));
+            projectList.changeColorProject("GYM", "f9c74f");
+                projectList.getProject("GYM").addTodo(
+                    new Todo("Treadmill Cardio", "Incline 12deg, speed 3mph, time 30 minutes", new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()+1), 'low', 'GYM')
+                );
+                projectList.getProject("GYM").addTodo(
+                    new Todo("Leg day...", "", new Date(today.getFullYear(), today.getMonth()-3, today.getDate(), 0,0), 'low', 'GYM')
+                );
+
+            projectList.addProject(new Project("CHORES"));
+            projectList.changeColorProject("CHORES", "43aa8b");
+                projectList.getProject("CHORES").addTodo(
+                    new Todo("Laundry", "", new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()-1), 'medium', 'CHORES')
+                );
+                projectList.getProject("CHORES").getTodo("Laundry").setDone(true);
+
+            projectList.updateAll();
+            projectList.updateToday();
+            projectList.updateThisWeek();
+            projectList.updateDone();
+        }
+        else {
+            projectList = Object.assign(new ProjectList, JSON.parse(localStorage.getItem('data')));
+        }
+
+        console.log(projectList);
 
         let projectsBuffer = [];
         projectList.getProjects().forEach((project) => {

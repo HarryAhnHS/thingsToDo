@@ -140,6 +140,8 @@ const UI = (() => {
         const projectDivs = document.querySelectorAll('.project');
         const projectName = document.querySelector('.main-head');
 
+        Storage.saveProjectList(Storage.getProjectList()); // Initial load 
+
         projectDivs.forEach((project) => {
             console.log(project.textContent);
             if (project.textContent == 'ALL') {

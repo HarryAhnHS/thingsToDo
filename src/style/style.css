@@ -384,6 +384,10 @@ img {
 
 /* Overdue todo styling */
 
+.todo.overdue {
+    background-color: rgba(157, 2, 8, 0.05);
+}
+
 .todo.overdue > .date-time  {
     color: rgba(157, 2, 8);
     font-weight: 500;
