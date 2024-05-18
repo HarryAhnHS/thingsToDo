@@ -1,7 +1,7 @@
 # todo
 The Odin Project - Todo List with localStorage and npm
 
-Link to live: https://harryahnhs.github.io/todo/
+Link to live: https://harryahnhs.github.io/thingsToDo/
 
 Main Functionalities: 
 1. Create new customizable projects  
