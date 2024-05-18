@@ -1,5 +1,5 @@
-# todo
-The Odin Project - Todo List with localStorage and npm
+# thingsToDo
+Todo List using localStorage and npm
 
 Link to live: https://harryahnhs.github.io/thingsToDo/
 
