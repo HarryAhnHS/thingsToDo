@@ -43,7 +43,7 @@ const Storage = (() => {
             projectList.addProject(new Project("GYM"));
             projectList.changeColorProject("GYM", "90be6d");
                 projectList.getProject("GYM").addTodo(
-                    new Todo("Treadmill Cardio", "Incline 12 degrees | Speed 3 mph | Time 30 minutes", new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()+1), 'low', 'GYM')
+                    new Todo("Treadmill Cardio", "3-12-30 - Speed 3MPH, Incline 12 degrees, Time 30 minutes", new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()+1), 'low', 'GYM')
                 );
                 projectList.getProject("GYM").addTodo(
                     new Todo("Leg day...", "", new Date(today.getFullYear(), today.getMonth()-3, today.getDate(), 0,0), 'low', 'GYM')
