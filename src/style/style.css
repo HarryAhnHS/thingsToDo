@@ -94,6 +94,8 @@ img {
     overflow-y: scroll; 
 
     margin-top: 65px;
+
+    height: 280px;
 }
 
 
@@ -193,8 +195,9 @@ img {
 
  
 .my-projects {
-    height: 300px;
     overflow-y: scroll;
+
+    flex:1;
 }
 
 #new-project {
@@ -500,7 +503,7 @@ img {
     font-weight: 300;
 
     text-overflow: ellipsis;
-    
+
     overflow: hidden;
     white-space: nowrap;
 }
