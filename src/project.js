@@ -1,4 +1,4 @@
-import { compareAsc, isToday, isThisWeek, isPast } from "date-fns";
+import { compareAsc, isWithinInterval, isPast } from "date-fns";
 import Todo from "./todo";
 
 
@@ -56,11 +56,23 @@ export default class Project {
     }
 
     getTodayTodos() {
-        return this.todos.filter((todo) => isToday(todo.date));
+        let today = new Date();
+        return this.todos.filter((todo) => 
+            isWithinInterval(todo.date, {
+                start: new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()-24, today.getMinutes()),
+                end: new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()+24, today.getMinutes())
+            })
+        );
     }
 
     getThisWeekTodos() {
-        return this.todos.filter((todo) => isThisWeek(todo.date));
+        let today = new Date();
+        return this.todos.filter((todo) => 
+            isWithinInterval(todo.date, {
+                start: new Date(today.getFullYear(), today.getMonth(), today.getDate()-7),
+                end: new Date(today.getFullYear(), today.getMonth(), today.getDate()+7)
+            })
+        );
     }
 
     getOverdueTodos() {

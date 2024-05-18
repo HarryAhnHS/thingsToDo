@@ -11,9 +11,10 @@ const UI = (() => {
 
     function init() {
         initSidebar();
-        initDisplay();
         refreshCurrentProjects();
-        newProject();
+        refreshSidebarNumTodos();
+
+        initDisplay();
         sidebarOpenClose();
 
         document.querySelector("#github").src = Git;
@@ -122,6 +123,7 @@ const UI = (() => {
     function refreshCurrentProjects() {
         displaySidebarProjects();
         clickProjectSidebar();
+        newProject();
     }
 
     function refreshCurrentTodos() {
@@ -130,24 +132,34 @@ const UI = (() => {
             if (project.classList.contains("active")) {
                 clearTodos();
 
-                if (project.classList.contains("new")) displayTodos(project.textContent.slice(2).toUpperCase());
-                else displayTodos(project.textContent);
+                if (project.classList.contains("new")) {
+                    displayTodos(project.children.item(1).textContent.toUpperCase());
+                }
+                else {
+                    displayTodos(project.children.item(0).textContent.toUpperCase());
+
+                } 
             }
         })
     }
 
     function initDisplay() {
         const projectDivs = document.querySelectorAll('.project');
-        const projectName = document.querySelector('.main-head');
+        const head = document.querySelector('.main-head');
 
         Storage.saveProjectList(Storage.getProjectList()); // Initial load 
 
         projectDivs.forEach((project) => {
-            console.log(project.textContent);
-            if (project.textContent == 'ALL') {
+            if (project.children.item(0).textContent == 'ALL') {
+                console.log(project);
+
+                head.innerHTML = ""; // Reset head
                 resetActive();
                 project.classList.add("active");
-                projectName.textContent = "All";
+
+                head.textContent = "All";
+                head.style.color = 'black';
+
                 clearTodos();
                 Storage.getProjectList().updateAll();
                 displayTodos('ALL');
@@ -164,20 +176,52 @@ const UI = (() => {
         sidebar.innerHTML = "";
         const all = document.createElement('div');
         all.classList.add("project");
-        all.classList.add("active");
-        all.textContent = "ALL";
+
+        const allText = document.createElement('div');
+        allText.classList.add("project-name");
+        allText.textContent = "ALL";
+
+        const numTodosAll = document.createElement('div');
+        numTodosAll.classList.add('num-todos');
+        numTodosAll.classList.add('all');
+    
+        all.appendChild(allText);
+        all.appendChild(numTodosAll);
 
         const today = document.createElement('div');
         today.classList.add("project");
-        today.textContent = "TODAY";
 
+        const todayText = document.createElement('div');
+        todayText.classList.add("project-name");
+        todayText.textContent = "TODAY";
+
+        const numTodosToday = document.createElement('div');
+        numTodosToday.classList.add('num-todos');
+        numTodosToday.classList.add('today');
+
+        today.appendChild(todayText);
+        today.appendChild(numTodosToday);
+        
         const thisweek = document.createElement('div');
         thisweek.classList.add("project");
-        thisweek.textContent = "THIS WEEK";
+
+        const weekText = document.createElement('div');
+        weekText.classList.add("project-name");
+        weekText.textContent = "THIS WEEK";
+        
+        const numTodosThisWeek = document.createElement('div');
+        numTodosThisWeek.classList.add('num-todos');
+        numTodosThisWeek.classList.add('thisweek');
+        thisweek.appendChild(weekText);
+        thisweek.appendChild(numTodosThisWeek);
 
         const done = document.createElement('div');
         done.classList.add("project");
-        done.textContent = "DONE";
+
+        const doneText = document.createElement('div');
+        doneText.classList.add("project-name");
+        doneText.textContent = "DONE";
+        done.appendChild(doneText);
 
         const myProjectsTitle = document.createElement('div');
         myProjectsTitle.classList.add("my-projects-title");
@@ -195,6 +239,65 @@ const UI = (() => {
         sidebar.appendChild(thisweek);
         sidebar.appendChild(done);
         sidebar.appendChild(myProjectsTitle);
+    }
+
+    function refreshSidebarNumTodos() {
+        console.log("reset-sidebar")
+        // Sidebar default numTodos
+        const numTodosAll = document.querySelector('.num-todos.all');
+        let cAll = 0;
+        Storage.getProjectList().getProject("ALL").getTodos().forEach((todo) => {
+            if (!todo.getDone()) { 
+                cAll++;
+            }
+        })
+        numTodosAll.textContent = cAll;
+
+        const numTodosToday = document.querySelector('.num-todos.today');
+        let cToday = 0;
+        Storage.getProjectList().getProject("TODAY").getTodos().forEach((todo) => {
+            if (!todo.getDone()) { 
+                cToday++;
+            }
+        })
+        numTodosToday.textContent = cToday;
+
+        
+        const numTodosThisWeek = document.querySelector('.num-todos.thisweek');
+        let cWeek = 0;
+        Storage.getProjectList().getProject("THIS WEEK").getTodos().forEach((todo) => {
+            if (!todo.getDone()) { 
+                cWeek++;
+            }
+        })
+        numTodosThisWeek.textContent = cWeek;
+
+        // user projects numTodos
+        const myProjects = document.querySelectorAll(".project.new");
+        myProjects.forEach((project) => {
+            console.log(project.children.item(1).textContent);
+            let c = 0;
+            Storage.getProjectList()
+            .getProject(project.children.item(1).textContent)
+            .getTodos().forEach((todo) => {
+                if (!todo.getDone()) { 
+                    c++;
+                }
+            })
+            project.children.item(2).textContent = c;
+        })
+
+        // If num is 0 - hide
+        const numTodos = document.querySelectorAll('.num-todos');
+        numTodos.forEach((num) => {
+            if (num.textContent == "0") {
+                console.log(num.textContent)
+                num.style.display = 'none';
+            }
+            else {
+                num.style.display = "flex";
+            }
+        })
     }
 
 
@@ -229,13 +332,18 @@ const UI = (() => {
         sharp.style['pointer-events'] = 'none';
 
         const projectName = document.createElement('div');
+        projectName.classList.add('project-name');
         projectName.textContent = `${name}`;
         projectName.style['pointer-events'] = 'none';
 
         sharp.style['color'] = `#${Storage.getProjectList().getProject(name).getColor()}`;
 
+        const numTodos = document.createElement('div');
+        numTodos.classList.add('num-todos');
+
         project.appendChild(sharp);
         project.appendChild(projectName);
+        project.appendChild(numTodos);
 
         myProjectList.appendChild(project);
     }
@@ -591,7 +699,7 @@ const UI = (() => {
         const head = document.querySelector('.main-head');
 
         projectDivs.forEach((project) => {
-            if (project.textContent == 'ALL') {
+            if (project.children.item(0).textContent == 'ALL') {
                 project.onclick = function switchProject(e) {
                     head.innerHTML = ""; // Reset head
                     resetActive();
@@ -605,7 +713,7 @@ const UI = (() => {
                     displayTodos('ALL');
                 };
             }
-            else if (project.textContent == 'TODAY') {
+            else if (project.children.item(0).textContent == 'TODAY') {
                 project.onclick = function switchProject(e) {
                     head.innerHTML = ""; // Reset head
                     resetActive();
@@ -619,7 +727,7 @@ const UI = (() => {
                     displayTodos('TODAY');
                 };
             }
-            else if (project.textContent == 'THIS WEEK') {
+            else if (project.children.item(0).textContent == 'THIS WEEK') {
                 project.onclick = function switchProject(e) {
                     head.innerHTML = ""; // Reset head
                     resetActive();
@@ -633,7 +741,7 @@ const UI = (() => {
                     displayTodos('THIS WEEK');
                 };
             }
-            else if (project.textContent == 'DONE') {
+            else if (project.children.item(0).textContent == 'DONE') {
                 project.onclick = function switchProject(e) {
                     head.innerHTML = ""; // Reset head
                     resetActive();
@@ -649,7 +757,7 @@ const UI = (() => {
             }
             else {
                 project.onclick = function switchProject(e) {
-                    setActiveAndOpenProject(e.target.textContent.slice(2).toUpperCase());
+                    setActiveAndOpenProject(project.children.item(1).textContent.toUpperCase());
                 };
             }
         })
@@ -658,15 +766,17 @@ const UI = (() => {
     // Helper function to set active and open projectName  
     function setActiveAndOpenProject(projectName) {
         const head = document.querySelector('.main-head');
-        const projectDivs = document.querySelectorAll('.project');
+        const projectDivs = document.querySelectorAll('.project.new');
 
         head.innerHTML = ""; // Reset head
 
         // Reset Active and set projectName's project to be active
         resetActive();
         projectDivs.forEach((project) => {
-            if (project.textContent.slice(2) == projectName) project.classList.add("active");
-        });
+            if (project.children.item(1).textContent == projectName.toUpperCase()) {
+                project.classList.add("active");
+            }
+        })
 
         const intro = document.createElement('div');
         intro.innerHTML = "Project&nbsp";
@@ -678,6 +788,7 @@ const UI = (() => {
 
         const title = document.createElement('div');
         title.classList.add("head-title");
+
 
         sharp.style.color = `#${Storage.getProjectList().getProject(projectName.toUpperCase()).getColor()}`;
         title.style.color = `#${Storage.getProjectList().getProject(projectName.toUpperCase()).getColor()}`;
@@ -797,6 +908,7 @@ const UI = (() => {
         const cancel = document.querySelector("#new-project-cancel");
 
         colors.forEach((color) => {
+            color.innerHTML = "";
             const inner = document.createElement('div');
             inner.style['background-color'] = `#${color.id}`;
             inner.style['height'] = `30px`;
@@ -860,7 +972,6 @@ const UI = (() => {
 
                     // Refresh projects and todos
                     refreshCurrentProjects();
-
                     // Open newly created project and set as active
                     setActiveAndOpenProject(name.value.toUpperCase());
 
@@ -979,6 +1090,7 @@ const UI = (() => {
         Storage.deleteProject(projectName); 
         
         refreshCurrentProjects(); // Refresh project sidebar + onclick events
+        refreshSidebarNumTodos();
         initDisplay(); // initialize display and active to 'All'
     }
 
@@ -1065,6 +1177,9 @@ const UI = (() => {
 
                 // refresh current page's todos
                 refreshCurrentTodos();
+                refreshSidebarNumTodos();
+
+                setActiveAndOpenProject(todoProject);
             }
             else {
                 console.log("Invalid name - Cannot Add");
@@ -1166,6 +1281,7 @@ const UI = (() => {
 
                 // refresh current page's todos
                 refreshCurrentTodos();
+                refreshSidebarNumTodos();
             }
             else {
                 console.log("Invalid name / Already exists");
@@ -1182,6 +1298,7 @@ const UI = (() => {
         Storage.deleteTodo(todoProject, todoTitle);
          // refresh current page's todos 
         refreshCurrentTodos();
+        refreshSidebarNumTodos();
     };
 
     function viewTodo(todoTitle, todoProject) {
@@ -1284,12 +1401,19 @@ const UI = (() => {
         if (!Storage.getProjectList().getProject(todoProject).getTodo(todoTitle).getDone()) {
             // Toggle to 'done'
             Storage.changeDoneTodo(todoProject, todoTitle, true);
+
             refreshCurrentTodos();
+
+            refreshSidebarNumTodos();
+
         }
         else {
             // Toggle to 'not done'
             Storage.changeDoneTodo(todoProject, todoTitle, false);
+            
             refreshCurrentTodos();
+
+            refreshSidebarNumTodos();
         }
     }
 
@@ -1299,8 +1423,11 @@ const UI = (() => {
 
         refreshCurrentProjects,
         refreshCurrentTodos,
+
         initDisplay,
+
         initSidebar,
+        refreshSidebarNumTodos,
 
         displaySidebarProjects,
         createProject,

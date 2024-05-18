@@ -77,7 +77,7 @@ export default class ProjectList {
         this.projects.forEach((project) => {
             if (project.name != "ALL" && project.name != "TODAY" && project.name != "THIS WEEK" && project.name != "DONE") {
                 project.getTodayTodos().forEach((todo) => {
-                    if (!todo.getDone()) {
+                    if (!todo.done) {
                         buffer.push(todo);
                     }
                 })
@@ -94,7 +94,7 @@ export default class ProjectList {
         this.projects.forEach((project) => {
             if (project.name != "ALL" && project.name != "TODAY" && project.name != "THIS WEEK" && project.name != "DONE") {
                 project.getThisWeekTodos().forEach((todo) => {
-                    if (!todo.getDone()) {
+                    if (!todo.done) {
                         buffer.push(todo);
                     }
                 })

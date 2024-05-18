@@ -65,7 +65,6 @@ const Storage = (() => {
             projectList = Object.assign(new ProjectList, JSON.parse(localStorage.getItem('data')));
         }
 
-        console.log(projectList);
 
         let projectsBuffer = [];
         projectList.getProjects().forEach((project) => {
@@ -81,7 +80,7 @@ const Storage = (() => {
             project.setTodos(tasksBuffer);
         })
         
-        // console.log("current projectList", projectList);
+        console.log("current projectList", projectList);
         return projectList;
     }
 

@@ -168,6 +168,27 @@ img {
     transform: translateX(4px);
 }
 
+.num-todos {
+    color: white; 
+
+    margin-left: 6px;
+    margin-bottom: 2px;
+
+    font-size: 12px;
+    font-weight: 300;
+
+    border-radius: 50%;
+
+    background-color: #c1121f;
+    
+    width: 18px;
+    height: 18px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .my-projects-title {
     width: 170px;
     height: 80px;
