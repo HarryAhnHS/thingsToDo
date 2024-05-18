@@ -779,11 +779,26 @@ dialog::backdrop {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    transition: all 0.3s;
 }
 
 .color:focus, .color:hover {
     opacity: 0.5;
     cursor: pointer;
+}
+
+.color.selected {
+    transform: translateY(-3px);
+    /* transform: scale(1.1); */
+
+    outline: none;
+
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+
+.color:active {
+    transform: scale(1.05);
 }
 
 #new-project-cancel,

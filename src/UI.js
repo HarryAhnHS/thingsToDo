@@ -273,10 +273,17 @@ const UI = (() => {
 
                 const text = document.createElement("div");
                 text.classList.add("empty-text");
-                text.textContent = "No Todos! Open a Project and Create Todos!"
+                text.textContent = "No Todos!"
+
+                const text2 = document.createElement("div");
+                text2.textContent = "Open a Project and Create Todos!"
+                text2.style['font-weight'] = "200";
+                text2.style['font-size'] = "18x";
+                text2.style['margin-top'] = "5px";
 
                 emptySaver.appendChild(emoji);
                 emptySaver.appendChild(text);
+                emptySaver.appendChild(text2);
 
                 todoList.appendChild(emptySaver);
             }
@@ -812,7 +819,8 @@ const UI = (() => {
 
             // Select default color to first choice
             document.getElementById('f94144').classList.add('selected');
-            document.getElementById('f94144').style['outline'] = '2px solid #f94144';
+            document.getElementById('f94144').style['outline-color'] = '#f94144';
+            document.getElementById('f94144').style['background-color'] = '#f9414430';
 
 
             // Color choose
@@ -820,10 +828,12 @@ const UI = (() => {
                 color.onclick = function selectColor(e) {
                     colors.forEach((color) => {
                         color.classList.remove('selected');
-                        color.style['outline'] = `1px solid rgba(51, 51, 51, 0.2)`;
+                        color.style['outline-color'] = `rgba(51, 51, 51, 0.2)`;
+                        color.style['background-color'] = `rgba(51, 51, 51, 0.05)`;
                     })
                     color.classList.add('selected');
-                    color.style['outline'] = `2px solid #${color.id}`;
+                    color.style['outline-color'] = `#${color.id}`;
+                    color.style['background-color'] = `#${color.id}30`;
                 };
             })
 
@@ -906,17 +916,21 @@ const UI = (() => {
         })
         // Select color value to pre-selected choice
         document.getElementById(originalColor).classList.add('selected');
-        document.getElementById(originalColor).style['outline'] = `2px solid #${originalColor}`;
+        document.getElementById(originalColor).style['outline-color'] = `#${originalColor}`;
+        document.getElementById(originalColor).style['background-color'] = `#${originalColor}30`;
+
 
         // Color choose
         colors.forEach((color) => {
             color.onclick = function selectColor(e) {
                 colors.forEach((color) => {
                     color.classList.remove('selected');
-                    color.style['outline'] = `1px solid rgba(51, 51, 51, 0.2)`;
+                    color.style['outline-color'] = `rgba(51, 51, 51, 0.2)`;
+                    color.style['background-color'] = `rgba(51, 51, 51, 0.05)`;
                 })
                 color.classList.add('selected');
-                color.style['outline'] = `2px solid #${color.id}`;
+                color.style['outline-color'] = `#${color.id}`;
+                color.style['background-color'] = `#${color.id}30`;
             };
         })
 
