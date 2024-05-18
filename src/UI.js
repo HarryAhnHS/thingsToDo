@@ -359,7 +359,7 @@ const UI = (() => {
         const priorityText = document.createElement('div');
         priorityText.classList.add('priority');
         priorityText.classList.add(priority.toLowerCase());
-        priorityText.textContent = `${priority.charAt(0).toUpperCase() + priority.slice(1)} Priority`;
+        priorityText.textContent = `${priority.charAt(0).toUpperCase() + priority.slice(1)}`;
 
         // Add project name as tag
         const projectName = document.createElement('div');

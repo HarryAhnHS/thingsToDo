@@ -496,7 +496,14 @@ img {
 
     text-overflow: ellipsis;
 
+    overflow: hidden;
+    white-space: nowrap;
+
     font-weight: 300;
+
+    /* padding-right: 25px; */
+
+    max-width: 200px;
 }
 
 .date-time {
@@ -513,6 +520,8 @@ img {
 
 
     color: rgba(0, 0, 0, 0.7);
+
+    flex-shrink: 0;
 }
 
 .date {
