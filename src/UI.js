@@ -819,8 +819,10 @@ const UI = (() => {
 
             // Select default color to first choice
             document.getElementById('f94144').classList.add('selected');
-            document.getElementById('f94144').style['outline-color'] = '#f94144';
+            document.getElementById('f94144').style['outline-color'] = '#f9414450';
             document.getElementById('f94144').style['background-color'] = '#f9414430';
+            document.getElementById('f94144').style['box-shadow'] = `#f9414450 0px 5px 15px`;
+            
 
 
             // Color choose
@@ -830,10 +832,14 @@ const UI = (() => {
                         color.classList.remove('selected');
                         color.style['outline-color'] = `rgba(51, 51, 51, 0.2)`;
                         color.style['background-color'] = `rgba(51, 51, 51, 0.05)`;
+                        color.style['box-shadow'] = `none`;
+
                     })
                     color.classList.add('selected');
-                    color.style['outline-color'] = `#${color.id}`;
+                    color.style['outline-color'] = `#${color.id}50`;
                     color.style['background-color'] = `#${color.id}30`;
+                    color.style['box-shadow'] = `#${color.id}50 0px 5px 15px`;
+                
                 };
             })
 
@@ -916,9 +922,9 @@ const UI = (() => {
         })
         // Select color value to pre-selected choice
         document.getElementById(originalColor).classList.add('selected');
-        document.getElementById(originalColor).style['outline-color'] = `#${originalColor}`;
+        document.getElementById(originalColor).style['outline-color'] = `#${originalColor}50`;
         document.getElementById(originalColor).style['background-color'] = `#${originalColor}30`;
-
+        document.getElementById(originalColor).style['box-shadow'] = `#${originalColor}50 0px 5px 15px`;
 
         // Color choose
         colors.forEach((color) => {
@@ -927,10 +933,12 @@ const UI = (() => {
                     color.classList.remove('selected');
                     color.style['outline-color'] = `rgba(51, 51, 51, 0.2)`;
                     color.style['background-color'] = `rgba(51, 51, 51, 0.05)`;
+                    color.style['box-shadow'] = `none`;
                 })
                 color.classList.add('selected');
                 color.style['outline-color'] = `#${color.id}`;
                 color.style['background-color'] = `#${color.id}30`;
+                color.style['box-shadow'] = `#${color.id}50 0px 5px 15px`;
             };
         })
 
