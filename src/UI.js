@@ -151,8 +151,6 @@ const UI = (() => {
 
         projectDivs.forEach((project) => {
             if (project.children.item(0).textContent == 'ALL') {
-                console.log(project);
-
                 head.innerHTML = ""; // Reset head
                 resetActive();
                 project.classList.add("active");
@@ -242,7 +240,7 @@ const UI = (() => {
     }
 
     function refreshSidebarNumTodos() {
-        console.log("reset-sidebar")
+        // console.log("reset-sidebar")
         // Sidebar default numTodos
         const numTodosAll = document.querySelector('.num-todos.all');
         let cAll = 0;
@@ -275,7 +273,7 @@ const UI = (() => {
         // user projects numTodos
         const myProjects = document.querySelectorAll(".project.new");
         myProjects.forEach((project) => {
-            console.log(project.children.item(1).textContent);
+            // console.log(project.children.item(1).textContent);
             let c = 0;
             Storage.getProjectList()
             .getProject(project.children.item(1).textContent)
@@ -291,7 +289,7 @@ const UI = (() => {
         const numTodos = document.querySelectorAll('.num-todos');
         numTodos.forEach((num) => {
             if (num.textContent == "0" || num.textContent == "") {
-                console.log(num.textContent)
+                // console.log(num.textContent)
                 num.style.display = 'none';
             }
             else {
@@ -439,7 +437,7 @@ const UI = (() => {
 
         // set Todo Done input configuration
         todo.onclick = (e) => {
-            console.log('Todo clicked at:'+e.target);
+            // console.log('Todo clicked at:'+e.target);
             if (!e.target.classList.contains("edit-delete-popup-icon") 
             && !e.target.classList.contains("edit-delete-menu")
             && !e.target.classList.contains("option")
@@ -1097,7 +1095,7 @@ const UI = (() => {
 
     // Add/Edit/Delete Todo functions
     function newTodo(todoProject) {
-        console.log("Add New Todo Running for: " , todoProject);
+        // console.log("Add New Todo Running for: " , todoProject);
 
         const dialog = document.querySelector(".new-todo-dialog");
         const form = document.querySelector(".new-todo-dialog-container");
@@ -1155,7 +1153,7 @@ const UI = (() => {
         const cancel = document.querySelector("#new-todo-cancel");
 
         add.onclick = function adding(e) {
-            console.log("Clicked add");
+            // console.log("Clicked add");
             e.preventDefault();
             if (titleinput.value != "" && !Storage.getProjectList().getProject(todoProject).todoExists(titleinput.value)) {
                 // If unique title - able to add
@@ -1182,7 +1180,7 @@ const UI = (() => {
                 setActiveAndOpenProject(todoProject);
             }
             else {
-                console.log("Invalid name - Cannot Add");
+                console.log("Invalid name");
             }
         };
 
@@ -1195,7 +1193,7 @@ const UI = (() => {
 
     // Edit task - popup
     function editTodo(todoTitle, todoProject) {
-        console.log("edit tab opened", todoTitle, todoProject);
+        // console.log("edit tab opened", todoTitle, todoProject);
         const dialog = document.querySelector(".new-todo-dialog");
         const form = document.querySelector(".new-todo-dialog-container");
 
@@ -1302,7 +1300,7 @@ const UI = (() => {
     };
 
     function viewTodo(todoTitle, todoProject) {
-        console.log("view tab opened", todoTitle, todoProject);
+        // console.log("view tab opened", todoTitle, todoProject);
         const dialog = document.querySelector(".view-todo-dialog");
         const container = document.querySelector(".view-todo-dialog-container");
 

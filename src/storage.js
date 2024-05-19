@@ -34,7 +34,7 @@ const Storage = (() => {
             projectList.addProject(new Project("SCHOOL"));
             projectList.changeColorProject("SCHOOL", "f9844a");
                 projectList.getProject("SCHOOL").addTodo(
-                    new Todo("CSCI170 Midterm Review", "Who the heck is Dijkstra?", new Date(today.getFullYear(), today.getMonth(), today.getDate()+6, 14, 30), 'medium', 'SCHOOL')
+                    new Todo("DSA Midterm Review", "Who the heck is Dijkstra?", new Date(today.getFullYear(), today.getMonth(), today.getDate()+6, 14, 30), 'medium', 'SCHOOL')
                 )
                 projectList.getProject("SCHOOL").addTodo(
                     new Todo("Apply for internships", "It's that time of year...", new Date(today.getFullYear(), today.getMonth()+1, today.getDate(), 0,0), 'high', 'SCHOOL')
@@ -43,10 +43,10 @@ const Storage = (() => {
             projectList.addProject(new Project("GYM"));
             projectList.changeColorProject("GYM", "90be6d");
                 projectList.getProject("GYM").addTodo(
-                    new Todo("Treadmill Cardio", "3-12-30 - Speed 3MPH, Incline 12 degrees, Time 30 minutes", new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()+1), 'low', 'GYM')
+                    new Todo("Treadmill Cardio", "Speed 3MPH, Incline 12 degrees, 30 minutes", new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours()+1), 'low', 'GYM')
                 );
                 projectList.getProject("GYM").addTodo(
-                    new Todo("Leg day...", "", new Date(today.getFullYear(), today.getMonth()-3, today.getDate(), 0,0), 'low', 'GYM')
+                    new Todo("Leg day", "", new Date(today.getFullYear(), today.getMonth()-3, today.getDate(), 0,0), 'low', 'GYM')
                 );
 
             projectList.addProject(new Project("CHORES"));
@@ -80,7 +80,7 @@ const Storage = (() => {
             project.setTodos(tasksBuffer);
         })
         
-        console.log("current projectList", projectList);
+        // console.log("current projectList", projectList);
         return projectList;
     }
 
@@ -143,7 +143,7 @@ const Storage = (() => {
     function renameTodo(projectName, todoTitle, newTitle) {
         let projectList = getProjectList();
 
-        console.log("Renaming todo in Project:" + projectName + " | Todo:" + todoTitle + " | to newTitle: " + newTitle);
+        // console.log("Renaming todo in Project:" + projectName + " | Todo:" + todoTitle + " | to newTitle: " + newTitle);
         
         projectList.getProject(projectName).getTodo(todoTitle).setTitle(newTitle);
 
@@ -153,7 +153,7 @@ const Storage = (() => {
     function changeDescTodo(projectName, todoTitle, newDesc) {
         let projectList = getProjectList();
 
-        console.log("changing desc todo in Project:" + projectName + " | Todo:" + todoTitle + " | to NewDesc: " + newDesc);
+        // console.log("changing desc todo in Project:" + projectName + " | Todo:" + todoTitle + " | to NewDesc: " + newDesc);
 
         if (newDesc == "") {
             projectList.getProject(projectName).getTodo(todoTitle).emptyDesc();
