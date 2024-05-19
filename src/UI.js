@@ -4,6 +4,7 @@ import ProjectList from './projectList.js';
 import Storage from './storage.js';
 
 import Git from './images/github.png';
+import Fav from './images/favicon.png';
 
 import { isPast, isWithinInterval, formatDistance, formatDistanceToNow, format } from 'date-fns';
 
@@ -18,6 +19,7 @@ const UI = (() => {
         sidebarOpenClose();
 
         document.querySelector("#github").src = Git;
+        document.querySelector('#favicon').setAttribute('href', Fav);
     }
 
     function sidebarOpenClose() {
