@@ -972,6 +972,7 @@ const UI = (() => {
 
                     // Refresh projects and todos
                     refreshCurrentProjects();
+                    refreshSidebarNumTodos();
                     // Open newly created project and set as active
                     setActiveAndOpenProject(name.value.toUpperCase());
 
@@ -1071,6 +1072,7 @@ const UI = (() => {
 
                 // Refresh projects and todos
                 refreshCurrentProjects();
+                refreshSidebarNumTodos();
 
                 // Open newly created project and set as active
                 setActiveAndOpenProject(name.value.toUpperCase());
