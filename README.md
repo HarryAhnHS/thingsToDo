@@ -1,5 +1,5 @@
 # thingsToDo
-Todo List using localStorage and npm
+Todo List using localStorage
 
 Link to live: https://harryahnhs.github.io/thingsToDo/
 
